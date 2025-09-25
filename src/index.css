@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+
+
+
+@font-face {
+  font-family: 'Britany';
+  src: url('/fonts/BrittanySignature.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Marine';
+  src: url('/fonts/Marine-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Macha';
+  src: url('/fonts/MachaBook.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'chathura';
+  src: url('/fonts/Chathura-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'lexend';
+  src: url('/fonts/Lexend.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'century';
+  src: url('/fonts/gothic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+p {
+  word-break: break-word;
+}
+
