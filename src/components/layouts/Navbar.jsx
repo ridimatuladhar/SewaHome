@@ -1,6 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import SocialIcons from "./navbar/Socialicons";
+import SocialIcons from "./navbar/SocialIcons";
 import DesktopMenuItem from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
 import { additionalMenuItems } from "./navbar/ServiceData"; // ← only additionalMenuItems stays static
