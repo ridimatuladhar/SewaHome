@@ -154,7 +154,7 @@ export default function MainHomePage() {
 
         {/* logo */}
         <div className="flex justify-center sm:justify-start">
-          <img src="/main-logo/logo.png" className="z-100 absolute h-40 sm:h-60 sm:top-10 sm:left-20" alt="Sewa Home Care logo" />
+          <img src="/main-logo/logo.webp" className="z-100 absolute h-40 sm:h-60 sm:top-10 sm:left-20" alt="Sewa Home Care logo" />
         </div>
 
         {/* Foreground Content */}

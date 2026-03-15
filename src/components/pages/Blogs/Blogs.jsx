@@ -1,57 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Facebook, Instagram, Youtube, Menu, Link, Clock } from 'lucide-react';
-import FooterButtons from '../../home/FooterButtons';
+import { ChevronDown, Clock, Loader } from 'lucide-react';
+import FooterButtons from '../footer/FooterButtons';
 import Navbar from '../../layouts/Navbar';
 import NewsletterSection from './NewsLetterSection';
 import { useNavigate } from 'react-router-dom';
 
 const Blogs = () => {
   const [sortBy, setSortBy] = useState('Relevance');
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleBlogClick = (blogId) => {
-    window.location.href = `/blogs/${blogId}`;
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true);
+      // Backend expects 'admin' parameter - false to show only published blogs
+    const response = await fetch('https://stf.org.np/Backend/Blog/get_blogs.php?admin=false');
+    //  const response = await fetch('http://localhost/SewaHome/Backend/Blog/get_blogs.php?admin=false');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setBlogs(data.blogs);
+      } else {
+        throw new Error(data.message || 'Failed to fetch blogs');
+      }
+    } catch (err) {
+      console.error('Error fetching blogs:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const blogPosts = [
-    {
-      id: 1,
-      category: "Care Experts and Insights",
-      title: "A Guide to Paying for Home Care: Breaking down Long-Term Care Insurance, VA Benefits, Medicaid Waivers, and Private Pay.",
-      date: "12th May, 2025",
-      readTime: "5 min read",
-      image: "/carousel/carousel2.png",
-      featured: true
-    },
-    {
-      id: 2,
-      category: "Care Experts and Insights",
-      title: "A Guide to Paying for Home Care: Breaking down Long-Term Care Insurance, VA Benefits, Medicaid Waivers, and Private Pay.",
-      date: "12th May, 2025",
-      readTime: "5 min read",
-      image: "/carousel/carousel3.png"
-    },
-    {
-      id: 3,
-      category: "Care Experts and Insights",
-      title: "A Guide to Paying for Home Care: Breaking down Long-Term Care Insurance, VA Benefits, Medicaid Waivers, and Private Pay.",
-      date: "12th May, 2025",
-      readTime: "5 min read",
-      image: "/carousel/carousel4.png"
-    },
-    {
-      id: 4,
-      category: "Care Experts and Insights",
-      title: "A Guide to Paying for Home Care: Breaking down Long-Term Care Insurance, VA Benefits, Medicaid Waivers, and Private Pay.",
-      date: "12th May, 2025",
-      readTime: "5 min read",
-      image: "/carousel/carousel5.jpg"
-    }
-  ];
+  const handleBlogClick = (blog) => {
+    // Use slug for SEO-friendly URLs (backend supports both slug and id)
+    navigate(`/blogs/${blog.slug || blog.id}`);
+  };
 
-  // Get the featured post
-  const featuredPost = blogPosts.find(post => post.featured);
+  // Get featured post (backend sets is_featured as boolean)
+  const featuredPost = blogs.find(blog => blog.is_featured) || blogs[0];
+
+  // Filter remaining blogs excluding the featured one
+  const gridBlogs = blogs.filter(blog => blog !== featuredPost);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -82,6 +83,39 @@ const Blogs = () => {
       }
     }
   };
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="bg-gray-50 md:mt-16 mt-8 min-h-screen flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader className="animate-spin h-12 w-12 text-[#376082]" />
+            <p className="text-gray-600">Loading blogs...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className="bg-gray-50 md:mt-16 mt-8 min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-red-600 text-lg mb-4">Error loading blogs</p>
+            <button 
+              onClick={fetchBlogs}
+              className="bg-[#376082] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -121,28 +155,33 @@ const Blogs = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-6xl mx-auto px-6 py-8"
-            onClick={() => handleBlogClick(featuredPost.id)}
+            className="max-w-6xl mx-auto px-6 py-8 "
+            onClick={() => handleBlogClick(featuredPost)}
           >
             <motion.div
               whileHover="hover"
               variants={cardHoverVariants}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+              className="bg-white  max-h-96 rounded-2xl shadow-lg overflow-hidden cursor-pointer "
             >
               <div className="md:flex">
                 <div className="md:w-1/2 p-8">
                   <div className="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm mb-4 mr-2">
                     {featuredPost.category}
                   </div>
-                  <div className="inline-block bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm mb-4">
-                    Featured
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#376082] mb-4 " style={{ fontFamily: 'Macha' }}>
+                  {featuredPost.is_featured && (
+                    <div className="inline-block bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm mb-4">
+                      Featured
+                    </div>
+                  )}
+                  <h2 className="text-2xl md:text-3xl font-bold text-[#376082] mb-4" style={{ fontFamily: 'Macha' }}>
                     {featuredPost.title}
                   </h2>
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {featuredPost.excerpt}
+                  </p>
                   <div className="flex items-center text-gray-500 text-sm mb-6 space-x-4">
-                    <span>{featuredPost.date}</span>
-                    <span>{featuredPost.readTime}</span>
+                    <span>{new Date(featuredPost.created_at).toLocaleDateString()}</span>
+                    <span>{featuredPost.read_time}</span>
                   </div>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -154,9 +193,14 @@ const Blogs = () => {
                 </div>
                 <div className="md:w-1/2">
                   <img
-                    src={featuredPost.image}
-                    alt="Featured blog post"
-                    className="w-full h-64 md:h-full object-cover"
+                    src={featuredPost.featured_image 
+                      ? `https://stf.org.np/Backend${featuredPost.featured_image}`
+                     //? `http://localhost/SewaHome/Backend${featuredPost.featured_image}`
+                      : "/carousel/carousel2.png"
+                    }
+                    alt={featuredPost.title}
+                    className="w-full h-48 md:h-full object-cover"
+                    
                   />
                 </div>
               </div>
@@ -164,68 +208,76 @@ const Blogs = () => {
           </motion.section>
         )}
 
-        {/* Sort By Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="max-w-6xl mx-auto px-6 py-4"
-        >
-          <div className="flex justify-end">
-            <div className="relative">
-              <button className="flex items-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-2 hover:border-blue-400 transition-colors">
-                <span className="text-gray-700">Sort By: {sortBy}</span>
-                <ChevronDown size={16} className="text-gray-400" />
-              </button>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Blog Grid */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-6xl mx-auto px-6 py-8"
-        >
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <motion.div
-                key={post.id}
-                variants={itemVariants}
-                whileHover="hover"
-                className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer group"
-                onClick={() => handleBlogClick(post.id)}
-              >
-                <motion.div variants={cardHoverVariants}>
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm mb-3">
-                      {post.category}
+        {gridBlogs.length > 0 ? (
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-6xl mx-auto px-6 py-8"
+          >
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {gridBlogs.map((post) => (
+                <motion.div
+                  key={post.id}
+                  variants={itemVariants}
+                  whileHover="hover"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer group"
+                  onClick={() => handleBlogClick(post)}
+                >
+                  <motion.div variants={cardHoverVariants}>
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={post.featured_image 
+                          ? `https://stf.org.np/Backend${post.featured_image}`
+                         // ? `http://localhost/SewaHome/Backend${post.featured_image}`
+                          : "/carousel/carousel2.png"
+                        }
+                        alt={post.title}
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.src = "/carousel/carousel2.png";
+                        }}
+                      />
                     </div>
-                    <h3 className="text-lg font-medium text-gray-800 mb-4 line-clamp-3" style={{ fontFamily: 'Macha' }}>
-                      {post.title}
-                    </h3>
-                    <div className="flex items-center text-gray-500 text-sm space-x-4">
-                      <span>{post.date}</span>
-                      <span className="flex items-center space-x-1">
-                        <Clock size={14} />
-                        <span>{post.readTime}</span>
-                      </span>
+                    <div className="p-6">
+                      <div className="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm mb-3">
+                        {post.category}
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-800 mb-4 line-clamp-3" style={{ fontFamily: 'Macha' }}>
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center text-gray-500 text-sm space-x-4">
+                        <span>{new Date(post.created_at).toLocaleDateString()}</span>
+                        <span className="flex items-center space-x-1">
+                          <Clock size={14} />
+                          <span>{post.read_time}</span>
+                        </span>
+                      </div>
                     </div>
-
-                  </div>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+              ))}
+            </div>
+          </motion.section>
+        ) : (
+          !loading && blogs.length <= 1 && (
+            <motion.section
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="max-w-6xl mx-auto px-6 py-12 text-center"
+            >
+              <div className="bg-white rounded-xl shadow-lg p-12">
+                <p className="text-gray-600 text-lg">No blog posts available yet.</p>
+                <p className="text-gray-500 mt-2">Check back later for new content.</p>
+              </div>
+            </motion.section>
+          )
+        )}
 
         {/* Newsletter Section */}
         <NewsletterSection />

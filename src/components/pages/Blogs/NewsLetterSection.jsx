@@ -6,24 +6,43 @@ const NewsletterSection = () => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
     
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSubscribed(true);
-      
-      // Reset after 3 seconds
-      setTimeout(() => {
+    setError("");
+
+    try {
+      const response = await fetch('https://stf.org.np/Backend/Newsletter/subscribe.php', {
+      //const response = await fetch('http://localhost/SewaHome/Backend/Newsletter/subscribe.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSubscribed(true);
         setEmail("");
-        setIsSubscribed(false);
-      }, 3000);
-    }, 1500);
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+          setIsSubscribed(false);
+        }, 3000);
+      } else {
+        setError(data.message || "Failed to subscribe");
+      }
+    } catch (err) {
+      setError("Network error. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,6 +86,16 @@ const NewsletterSection = () => {
           industry updates, and our latest blog posts directly to your inbox.
         </motion.p>
 
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-500/20 border border-red-500 text-white p-3 rounded-lg mb-4 max-w-md mx-auto"
+          >
+            {error}
+          </motion.div>
+        )}
+
         {isSubscribed ? (
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -94,7 +123,7 @@ const NewsletterSection = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                className="w-full px-4 py-3 pr-10 rounded-lg  border border-white focus:ring-2 focus:ring-white/30 focus:outline-none transition-all"
+                className="w-full px-4 py-3 pr-10 rounded-lg bg-white/10 border border-white/30 focus:ring-2 focus:ring-white/30 focus:outline-none transition-all placeholder-white/70"
                 required
               />
               <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white w-5 h-5" />

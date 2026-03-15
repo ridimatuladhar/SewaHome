@@ -1,56 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [faqData, setFaqData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const faqData = [
-    {
-      id: 1,
-      question: "What types of services do you provide?",
-      answer: "We offer companion care, personal care, dementia support, respite services, transitional care, nursing visits, transportation, geriatric care management, home search entity, non-medical transportation, and assisted living referrals."
-    },
-    {
-      id: 2,
-      question: "Do you provide medical or non-medical care?",
-      answer: "We specialize in non-medical home care while also offering nursing visits and health monitoring for added professional oversight."
-    },
-    {
-      id: 3,
-      question: "Can you help with Alzheimer's and dementia support?",
-      answer: "Yes. Our caregivers provide specialized dementia and Alzheimer's care, focusing on safety, patience, and meaningful engagement."
-    },
-    {
-      id: 4,
-      question: "What makes SEWA Home Care different?",
-      answer: "We are nationally recognized, led by certified care managers and experienced RNs, and known for our personalized, flexible care plans."
-    },
-    {
-      id: 5,
-      question: "How do your transportation services work?",
-      answer: "We provide non-medical transportation for medical appointments, errands, and social outings, supporting independence and mobility."
-    },
-    {
-      id: 6,
-      question: "Do you provide hospital-to-home transitional assistance?",
-      answer: "Yes. Our transitional care services help clients recover safely and comfortably after hospital stays."
-    },
-    {
-      id: 7,
-      question: "How do families stay informed about their loved one's care?",
-      answer: "Through our technology-enabled care portals and direct communication, families receive regular updates and peace of mind."
-    },
-    {
-      id: 8,
-      question: "How do I get started with SEWA Home Care?",
-      answer: "Just contact us for a consultation. We'll assess your needs, design a personalized care plan, and connect you with the right caregiver."
-    }
-  ];
+  // Fetch FAQs from PHP API
+  useEffect(() => {
+    const fetchFAQs = async () => {
+      try {
+        const response = await fetch('https://stf.org.np/Backend/About/get_faqs.php')
+        //const response = await fetch('http://localhost/SewaHome/Backend/About/get_faqs.php')
+        const data = await response.json();
+        setFaqData(data);
+      } catch (error) {
+        console.error('Error fetching FAQs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFAQs();
+  }, []);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center">
+              <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>
+                Frequently Asked Questions
+              </h2>
+              <div className="w-16 h-1 bg-[#376082] rounded mx-auto"></div>
+            </div>
+            <div className="text-center py-8">Loading FAQs...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <motion.section 
@@ -69,7 +64,9 @@ const FAQ = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="text-left mb-12">
-             <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6"  style={{ fontFamily: "Chathura" }}>Frequently Asked Questions</h2>
+            <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>
+              Frequently Asked Questions
+            </h2>
             <div className="w-16 h-1 bg-[#376082] rounded"></div>
           </div>
 
@@ -95,7 +92,7 @@ const FAQ = () => {
                     <motion.div
                       animate={{ rotate: openIndex === index ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
-                      className="flex-shrink-0 "
+                      className="flex-shrink-0"
                     >
                       <ChevronDown className="w-5 h-5 text-gray-500" />
                     </motion.div>

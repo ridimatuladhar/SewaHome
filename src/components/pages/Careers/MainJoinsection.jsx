@@ -2,14 +2,14 @@ import React from "react";
 import WhyJoinUs from "./WhyJoinUs";
 import TeamSection from "./TeamSection";
 import Navbar from "../../layouts/Navbar";
-import FooterButtons from "../../home/FooterButtons";
+import FooterButtons from "../footer/FooterButtons";
 
 
 const MainJoinsection = () => {
   return (
     <>
     <Navbar />
-    <div id="join-our-team " className="md:mt-16 mt-8" >
+    <div id="join-our-team " className="mt-16" >
       <WhyJoinUs />
       <TeamSection />
     </div>

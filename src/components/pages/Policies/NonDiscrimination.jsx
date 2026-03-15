@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../../layouts/Navbar';
-import FooterButtons from '../../home/FooterButtons';
+import FooterButtons from '../footer/FooterButtons';
 
 const NonDiscrimination = () => {
   // Animation variants
@@ -25,7 +25,7 @@ const NonDiscrimination = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-[#376082] py-12 md:mt-16 text-white">
+      <section className="bg-[#376082] py-12 mt-16 text-white">
         <div className="container mx-auto px-4">
           <motion.div 
             initial="hidden"

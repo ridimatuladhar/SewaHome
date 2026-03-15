@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../layouts/Navbar";
 import MainContent from "./MainContent";
-import FooterButtons from "./FooterButtons";
+import FooterButtons from "../pages/footer/FooterButtons";
 import Services from "../pages/services/Services";
 import MainJoinsection from "../pages/Careers/MainJoinsection";
 import Banners from "../pages/banners/Banners";
@@ -13,7 +13,7 @@ import WhoWeAre from "../pages/Who we are/WhoWeAre";
 import MeetTheTeam from "../pages/Meet the team/MeetTheTeam";
 import CareComparisonTable from "./CareComparisonTable";
 import InstagramCarousel from "./InstagramCarousel";
-import Testimonials from "./Testimonials";
+import Testimonials from "../pages/testimonials/Testimonials";
 import ScrollToTopArrow from "./ScrollToTopArrow";
 
 export default function Homepage() {

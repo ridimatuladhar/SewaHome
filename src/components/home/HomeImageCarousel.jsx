@@ -2,27 +2,53 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const HomeImageCarousel = () => {
+  const [carouselImages, setCarouselImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const images = [
-    "/carousel/carousel1.jpg",
-    "/carousel/carousel2.png",
-    "/carousel/carousel3.png",
-    "/carousel/carousel4.png",
-    "/carousel/carousel5.jpg"
-  ];
+  useEffect(() => {
+    fetchCarouselImages();
+  }, []);
 
-  const carouselImages = images;
+   const fetchCarouselImages = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetch('https://stf.org.np/Backend/carousel/carousel.php');
+     // const res = await fetch('http://localhost/SewaHome/Backend/carousel/carousel.php');
+      
+      if (!res.ok) {
+        throw new Error('Failed to fetch images');
+      }
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        setCarouselImages(data.images || []); // Ensure it's always an array
+      } else {
+        setCarouselImages([]);
+      }
+    } catch (err) {
+      console.error('Error fetching carousel images:', err);
+      setError('Failed to load carousel images');
+      setCarouselImages([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const nextSlide = () => {
+    if (carouselImages.length === 0) return;
     setCurrentIndex((prevIndex) => 
       prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevSlide = () => {
+    if (carouselImages.length === 0) return;
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? carouselImages.length - 1 : prevIndex - 1
     );
@@ -31,7 +57,7 @@ const HomeImageCarousel = () => {
   const goToSlide = (index) => {
     setCurrentIndex(index);
   };
- 
+
   // Touch event handlers
   const handleTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -52,18 +78,52 @@ const HomeImageCarousel = () => {
       prevSlide();
     }
   };
-   
+
   // Auto-play the carousel
   useEffect(() => {
+    if (carouselImages.length === 0) return;
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000); // Change slide every 5 seconds
-
+    }, 5000);
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, carouselImages.length]);
+
+  if (loading) {
+    return (
+      <div className="w-full h-[50vh] flex items-center justify-center bg-gray-100">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#376082]"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-[50vh] flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={fetchCarouselImages}
+            className="bg-[#376082] text-white px-4 py-2 rounded-lg hover:bg-[#5D8FB1]"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+ if (carouselImages.length === 0) {
+    return (
+      <div className="w-full h-[50vh] flex items-center justify-center bg-gray-100">
+        <div className="text-center text-gray-500">
+          <p>No carousel images available</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-     <div 
+    <div 
       className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-screen overflow-hidden"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -73,16 +133,19 @@ const HomeImageCarousel = () => {
         className="flex transition-transform duration-700 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {carouselImages.map((image, index) => (
-          <div 
-            key={index} 
-            className="w-full h-full flex-shrink-0 relative"
-          >
-            <img 
-              src={image} 
-              alt={`Carousel image ${index + 1}`}
+        {carouselImages.map((img, index) => (
+          <div key={index} className="w-full h-full flex-shrink-0 relative">
+            <img
+             src={`https://stf.org.np/Backend${img.image_path}`}
+             // src={`http://localhost/SewaHome/Backend${img.image_path}`}
+              alt={img.alt_text || img.title || `Carousel image ${index + 1}`}
               className="w-full h-full object-cover"
             />
+            {/* {img.title && (
+              <div className="absolute bottom-5 left-0 right-0 bg-black/40 text-white text-center py-2 text-lg">
+                {img.title}
+              </div>
+            )} */}
           </div>
         ))}
       </div>

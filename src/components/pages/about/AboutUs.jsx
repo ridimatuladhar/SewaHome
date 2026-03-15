@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 import { Target, Eye, Heart, Home, Users, CheckCircle } from 'lucide-react';
 import Navbar from "../../layouts/Navbar";
-import FooterButtons from "../../home/FooterButtons";
+import FooterButtons from "../footer/FooterButtons";
 import FAQ from './FAQ';
 import ScrollToTopArrow from '../../home/ScrollToTopArrow';
 
@@ -148,7 +148,7 @@ const About = () => {
               </p>
             </motion.div>
             <motion.div {...slideRight} viewport={{ once: true }} className="relative">
-              <img src="/carousel/carousel2.png" alt="Caregiver assisting senior" className="rounded-xl shadow-2xl w-full" />
+              <img src="/carousel/carousel2.webp" alt="Caregiver assisting senior" className="rounded-xl shadow-2xl w-full" />
             </motion.div>
           </div>
         </div>
@@ -159,7 +159,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <motion.div {...slideLeft} viewport={{ once: true }} className="order-2 lg:order-1">
-              <img src="/carousel/carousel1.jpg" alt="Memory care specialist with senior" className="rounded-xl shadow-2xl w-full" />
+              <img src="/carousel/carousel1.webp" alt="Memory care specialist with senior" className="rounded-xl shadow-2xl w-full" />
             </motion.div>
             <motion.div {...slideRight} viewport={{ once: true }} className="order-1 lg:order-2">
               <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>Specialized Memory Care</h2>
@@ -185,7 +185,7 @@ const About = () => {
               </p>
             </motion.div>
             <motion.div {...slideRight} viewport={{ once: true }} className="relative">
-              <img src="/carousel/carousel3.png" alt="Professional caregivers" className="rounded-xl shadow-2xl w-full" />
+              <img src="/carousel/carousel3.webp" alt="Professional caregivers" className="rounded-xl shadow-2xl w-full" />
             </motion.div>
           </div>
         </div>

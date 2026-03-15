@@ -10,28 +10,28 @@ export default function WhoWeAreSection() {
       title: "EXPERIENCED AND SUPPORTIVE",
       content: "We understand that not one care plan fits all. Daily services can include anything from meal preparation, hygiene, cleaning, and supervision. We will take the time to get to know you and develop an individualized care plan that fits your specific needs.",
       imagePosition: "right",
-      image: "/carousel/carousel1.jpg"
+      image: "/carousel/carousel1.webp"
     },
     {
       id: 2,
       title: "Experienced Home Health Aids",
       content: "Companionship is key to a trusted relationship with our caregivers. We not only strive to help you with everyday tasks but want to develop a caring relationship with you. We provide one-on-one attention and care that cannot compare in other settings.",
       imagePosition: "left",
-      image: "/carousel/carousel2.png"
+      image: "/carousel/carousel2.webp"
     },
     {
       id: 3,
       title: "OUR CAREGIVERS",
       content: "An exceptional team of home care professionals with real-world experience, education, skills, and multiple specializations. We assist you and your family with the care and you deserve. Whether you or your loved one needs our service for a few hours a day or 24 hours a day, we are here to make your life easier at home.",
       imagePosition: "right",
-      image: "/carousel/carousel3.png"
+      image: "/carousel/carousel3.webp"
     },
     {
       id: 4,
       title: "CAREGIVERS YOU CAN TRUST",
       content: "Feel better in the comfort of your own home. We specialize in care and daily living assistance to an array of individuals. Whether you need daily or weekly assistance due to aging, illness, recovery, or rehabilitation, our care givers will provide an individualized service that you can trust.",
       imagePosition: "left",
-      image: "/carousel/carousel4.png"
+      image: "/carousel/carousel4.webp"
     }
   ];
 

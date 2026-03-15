@@ -3,105 +3,148 @@ import { useState, useEffect } from "react";
 import SocialIcons from "./navbar/Socialicons";
 import DesktopMenuItem from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
-import ServiceModal from "./navbar/ServiceModal";
-import DesktopAdditionalMenu from "./navbar/DesktopAdditionalMenu";
-import { additionalMenuItems } from "./navbar/ServiceData";
+import { additionalMenuItems } from "./navbar/ServiceData"; // ← only additionalMenuItems stays static
 import { useLocation, useNavigate } from "react-router-dom";
+import DesktopAdditionalMenu from "./navbar/DesktopAdditionalMenu";
 
+const BASE_URL = "https://stf.org.np";
+//const BASE_URL = "http://localhost/SewaHome";
+
+const menuRoutes = {
+  "HOMECARE MASSACHUSETTS": "homecare-massachusetts",
+  "NON-DISCRIMINATION POLICY": "non-discrimination-policy",
+  "BLOGS": "blogs",
+  "CONTACT US": "contact-us",
+  "JOIN OUR TEAM": "join-our-team",
+  "OPPORTUNITIES": "opportunities",
+  "LEAVE A REVIEW": "leave-review",
+  "GOOGLE BUSINESS REVIEWS": "google-business-reviews",
+  "CARE.COM REVIEWS": "care-com-reviews",
+};
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [openSubmenu, setOpenSubmenu] = useState(null);
-  const [selectedService, setSelectedService] = useState(null);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [activeMenu,       setActiveMenu]       = useState(null);
+  const [openSubmenu,      setOpenSubmenu]       = useState(null);
+  const [isVisible,        setIsVisible]         = useState(true);
+  const [lastScrollY,      setLastScrollY]       = useState(0);
+  const [scrolled,         setScrolled]          = useState(false);
+
+  // ── Service data from backend ─────────────────────────────────────────────
+  const [serviceMenuData, setServiceMenuData] = useState([]);
 
   useEffect(() => {
+    fetch(`${BASE_URL}/Backend/service/services.php`)
+      .then(res => res.text())
+      .then(text => {
+        try {
+          const data = JSON.parse(text);
+          if (data.success) setServiceMenuData(data.services ?? []);
+        } catch {
+          console.error("[Navbar] services.php returned non-JSON:", text.slice(0, 200));
+        }
+      })
+      .catch(err => console.error("[Navbar] fetch error:", err));
+  }, []);
+
+  // ── Split service data to mirror desktop sections ─────────────────────────
+  // API returns category objects: { id, title, slug, items: [...] }
+  // Filter by title exactly as before — works with both static and API data
+  const homeCareServices = serviceMenuData.filter(item =>
+    ["HOME CARE SERVICES", "TRANSITION & PLACEMENT", "SUPPORT SERVICES"].includes(item.title)
+  );
+  const professionalCareManagement = serviceMenuData.filter(item =>
+    item.title === "PROFESSIONAL CARE MANAGEMENT"
+  );
+  const clinicalNursingServices = serviceMenuData.filter(item =>
+    item.title === "CLINICAL NURSING SERVICES"
+  );
+  const dementiaCareSpecialists = serviceMenuData.filter(item =>
+    item.title === "DEMENTIA CARE SPECIALISTS"
+  );
+
+  const navigate  = useNavigate();
+  const location  = useLocation();
+
+  // ── Scroll behaviour ──────────────────────────────────────────────────────
+  useEffect(() => {
     const controlNavbar = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 100) { // scroll down
+      setScrolled(window.scrollY > 10);
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
         setIsVisible(false);
-        setActiveMenu(null); // Close dropdowns when hiding navbar
-      } else { // scroll up
+        setActiveMenu(null);
+      } else {
         setIsVisible(true);
       }
       setLastScrollY(window.scrollY);
     };
-
     window.addEventListener('scroll', controlNavbar);
-    return () => {
-      window.removeEventListener('scroll', controlNavbar);
-    };
+    return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY]);
 
-  const handleMenuEnter = (title) => {
-    setActiveMenu(title);
-  };
+  const handleMenuEnter = (title) => setActiveMenu(title);
+  const handleMenuLeave = () => setActiveMenu(null);
+  const toggleSubmenu   = (title) => setOpenSubmenu(openSubmenu === title ? null : title);
 
-  const handleMenuLeave = () => {
-    setActiveMenu(null);
-  };
-
-  const toggleSubmenu = (title) => {
-    setOpenSubmenu(openSubmenu === title ? null : title);
-  };
-
-  const handleScrollTo = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+  // ── Navigation helpers ────────────────────────────────────────────────────
   const navigateToAbout = () => {
     navigate("/about");
     setIsMobileMenuOpen(false);
     setActiveMenu(null);
   };
-
-
-  const handleServiceClick = (serviceName, e) => {
-    e.preventDefault();
-
-    // Map service names to their route IDs
-    const serviceRoutes = {
-      "COMPREHENSIVE HOME CARE SOLUTIONS": "comprehensive-home-care",
-      "EXPERIENCED CARE MANAGERS OVERSIGHT": "care-manager-oversight",
-      "COMPLETE GERIATRIC SUPPORT": "geriatric-support",
-      "NURSING VISITS & HEALTH MONITORING": "nursing-visits",
-      "TRANSITIONAL ASSISTANCE": "transitional-assistance",
-      "MOBILITY AND INDEPENDENCE": "mobility-independence",
-      "TECHNOLOGY-ENABLED PEACE OF MIND": "technology-enabled-care",
-      "FLEXIBLE CARE PLANS": "flexible-care-plans",
-      "HOME SEARCH ENTITY": "home-search-entity",
-      "NON MEDICAL TRANSPORTATION": "non-medical-transportation",
-      "ASSISTED LIVING REFERRALS": "assisted-living-referrals"
-    };
-
-    const routeId = serviceRoutes[serviceName];
-    if (routeId) {
-      window.location.href = `/services/${routeId}`;
-      setActiveMenu(null);
-      setIsMobileMenuOpen(false);
-    }
+  const navigateToContact = () => {
+    navigate("/contact-us");
+    setIsMobileMenuOpen(false);
+    setActiveMenu(null);
+  };
+  const navigateToLeaveReview = () => {
+    navigate("/leave-review");
+    setIsMobileMenuOpen(false);
+    setActiveMenu(null);
   };
 
+  // ── Service click — uses serviceId slug from API, falls back to title-slug ──
+  // serviceItem is now an object { title, serviceId, subItems, ... } from the API
+  // OR a plain string (legacy / sub-item string) — handle both safely
+  const handleServiceClick = (serviceItem, e) => {
+    e.preventDefault();
+
+    let slug;
+    if (typeof serviceItem === 'object' && serviceItem !== null) {
+      // API object — use the stored serviceId slug directly
+      slug = serviceItem.serviceId;
+    } else {
+      // Fallback: plain string (shouldn't happen with API data, but keeps old behaviour)
+      slug = String(serviceItem).toLowerCase().replace(/\s+/g, '-');
+    }
+
+    if (slug) {
+      window.location.href = `/services/${slug}`;
+    }
+    setActiveMenu(null);
+    setIsMobileMenuOpen(false);
+  };
+
+  // ── Additional MENU item click ────────────────────────────────────────────
   const handleMenuClick = (menuName, e) => {
     e.preventDefault();
 
-    // Map service names to their route IDs
-    const menuRoutes = {
-      "HOMECARE MASSACHUSETTS": "homecare-massachusetts",
-      "MYHOMEHEALTHAIDES": "myhomehealthaides",
-      "NON-DISCRIMINATION POLICY": "non-discrimination-policy",
-      "BLOGS": "blogs",
-      "CONTACT US": "contact-us",
-
-      "JOIN OUR TEAM": "join-our-team",
-      "OPPORTUNITIES": "opportunities"
-    };
+    if (menuName === "GOOGLE BUSINESS REVIEWS") {
+      window.open('https://search.google.com/local/reviews?placeid=ChIJN-6XXWCj44kRO9OoeOWMzhY', '_blank');
+      setActiveMenu(null);
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    if (menuName === "CARE.COM REVIEWS") {
+      window.open('https://www.care.com/b/l/sewa-home-care/westford-ma', '_blank');
+      setActiveMenu(null);
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    if (menuName === "LEAVE A REVIEW") {
+      navigateToLeaveReview();
+      return;
+    }
 
     const routeId = menuRoutes[menuName];
     if (routeId) {
@@ -111,227 +154,135 @@ const Navbar = () => {
     }
   };
 
-
-  const handleAboutClick = (sectionName, e) => {
-    e.preventDefault();
-    let sectionId = "";
-
-    switch (sectionName) {
-      case "MEET THE TEAM":
-        sectionId = "meet-the-team";
-        break;
-      case "WHO WE ARE":
-        sectionId = "who-we-are";
-        break;
-      case "OUR PARTNERS":
-        sectionId = "our-partners";
-        break;
-      default:
-        return;
-    }
-
-    // const section = document.getElementById(sectionId);
-    // if (section) {
-    //   section.scrollIntoView({ behavior: "smooth" });
-    // }
-
-    setActiveMenu(null);
-    setIsMobileMenuOpen(false);
-  };
-
-  const closeModal = () => {
-    setSelectedService(null);
-  };
-
   const handleLogoClick = (e) => {
     e.preventDefault();
-
-    if (location.pathname === '/home') {
-      navigate('/');
-    } else {
-      navigate('/home');
-    }
+    navigate(location.pathname === '/home' ? '/' : '/home');
   };
 
   return (
-    <>
-      <header className={`fixed top-0 left-0 right-0 z-[9999] bg-white shadow-sm w-screen transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}>
-        {/* Main Navbar Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Top Bar - Logo and Mobile Menu Button */}
-          <div className="flex justify-between items-center h-10">
-            {/* Logo Section */}
-            <div className="flex items-center">
-              <a href="/home">
-                <img
-                  src="/main-logo/logo.png"
-                  alt=""
-                  className="h-10 lg:relative lg:top-7 lg:h-24"
-                  onClick={handleLogoClick}
-                />
-              </a>
-            </div>
-
-            {/* Desktop Social Icons and Search */}
-            <div className="hidden lg:flex items-center">
-              {/* <div className="flex items-center mr-8">
-                <SocialIcons />
-                <button className="bg-gray-100 rounded-full p-2 pl-50 ml-10 border border-blue-500 hover:bg-gray-200 transition-colors">
-                  <Search className="w-4 h-4 text-gray-600" />
-                </button>
-              </div> */}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
-
-          {/* Desktop Menu Section */}
-          <div
-            className="hidden lg:block "
-            onMouseLeave={handleMenuLeave}
-          >
-            <div className="flex items-center justify-end  pt-4 ">
-              {/* Navbar ko Items Container  ho jaha about, our servies*/}
-              <div className="flex items-center mr-20 ">
-                {/* About Us Menu Item */}
-                <button onClick={navigateToAbout} className="flex items-center">
-                  <DesktopMenuItem
-                    title="ABOUT US"
-                    id="about-us"
-                    activeMenu={activeMenu}
-                    handleMenuEnter={handleMenuEnter}
-                    handleMenuLeave={handleMenuLeave}
-                  />
-                  <span className="mx-4 h-7">|</span>
-                </button>
-
-
-                {/* Services Menu Item */}
-                <DesktopMenuItem
-                  title="OUR SERVICES"
-                  id="our-services"
-                  items={[
-                    "COMPREHENSIVE HOME CARE SOLUTIONS",
-                    "EXPERIENCED CARE MANAGERS OVERSIGHT",
-                    "COMPLETE GERIATRIC SUPPORT",
-                    "NURSING VISITS & HEALTH MONITORING",
-                    "TRANSITIONAL ASSISTANCE",
-                    "MOBILITY AND INDEPENDENCE",
-                    "TECHNOLOGY-ENABLED PEACE OF MIND",
-                    "FLEXIBLE CARE PLANS",
-                    "HOME SEARCH ENTITY",
-                    "NON MEDICAL TRANSPORTATION",
-                    "ASSISTED LIVING REFERRALS"
-                  ]}
-                  dropdownType="services"
-                  onItemClick={handleServiceClick}
-                  activeMenu={activeMenu}
-                  handleMenuEnter={handleMenuEnter}
-                  handleMenuLeave={handleMenuLeave}
-                // handleScrollTo={handleScrollTo}
-                />
-                <span className="  mx-4 h-7">|</span>
-
-
-                {/* Reviews Menu Item */}
-                {/* <DesktopMenuItem
-                  title="View Reviews"
-                  id="testimonials"
-                  items={[]}
-                  dropdownType="default"
-                  onItemClick={handleAboutClick}
-                  activeMenu={activeMenu}
-                  handleMenuEnter={handleMenuEnter}
-                  handleMenuLeave={handleMenuLeave}
-                  handleScrollTo={handleScrollTo}
-                />
-                  <span className="  mx-4 h-7">|</span> */}
-
-                {/* Testimonials Menu Item */}
-                <DesktopMenuItem
-                  title="TESTIMONIALS"
-                  id="testimonials"
-                  items={["GOOGLE BUSINESS REVIEWS", "CARE.COM REVIEWS"]}
-                  dropdownType="reviews"
-                  onItemClick={handleAboutClick}
-                  activeMenu={activeMenu}
-                  handleMenuEnter={handleMenuEnter}
-                  handleMenuLeave={handleMenuLeave}
-                  handleScrollTo={handleScrollTo}
-                />
-
-                <span className="  mx-4 h-7">|</span>
-
-                {/* Careers Menu Item */}
-                <DesktopMenuItem
-                  title="CAREERS"
-                  id="join-our-team"
-                  items={["JOIN OUR TEAM", "OPPORTUNITIES"]}
-                  dropdownType="reviews"
-                  onItemClick={handleMenuClick}
-                  activeMenu={activeMenu}
-                  handleMenuEnter={handleMenuEnter}
-                  handleMenuLeave={handleMenuLeave}
-                  handleScrollTo={handleScrollTo}
-                />
-
-              </div>
-
-              <div className="flex items-center mx-4">
-                <SocialIcons />
-              </div>
-
-              <span className="  mx-4 h-7"></span>
-
-
-              {/* Additional Menu Container */}
-              <div className="relative">
-                <DesktopAdditionalMenu
-                  title="MENU"
-                  items={additionalMenuItems}
-                  activeMenu={activeMenu}
-                  onItemClick={handleMenuClick}
-                  handleMenuEnter={handleMenuEnter}
-                  handleMenuLeave={handleMenuLeave}
-                  onAboutClick={handleAboutClick}
-                />
-              </div>
-            </div>
-          </div>
+    <header
+      className={`fixed top-0 left-0 right-0 z-[9999] bg-white w-screen transition-all duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      } ${scrolled ? 'shadow-md' : 'shadow-sm'}`}
+    >
+      {/* ── Desktop bar ── */}
+      <div
+        className="hidden lg:flex items-end justify-between w-full px-4 xl:px-10"
+        style={{ height: '80px' }}
+        onMouseLeave={handleMenuLeave}
+      >
+        {/* Logo */}
+        <div className="flex items-center flex-shrink-0">
+          <a href="/home" onClick={handleLogoClick}>
+            <img src="/main-logo/logo.webp" alt="Logo" className="h-18 w-auto object-contain" />
+          </a>
         </div>
 
-        {/* Mobile Menu Section */}
-        <MobileMenu
-          isOpen={isMobileMenuOpen}
-          openSubmenu={openSubmenu} toggleSubmenu={toggleSubmenu}
+        {/* Nav links */}
+        <nav className="flex items-center gap-0.5 flex-1 justify-center min-w-0">
+          <button
+            onClick={navigateToAbout}
+            className="text-[13px] font-light tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap flex-shrink-0"
+            style={{ fontFamily: "century, 'Century Gothic', sans-serif", color: '#374151' }}
+            onMouseEnter={e => e.currentTarget.style.color = '#376082'}
+            onMouseLeave={e => e.currentTarget.style.color = '#374151'}
+          >
+            ABOUT US
+          </button>
 
-          handleServiceClick={handleServiceClick}
-          handleAboutClick={handleAboutClick}
-          additionalMenuItems={additionalMenuItems}
-          navigateToAbout={navigateToAbout}
-          handleMenuClick={handleMenuClick}
-        />
-      </header>
+          <Divider />
 
-      {/* Service Modal */}
-      <ServiceModal
-        selectedService={selectedService}
-        onClose={closeModal}
+          <DesktopMenuItem
+            title="OUR SERVICES"
+            items={homeCareServices}
+            dropdownType="services"
+            onItemClick={handleServiceClick}
+            activeMenu={activeMenu}
+            handleMenuEnter={handleMenuEnter}
+            handleMenuLeave={handleMenuLeave}
+          />
+          <Divider />
+          <DesktopMenuItem
+            title="PROFESSIONAL CARE"
+            items={professionalCareManagement}
+            dropdownType="services"
+            onItemClick={handleServiceClick}
+            activeMenu={activeMenu}
+            handleMenuEnter={handleMenuEnter}
+            handleMenuLeave={handleMenuLeave}
+          />
+          <Divider />
+          <DesktopMenuItem
+            title="CLINICAL NURSING"
+            items={clinicalNursingServices}
+            dropdownType="services"
+            onItemClick={handleServiceClick}
+            activeMenu={activeMenu}
+            handleMenuEnter={handleMenuEnter}
+            handleMenuLeave={handleMenuLeave}
+          />
+          <Divider />
+          <DesktopMenuItem
+            title="DEMENTIA CARE"
+            items={dementiaCareSpecialists}
+            dropdownType="services"
+            onItemClick={handleServiceClick}
+            activeMenu={activeMenu}
+            handleMenuEnter={handleMenuEnter}
+            handleMenuLeave={handleMenuLeave}
+          />
+        </nav>
+
+        {/* Right utilities */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <SocialIcons />
+          <div className="h-5 w-px bg-gray-200" />
+          <DesktopAdditionalMenu
+            title="MENU"
+            items={additionalMenuItems}
+            activeMenu={activeMenu}
+            onItemClick={handleMenuClick}
+            handleMenuEnter={handleMenuEnter}
+            handleMenuLeave={handleMenuLeave}
+          />
+        </div>
+      </div>
+
+      {/* ── Mobile bar ── */}
+      <div className="lg:hidden flex items-center justify-between px-4 h-16">
+        <a href="/home" onClick={handleLogoClick}>
+          <img src="/main-logo/logo.webp" alt="Logo" className="h-10 w-auto object-contain" />
+        </a>
+        <button
+          className="p-2 rounded-md focus:outline-none focus:ring-2 transition-colors"
+          style={{ color: '#376082' }}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-expanded={isMobileMenuOpen}
+          aria-label="Toggle navigation"
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        openSubmenu={openSubmenu}
+        toggleSubmenu={toggleSubmenu}
+        handleServiceClick={handleServiceClick}
+        additionalMenuItems={additionalMenuItems}
+        navigateToAbout={navigateToAbout}
+        handleMenuClick={handleMenuClick}
+        services={serviceMenuData}
+        navigateToContact={navigateToContact}
+        navigateToLeaveReview={navigateToLeaveReview}
       />
-    </>
+    </header>
   );
 };
+
+const Divider = () => (
+  <div className="h-5 w-px bg-gray-200 flex-shrink-0" aria-hidden="true" />
+);
 
 export default Navbar;

@@ -1,88 +1,68 @@
 import React from 'react';
-import { AboutDropdownContent, MenuDropdownContent, ReviewsDropdownContent, ServicesDropdownContent } from './DropdownContents';
+import { ServicesDropdownContent } from './DropdownContents';
+import { ChevronDown } from 'lucide-react';
 
-const DesktopMenuItem = ({ 
-  title, 
-  id, 
-  items = [], 
-  dropdownType = "default", 
+const BRAND = '#376082';
+
+const DesktopMenuItem = ({
+  title,
+  items = [],
+  dropdownType = "default",
   onItemClick,
   activeMenu,
   handleMenuEnter,
   handleMenuLeave,
-  handleScrollTo,
-  navigateTo = null
-}) => 
-  {
-  // const navigateToAbout = () => {
-  //   window.location.href = '/about';
-  // };
-
-  const handleClick = (e) => {
-    if (navigateTo === '/about') {
-      e.preventDefault();
-      navigateToAbout();
-    }
-  };
+}) => {
+  const isActive = activeMenu === title;
 
   const renderDropdownContent = () => {
-    switch (dropdownType) {
-      case "services":
-        return <ServicesDropdownContent items={items} onServiceClick={onItemClick} />;
-      case "about":
-        return <AboutDropdownContent items={items} onAboutClick={onItemClick} />;
-      case "reviews":
-        return <ReviewsDropdownContent items={items} onAboutClick={onItemClick} />;
-      case "menu":
-        return (
-        <MenuDropdownContent
-          items={items}
-          onItemClick={onItemClick} 
-        />
-      );
-      default:
-        return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 p-6">
-            {items.map((item, index) => (
-              <a
-                key={index}
-                href="#"
-                onClick={(e) => onItemClick(item, e)}
-                className="block p-4 rounded-lg hover:bg-blue-50 border hover:text-blue-600 transition-colors duration-200 cursor-pointer"
-              >
-                <div className="font-medium text-sm">{item}</div>
-              </a>
-            ))}
-          </div>
-        );
+    if (dropdownType === "services") {
+      return <ServicesDropdownContent items={items} onServiceClick={onItemClick} />;
     }
+    return null;
   };
 
   return (
     <div
-    className="relative"
-    onMouseEnter={() => handleMenuEnter(title)}
-    onMouseLeave={handleMenuLeave}
-  >
-    <div
-      onClick={handleClick}
-      className="text-black text-[14px] hover:text-blue-600 py-2 transition-colors duration-200 tracking-wider cursor-pointer"
-      style={{ fontFamily: "century" }}
+      className="relative flex-shrink-0"
+      onMouseEnter={() => handleMenuEnter(title)}
+      onMouseLeave={handleMenuLeave}
     >
-      {title}
-    </div>
-        
-      {/* Dropdown section */}
+      <div
+        className="flex items-center gap-1 text-[13px] font-light tracking-wide px-3 py-2 rounded cursor-pointer whitespace-nowrap transition-colors duration-200 select-none"
+        style={{
+          fontFamily: "century, 'Century Gothic', sans-serif",
+          color: isActive ? BRAND : '#374151',
+        }}
+      >
+        {title}
+        {items.length > 0 && (
+          <ChevronDown
+            className={`w-3 h-3 transition-transform duration-200`}
+            style={{ color: isActive ? BRAND : '#9ca3af', transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)' }}
+          />
+        )}
+      </div>
+
+      {/* Active underline indicator */}
+      {isActive && (
+        <div
+          className="absolute bottom-0 left-3 right-3 h-0.25 rounded-full"
+          style={{ backgroundColor: BRAND }}
+        />
+      )}
+
+      {/* Full-width dropdown */}
       {items.length > 0 && (
-        <div 
-          className={`fixed top-[92px] border border-blue-800 left-0 w-screen bg-white shadow-xl border-t border-gray-300 z-[100] transition-all duration-300 ease-in-out ${
-            activeMenu === title 
-              ? 'opacity-100 translate-y-0 visible' 
-              : 'opacity-0 invisible'
-          }`}
+        <div
+          className={`fixed top-[80px] w-screen bg-white shadow-xl z-[100] transition-all duration-200 ease-out`}
           style={{
             left: '50%',
-            transform: 'translateX(-50%)',
+            transform: isActive
+              ? 'translateX(-50%) translateY(0)'
+              : 'translateX(-50%) translateY(-6px)',
+            opacity: isActive ? 1 : 0,
+            pointerEvents: isActive ? 'auto' : 'none',
           }}
         >
           {renderDropdownContent()}

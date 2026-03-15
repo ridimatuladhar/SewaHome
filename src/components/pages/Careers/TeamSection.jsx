@@ -82,7 +82,7 @@ const TeamSection = () => {
         >
           <div className="relative w-full h-full flex items-center justify-center">
             <motion.img
-              src="/carousel/carousel2.png"
+              src="/carousel/carousel2.webp"
               alt="Join Our Compassionate Home Care Team"
               className="w-full max-w-md h-auto object-contain rounded-lg shadow-2xl"
               whileHover={{ scale: 1.03 }}

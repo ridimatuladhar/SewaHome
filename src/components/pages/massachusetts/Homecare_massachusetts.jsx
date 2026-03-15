@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../../layouts/Navbar';
-import FooterButtons from '../../home/FooterButtons';
+import FooterButtons from '../footer/FooterButtons';
 import { Link } from 'react-router-dom';
 
 const Homecare_massachusetts = () => {
@@ -60,7 +60,7 @@ const Homecare_massachusetts = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-blue-50 py-12 md:mt-16 md:py-20">
+      <section className="bg-blue-50 py-12 mt-16 ">
         <div className="container mx-auto px-4">
           <motion.div 
             initial="hidden"
@@ -96,7 +96,7 @@ const Homecare_massachusetts = () => {
             </p>
             <div className="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-lg">
               <img 
-                src="/carousel/carousel1.jpg" 
+                src="/carousel/carousel1.webp" 
                 alt="Caregiver assisting an elderly person at home" 
                 className="w-full h-full object-cover"
               />

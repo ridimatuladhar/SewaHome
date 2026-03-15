@@ -2,17 +2,17 @@ import React, { useState } from "react";
 
 // Airline data with actual logos
 const airlines = [
-  { name: "Emirates", src: "partners/Alignable.png" },
-  { name: "China Southern", src: "partners/axis_care.png" },
-  { name: "Singapore Airlines", src: "partners/bill.png" },
-  { name: "Qatar Airways", src: "partners/care_academy.png" },
-  { name: "Turkish Airlines", src: "partners/care.png" },
-  { name: "Korean Air", src: "partners/fallon.png" },
-  { name: "Korean Air", src: "partners/GR8NEPAL-LOGO.png" },
-  { name: "Korean Air", src: "partners/habitat.png" },
-  { name: "Korean Air", src: "partners/home_care_alliance.png" },
-  { name: "Korean Air", src: "partners/middlesex_west.png" },
-  { name: "Korean Air", src: "partners/senior care association.png" },
+  { name: "Alignable", src: "partners/Alignable.png" },
+  { name: "Axis Care", src: "partners/axis_care.png" },
+  { name: "Bill", src: "partners/bill.png" },
+  { name: "Care Academy", src: "partners/care_academy.png" },
+  { name: "Care", src: "partners/care.png" },
+  { name: "Fallon Health", src: "partners/fallon.png" },
+  { name: "GR8Nepal", src: "partners/GR8NEPAL-LOGO.png" },
+  { name: "Habitat", src: "partners/habitat.png" },
+  { name: "Home Care Alliance", src: "partners/home_care_alliance.png" },
+  { name: "Middlesex West", src: "partners/middlesex_west.png" },
+  { name: "Senior Care Association", src: "partners/senior care association.png" },
 ];
 const InfiniteMarquee = ({ children, speed = 60 }) => {
   return (

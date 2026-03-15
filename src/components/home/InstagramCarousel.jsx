@@ -6,67 +6,47 @@ const InstagramAutoCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  // Instagram post images - expanded dataset for better grid display
+  // Instagram post images - loaded from public/insta-carousel folder
   const images = [
     {
       id: 1,
-      src: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Dementia awareness and care"
+      src: "/insta-carousel/sewa1.webp",
+      alt: "instagram post"
     },
     {
       id: 2,
-      src: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      src: "/insta-carousel/sewa2.webp",
       alt: "World Senior Citizen Day celebration"
     },
     {
       id: 3,
-      src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "International Youth Day healthcare"
+      src: "/insta-carousel/sewa3.webp",
+      alt: "instagram post"
     },
     {
       id: 4,
-      src: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      src: "/insta-carousel/sewa4.webp",
       alt: "What Makes us Unique - Geriatric care"
     },
     {
       id: 5,
-      src: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      src: "/insta-carousel/sewa5.webp",
       alt: "Senior fitness and mobility"
     },
     {
       id: 6,
-      src: "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      src: "/insta-carousel/sewa6.webp",
       alt: "Healthy nutrition for seniors"
     },
     {
       id: 7,
-      src: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      src: "/insta-carousel/sewa7.webp",
       alt: "Safe home environment"
     },
     {
       id: 8,
-      src: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      src: "/insta-carousel/sewa8.webp",
       alt: "Caregiver wellness"
-    },
-    {
-      id: 9,
-      src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Senior cognitive activities"
-    },
-    {
-      id: 10,
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Senior social community"
-    },
-    {
-      id: 11,
-      src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Medical care consultation"
-    },
-    {
-      id: 12,
-      src: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Family bonding moments"
     }
   ];
 
@@ -264,7 +244,7 @@ const InstagramAutoCarousel = () => {
           transition={{ delay: 0.5 }}
         >
           <motion.a
-            href="https://instagram.com"
+            href="https://www.instagram.com/sewahomecare"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-8 py-3 bg-[#376082] text-white rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300"
