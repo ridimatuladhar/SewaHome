@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import SocialIcons from "./navbar/SocialIcons";
 import DesktopMenuItem from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
-import { additionalMenuItems } from "./navbar/ServiceData"; // ← only additionalMenuItems stays static
+import { additionalMenuItems } from "./navbar/ServiceData"; 
 import { useLocation, useNavigate } from "react-router-dom";
 import DesktopAdditionalMenu from "./navbar/DesktopAdditionalMenu";
 

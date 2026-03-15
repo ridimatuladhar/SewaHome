@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from "lucide-react";
-import SocialIcons from './Socialicons';
+import SocialIcons from './SocialIcons';
 
 const BRAND       = '#376082';
 const BRAND_LIGHT = '#eef3f7';
