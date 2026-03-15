@@ -15,7 +15,7 @@ const MeetTheTeam = () => {
   const observerRef = useRef(null);
   const navigate = useNavigate();
 
-  const API_BASE = 'https://stf.org.np/Backend/team';
+  const API_BASE = 'https://sewacareservices.com/Backend/team';
   // const API_BASE = 'http://localhost/SewaHome/Backend/team';
 
   const fetchTeamMembers = useCallback(async () => {

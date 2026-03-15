@@ -26,7 +26,7 @@ const AllAdmins = () => {
 
   const handleAddAdmin = async (adminData) => {
     try {
-      const response = await fetch('https://stf.org.np/Backend/admin/create_admin.php', {
+      const response = await fetch('https://sewacareservices.com/Backend/admin/create_admin.php', {
      //const response = await fetch('http://localhost/SewaHome/Backend/admin/create_admin.php', {
         method: 'POST',
         headers: {
@@ -60,7 +60,7 @@ const AllAdmins = () => {
 
   const fetchAdmins = async () => {
     try {
-      const response = await fetch('https://stf.org.np/Backend/admin/get_admins.php');
+      const response = await fetch('https://sewacareservices.com/Backend/admin/get_admins.php');
       //const response = await fetch('http://localhost/SewaHome/Backend/admin/get_admins.php');
       const result = await response.json();
       
@@ -86,7 +86,7 @@ const AllAdmins = () => {
     try {
       const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
       
-      const response = await fetch('https://stf.org.np/Backend/admin/update_admin_status.php', {
+      const response = await fetch('https://sewacareservices.com/Backend/admin/update_admin_status.php', {
       //const response = await fetch('http://localhost/SewaHome/Backend/admin/update_admin_status.php', {
         method: 'POST',
         headers: {

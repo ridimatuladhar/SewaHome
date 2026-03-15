@@ -5,7 +5,7 @@ import { Plus, Edit2, Trash2, Save, X, CheckCircle, XCircle, AlertCircle } from 
 
 // Base API Configuration - Update these values as needed
 const API_CONFIG = {
- BASE_URL: 'https://stf.org.np/Backend',
+ BASE_URL: 'https://sewacareservices.com/Backend',
   //BASE_URL: 'http://localhost/SewaHome/Backend',
   ENDPOINTS: {
     GET_TESTIMONIALS: '/testimonials/get_testimonials.php',
@@ -14,7 +14,7 @@ const API_CONFIG = {
     ADD_TESTIMONIALS: '/testimonials/add_testimonials.php',
     EDIT_TESTIMONIALS: '/testimonials/edit_testimonials.php'
   },
-  IMAGE_BASE_URL: 'https://stf.org.np/Backend/testimonials/'
+  IMAGE_BASE_URL: 'https://sewacareservices.com/Backend/testimonials/'
  //IMAGE_BASE_URL: 'http://localhost/SewaHome/Backend/testimonials/'
 };
 

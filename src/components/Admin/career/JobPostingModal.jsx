@@ -14,7 +14,7 @@ const JobPostingModal = ({ show, onClose, position, onSuccess, onError }) => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  const API_BASE = 'https://stf.org.np/Backend/career';
+  const API_BASE = 'https://sewacareservices.com/Backend/career';
   //const API_BASE = 'http://localhost/SewaHome/Backend/career';
 
   // Job type options

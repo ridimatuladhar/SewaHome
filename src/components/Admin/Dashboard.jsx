@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   const fetchAdmins = async () => {
     try {
-     const response = await fetch('https://stf.org.np/Backend/admin/get_admins.php');
+     const response = await fetch('https://sewacareservices.com/Backend/admin/get_admins.php');
     //  const response = await fetch('http://localhost/SewaHome/Backend/admin/get_admins.php');
       const result = await response.json();
       
@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   const fetchLoginAttempts = async () => {
     try {
-     const response = await fetch('https://stf.org.np/Backend/admin/get_login_attempts.php');
+     const response = await fetch('https://sewacareservices.com/Backend/admin/get_login_attempts.php');
       //const response = await fetch('http://localhost/SewaHome/Backend/admin/get_login_attempts.php');
       
       // First, get the response as text to see what we're dealing with

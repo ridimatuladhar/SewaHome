@@ -7,7 +7,7 @@ import { additionalMenuItems } from "./navbar/ServiceData";
 import { useLocation, useNavigate } from "react-router-dom";
 import DesktopAdditionalMenu from "./navbar/DesktopAdditionalMenu";
 
-const BASE_URL = "https://stf.org.np";
+const BASE_URL = "https://sewacareservices.com";
 //const BASE_URL = "http://localhost/SewaHome";
 
 const menuRoutes = {

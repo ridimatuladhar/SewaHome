@@ -16,7 +16,7 @@ import {
   Loader2,
 } from "lucide-react";
 
-const BASE_URL = "https://stf.org.np";
+const BASE_URL = "https://sewacareservices.com";
 //const BASE_URL = "http://localhost/SewaHome";
 
 const BRAND       = "#376082";

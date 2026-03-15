@@ -15,7 +15,7 @@ import {
 
 // Base API Configuration - Update these values as needed
 const API_CONFIG = {
-    BASE_URL: 'https://stf.org.np/Backend',
+    BASE_URL: 'https://sewacareservices.com/Backend',
     // BASE_URL: 'http://localhost/SewaHome/Backend',
     ENDPOINTS: {
         GET_SUBSCRIBERS: '/newsletter/get_subscribers.php',

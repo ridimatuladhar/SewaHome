@@ -16,7 +16,7 @@ import {
   Star, Sun, Truck, Utensils, Wallet, 
 } from 'lucide-react';
 
-const BASE_URL = 'https://stf.org.np';
+const BASE_URL = 'https://sewacareservices.com';
 // const BASE_URL = 'http://localhost/SewaHome';
 
 const ICON_OPTIONS = [

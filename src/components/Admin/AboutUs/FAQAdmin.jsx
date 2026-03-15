@@ -11,7 +11,7 @@ const FAQAdmin = () => {
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
 
  // const API_BASE_URL = 'http://localhost/SewaHome/Backend/About';
- const API_BASE_URL = 'https://stf.org.np/Backend/About';
+ const API_BASE_URL = 'https://sewacareservices.com/Backend/About';
   
 
   // Show alert function

@@ -91,7 +91,7 @@ const LeaveReview = () => {
         submitData.append('image', formData.image);
       }
 
-      const response = await fetch('https://stf.org.np/Backend/testimonials/add_testimonials.php', {
+      const response = await fetch('https://sewacareservices.com/Backend/testimonials/add_testimonials.php', {
       //const response = await fetch('http://localhost/SewaHome/Backend/testimonials/add_testimonials.php', {
         method: 'POST',
         body: submitData,

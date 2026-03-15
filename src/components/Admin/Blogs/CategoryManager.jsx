@@ -38,8 +38,8 @@ const CategoryModal = ({ category, onClose, onSave }) => {
 
     try {
       const url = category 
-        ? 'https://stf.org.np/Backend/Blog/update_category.php'
-        : 'https://stf.org.np/Backend/Blog/create_category.php';
+        ? 'https://sewacareservices.com/Backend/Blog/update_category.php'
+        : 'https://sewacareservices.com/Backend/Blog/create_category.php';
         // ? 'http://localhost/SewaHome/Backend/Blog/update_category.php'
         // : 'http://localhost/SewaHome/Backend/Blog/create_category.php';
 
@@ -157,7 +157,7 @@ const CategoryManager = () => {
     try {
       setLoading(true);
     //const res = await fetch('http://localhost/SewaHome/Backend/Blog/get_categories.php');
-      const res = await fetch('https://stf.org.np/Backend/Blog/get_categories.php');
+      const res = await fetch('https://sewacareservices.com/Backend/Blog/get_categories.php');
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -182,7 +182,7 @@ const CategoryManager = () => {
     if (!window.confirm('Are you sure you want to delete this category?')) return;
 
     try {
-      const res = await fetch('https://stf.org.np/Backend/Blog/delete_category.php', {
+      const res = await fetch('https://sewacareservices.com/Backend/Blog/delete_category.php', {
      // const res = await fetch('http://localhost/SewaHome/Backend/Blog/delete_category.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

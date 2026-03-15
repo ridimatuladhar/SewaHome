@@ -16,7 +16,7 @@ const NewsletterSection = () => {
     setError("");
 
     try {
-      const response = await fetch('https://stf.org.np/Backend/Newsletter/subscribe.php', {
+      const response = await fetch('https://sewacareservices.com/Backend/Newsletter/subscribe.php', {
       //const response = await fetch('http://localhost/SewaHome/Backend/Newsletter/subscribe.php', {
         method: 'POST',
         headers: {

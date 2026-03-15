@@ -57,7 +57,7 @@ const TeamMemberModal = ({ show, onClose, member, onSuccess, onError }) => {
         if (member.image) {
           const imageUrl = member.image.startsWith('http')
             ? member.image
-            : `https://stf.org.np/Backend/team${member.image}`;
+            : `https://sewacareservices.com/Backend/team${member.image}`;
             //: `http://localhost/SewaHome/Backend/team${member.image}`;
           setImagePreview(imageUrl);
         } else {
@@ -169,8 +169,8 @@ const TeamMemberModal = ({ show, onClose, member, onSuccess, onError }) => {
       }
 
       const url = member
-        ? `https://stf.org.np/Backend/team/update_team_member.php`
-        : `https://stf.org.np/Backend/team/add_team_member.php`;
+        ? `https://sewacareservices.com/Backend/team/update_team_member.php`
+        : `https://sewacareservices.com/Backend/team/add_team_member.php`;
         // ? `http://localhost/SewaHome/Backend/team/update_team_member.php`
         // : `http://localhost/SewaHome/Backend/team/add_team_member.php`;
 

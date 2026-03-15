@@ -19,7 +19,7 @@ import Navbar from "../../layouts/Navbar";
 import FooterButtons from "../footer/FooterButtons";
 import ScrollToTopArrow from "../../home/ScrollToTopArrow";
 
-const BASE_URL = 'https://stf.org.np';
+const BASE_URL = 'https://sewacareservices.com';
 //const BASE_URL = 'http://localhost/SewaHome';
 
 // Full icon map — must match AdminServices exactly
