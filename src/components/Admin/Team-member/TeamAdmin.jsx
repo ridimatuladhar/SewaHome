@@ -159,7 +159,9 @@ const TeamAdmin = () => {
               {/* Image */}
               <div className="relative h-48 bg-gray-100">
                 <img
-                  src={`https://api.sewacareservices.com/team/${member.image}`}
+                  src={member.image?.startsWith('http') 
+    ? member.image 
+    : `https://api.sewacareservices.com${member.image}`}
                  //  src={`http://localhost/SewaHome/Backend/team/${member.image}`}
                   alt={member.name}
                   className="w-full h-full object-cover"
