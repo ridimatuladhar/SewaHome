@@ -20,7 +20,7 @@ const TeamAdmin = () => {
 
   const fetchTeamMembers = async () => {
     try {
-      const response = await fetch('https://sewacareservices.com/Backend/team/get_team_members.php');
+      const response = await fetch('https://api.sewacareservices.com/team/get_team_members.php');
       // const response = await fetch('http://localhost/SewaHome/Backend/team/get_team_members.php');
       const data = await response.json();
 
@@ -86,7 +86,7 @@ const TeamAdmin = () => {
   const handleDelete = async (memberId, memberName) => {
     if (window.confirm(`Are you sure you want to delete "${memberName}"?`)) {
       try {
-        const response = await fetch(`https://sewacareservices.com/Backend/team/delete_team_member.php`, {
+        const response = await fetch(`https://api.sewacareservices.com/team/delete_team_member.php`, {
           // const response = await fetch(`http://localhost/SewaHome/Backend/team/delete_team_member.php`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
@@ -159,7 +159,7 @@ const TeamAdmin = () => {
               {/* Image */}
               <div className="relative h-48 bg-gray-100">
                 <img
-                  src={`https://sewacareservices.com/Backend/team/${member.image}`}
+                  src={`https://api.sewacareservices.com/team/${member.image}`}
                  //  src={`http://localhost/SewaHome/Backend/team/${member.image}`}
                   alt={member.name}
                   className="w-full h-full object-cover"

@@ -16,8 +16,8 @@ import {
   Loader2,
 } from "lucide-react";
 
-const BASE_URL = "https://sewacareservices.com";
-//const BASE_URL = "http://localhost/SewaHome";
+const BASE_URL = "https://api.sewacareservices.com";
+//const BASE_URL = "http://localhost/SewaHome/Backend";
 
 const BRAND       = "#376082";
 const BRAND_LIGHT = "#E8F4FD";
@@ -61,7 +61,7 @@ export default function Services() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res  = await fetch(`${BASE_URL}/Backend/service/services.php`);
+        const res  = await fetch(`${BASE_URL}/service/services.php`);
         const text = await res.text();
         let data;
         try {

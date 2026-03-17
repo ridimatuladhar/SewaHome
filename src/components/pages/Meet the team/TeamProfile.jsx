@@ -13,7 +13,7 @@ const TeamProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE = 'https://sewacareservices.com/Backend/team';
+  const API_BASE = 'https://api.sewacareservices.com/team';
   //const API_BASE = 'http://localhost/SewaHome/Backend/team';
 
   const containerVariants = {

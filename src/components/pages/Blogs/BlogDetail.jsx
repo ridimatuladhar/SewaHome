@@ -44,8 +44,8 @@ const BlogDetail = () => {
       
       const isNumeric = /^\d+$/.test(slug);
       const url = isNumeric 
-        ? `https://sewacareservices.com/Backend/Blog/get_blog_id.php?id=${slug}`
-        : `https://sewacareservices.com/Backend/Blog/get_blog_id.php?slug=${slug}`;
+        ? `https://api.sewacareservices.com/Blog/get_blog_id.php?id=${slug}`
+        : `https://api.sewacareservices.com/Blog/get_blog_id.php?slug=${slug}`;
       
         // ? `http://localhost/SewaHome/Backend/Blog/get_blog_id.php?id=${slug}`
         // : `http://localhost/SewaHome/Backend/Blog/get_blog_id.php?slug=${slug}`;
@@ -74,7 +74,7 @@ const BlogDetail = () => {
 
   const fetchRelatedBlogs = async () => {
     try {
-     const response = await fetch('https://sewacareservices.com/Backend/Blog/get_blogs.php?admin=false');
+     const response = await fetch('https://api.sewacareservices.com/Blog/get_blogs.php?admin=false');
      // const response = await fetch('http://localhost/SewaHome/Backend/Blog/get_blogs.php?admin=false');
       
       if (response.ok) {
@@ -109,7 +109,7 @@ const BlogDetail = () => {
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
-    return `https://sewacareservices.com/Backend${imagePath}`;
+    return `https://api.sewacareservices.com${imagePath}`;
    //return `http://localhost/SewaHome/Backend${imagePath}`;
   };
 

@@ -9,8 +9,8 @@ const Testimonials = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const API_URL = 'https://sewacareservices.com/Backend/testimonials/get_testimonials.php';
-  const IMAGE_BASE_URL = 'https://sewacareservices.com/Backend/testimonials/';
+  const API_URL = 'https://api.sewacareservices.com/testimonials/get_testimonials.php';
+  const IMAGE_BASE_URL = 'https://api.sewacareservices.com/testimonials/';
   // const API_URL = 'http://localhost/SewaHome/Backend/testimonials/get_testimonials.php';
   // const IMAGE_BASE_URL = 'http://localhost/SewaHome/Backend/testimonials/';
 

@@ -115,7 +115,7 @@ const ChangePassword = () => {
 
     try {
       const response = await fetch(
-        "https://sewacareservices.com/Backend/admin/change_password.php",
+        "https://api.sewacareservices.com/admin/change_password.php",
        // "http://localhost/SewaHome/Backend/admin/change_password.php",
         {
           method: "POST",

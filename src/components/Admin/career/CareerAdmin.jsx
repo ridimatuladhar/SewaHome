@@ -10,7 +10,7 @@ const CareerAdmin = () => {
   const [editingPosition, setEditingPosition] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const API_BASE = 'https://sewacareservices.com/Backend/career';
+  const API_BASE = 'https://api.sewacareservices.com/career';
   //const API_BASE = 'http://localhost/SewaHome/Backend/career';
 
   // Fetch positions

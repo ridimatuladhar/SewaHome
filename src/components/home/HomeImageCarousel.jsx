@@ -17,7 +17,7 @@ const HomeImageCarousel = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch('https://sewacareservices.com/Backend/carousel/carousel.php');
+      const res = await fetch('https://api.sewacareservices.com/carousel/carousel.php');
      // const res = await fetch('http://localhost/SewaHome/Backend/carousel/carousel.php');
       
       if (!res.ok) {
@@ -136,7 +136,7 @@ const HomeImageCarousel = () => {
         {carouselImages.map((img, index) => (
           <div key={index} className="w-full h-full flex-shrink-0 relative">
             <img
-             src={`https://sewacareservices.com/Backend${img.image_path}`}
+             src={`https://api.sewacareservices.com${img.image_path}`}
              // src={`http://localhost/SewaHome/Backend${img.image_path}`}
               alt={img.alt_text || img.title || `Carousel image ${index + 1}`}
               className="w-full h-full object-cover"

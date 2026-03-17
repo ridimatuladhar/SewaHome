@@ -11,7 +11,7 @@ const FAQ = () => {
   useEffect(() => {
     const fetchFAQs = async () => {
       try {
-        const response = await fetch('https://sewacareservices.com/Backend/About/get_faqs.php')
+        const response = await fetch('https://api.sewacareservices.com/About/get_faqs.php')
         //const response = await fetch('http://localhost/SewaHome/Backend/About/get_faqs.php')
         const data = await response.json();
         setFaqData(data);

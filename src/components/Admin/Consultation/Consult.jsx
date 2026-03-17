@@ -91,7 +91,7 @@ const Consult = () => {
   const fetchConsultations = async () => {
     setLoading(true);
     try {
-       const response = await fetch(`https://sewacareservices.com/Backend/consultation/get_consults.php?page=${currentPage}&limit=${itemsPerPage}`);
+       const response = await fetch(`https://api.sewacareservices.com/consultation/get_consults.php?page=${currentPage}&limit=${itemsPerPage}`);
       //const response = await fetch(`http://localhost/SewaHome/Backend/consultation/get_consults.php?page=${currentPage}&limit=${itemsPerPage}`);
       const data = await response.json();
       if (data.success) {
@@ -128,7 +128,7 @@ const Consult = () => {
 
   const updateStatus = async (id, status) => {
     try {
-       const response = await fetch('https://sewacareservices.com/Backend/consultation/update_consult_status.php', {
+       const response = await fetch('https://api.sewacareservices.com/consultation/update_consult_status.php', {
       //const response = await fetch('http://localhost/SewaHome/Backend/consultation/update_consult_status.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -21,7 +21,7 @@ const Blogs = () => {
     try {
       setLoading(true);
       // Backend expects 'admin' parameter - false to show only published blogs
-    const response = await fetch('https://sewacareservices.com/Backend/Blog/get_blogs.php?admin=false');
+    const response = await fetch('https://api.sewacareservices.com/Blog/get_blogs.php?admin=false');
     //  const response = await fetch('http://localhost/SewaHome/Backend/Blog/get_blogs.php?admin=false');
       
       if (!response.ok) {
@@ -194,7 +194,7 @@ const Blogs = () => {
                 <div className="md:w-1/2">
                   <img
                     src={featuredPost.featured_image 
-                      ? `https://sewacareservices.com/Backend${featuredPost.featured_image}`
+                      ? `https://api.sewacareservices.com${featuredPost.featured_image}`
                      //? `http://localhost/SewaHome/Backend${featuredPost.featured_image}`
                       : "/carousel/carousel2.png"
                     }
@@ -230,7 +230,7 @@ const Blogs = () => {
                     <div className="relative overflow-hidden">
                       <img
                         src={post.featured_image 
-                          ? `https://sewacareservices.com/Backend${post.featured_image}`
+                          ? `https://api.sewacareservices.com${post.featured_image}`
                          // ? `http://localhost/SewaHome/Backend${post.featured_image}`
                           : "/carousel/carousel2.png"
                         }

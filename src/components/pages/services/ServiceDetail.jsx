@@ -19,8 +19,8 @@ import Navbar from "../../layouts/Navbar";
 import FooterButtons from "../footer/FooterButtons";
 import ScrollToTopArrow from "../../home/ScrollToTopArrow";
 
-const BASE_URL = 'https://sewacareservices.com';
-//const BASE_URL = 'http://localhost/SewaHome';
+const BASE_URL = 'https://api.sewacareservices.com';
+//const BASE_URL = 'http://localhost/SewaHome/Backend';
 
 // Full icon map — must match AdminServices exactly
 const ICON_MAP = {
@@ -56,7 +56,7 @@ const ServiceDetail = () => {
 
   const fetchServiceDetail = async () => {
     try {
-      const res  = await fetch(`${BASE_URL}/Backend/service/get_service_id.php?service_id=${serviceId}`);
+      const res  = await fetch(`${BASE_URL}/service/get_service_id.php?service_id=${serviceId}`);
       const text = await res.text();
       let data;
       try {

@@ -90,7 +90,7 @@ const Contacts = () => {
 
   const fetchContacts = async () => {
     try {
-      const res = await fetch('https://sewacareservices.com/Backend/contact/get_contact.php');
+      const res = await fetch('https://api.sewacareservices.com/contact/get_contact.php');
       //const res = await fetch('http://localhost/SewaHome/Backend/contact/get_contact.php');
       const data = await res.json();
       if (data.success) {
@@ -145,7 +145,7 @@ const Contacts = () => {
 
   const handleMarkAsRead = async (id) => {
     try {
-       const res = await fetch('https://sewacareservices.com/Backend/contact/mark_read.php', {
+       const res = await fetch('https://api.sewacareservices.com/contact/mark_read.php', {
       //const res = await fetch('http://localhost/SewaHome/Backend/contact/mark_read.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -169,7 +169,7 @@ const Contacts = () => {
 
   const handleMarkAsUnread = async (id) => {
     try {
-       const res = await fetch('https://sewacareservices.com/Backend/contact/mark_unread.php', {
+       const res = await fetch('https://api.sewacareservices.com/contact/mark_unread.php', {
      // const res = await fetch('http://localhost/SewaHome/Backend/contact/mark_unread.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -195,7 +195,7 @@ const Contacts = () => {
     if (!window.confirm('Are you sure you want to delete this message?')) return;
 
     try {
-       const res = await fetch('https://sewacareservices.com/Backend/contact/delete_contact.php', {
+       const res = await fetch('https://api.sewacareservices.com/contact/delete_contact.php', {
       //const res = await fetch('http://localhost/SewaHome/Backend/contact/delete_contact.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -64,7 +64,7 @@ const Consultation = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-      const response = await fetch('https://sewacareservices.com/Backend/consultation/get_services_dropdown.php');
+      const response = await fetch('https://api.sewacareservices.com/consultation/get_services_dropdown.php');
         //const response = await fetch('http://localhost/SewaHome/Backend/consultation/get_services_dropdown.php');
 
         if (!response.ok) {
@@ -151,7 +151,7 @@ const Consultation = () => {
     setShowConfirmation(false);
 
     try {
-      const response = await fetch('https://sewacareservices.com/Backend/consultation/submit_consult.php', {
+      const response = await fetch('https://api.sewacareservices.com/consultation/submit_consult.php', {
      // const response = await fetch('http://localhost/SewaHome/Backend/consultation/submit_consult.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

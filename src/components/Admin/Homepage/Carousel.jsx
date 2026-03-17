@@ -7,7 +7,7 @@ import {
 
 // Base API Configuration - Update these values as needed
 const API_CONFIG = {
-  BASE_URL: 'https://sewacareservices.com/Backend',
+  BASE_URL: 'https://api.sewacareservices.com',
   //BASE_URL: 'http://localhost/SewaHome/Backend',
   ENDPOINTS: {
     GET_CAROUSEL: '/carousel/get_carousel.php',

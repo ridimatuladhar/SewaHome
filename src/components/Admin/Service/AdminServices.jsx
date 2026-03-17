@@ -16,7 +16,7 @@ import {
   Star, Sun, Truck, Utensils, Wallet, 
 } from 'lucide-react';
 
-const BASE_URL = 'https://sewacareservices.com';
+const BASE_URL = 'https://api.sewacareservices.com';
 // const BASE_URL = 'http://localhost/SewaHome';
 
 const ICON_OPTIONS = [
@@ -150,8 +150,8 @@ export default function AdminServices() {
     setLoading(true);
     try {
       const [catRes, svcRes] = await Promise.all([
-        fetch(`${BASE_URL}/Backend/service/get_categories.php`),
-        fetch(`${BASE_URL}/Backend/service/get_services.php`),
+        fetch(`${BASE_URL}/service/get_categories.php`),
+        fetch(`${BASE_URL}/service/get_services.php`),
       ]);
       const catData = await catRes.json();
       const svcData = await svcRes.json();
@@ -221,7 +221,7 @@ export default function AdminServices() {
       setUploadingImage(true);
       const fd = new FormData();
       fd.append('hero_image', file);
-      const res  = await fetch(`${BASE_URL}/Backend/service/upload_image.php`, { method: 'POST', body: fd });
+      const res  = await fetch(`${BASE_URL}/service/upload_image.php`, { method: 'POST', body: fd });
       const data = await res.json();
       if (data.success) setField('hero_image', data.image_path);
       else throw new Error(data.message);
@@ -249,8 +249,8 @@ export default function AdminServices() {
     };
 
     const url = editMode
-      ? `${BASE_URL}/Backend/service/update_service.php`
-      : `${BASE_URL}/Backend/service/add_service.php`;
+      ? `${BASE_URL}/service/update_service.php`
+      : `${BASE_URL}/service/add_service.php`;
 
     try {
       setSubmitting(true);
@@ -268,7 +268,7 @@ export default function AdminServices() {
   const toggleActive = async (svc) => {
     if (!window.confirm(`${svc.isActive ? 'Deactivate' : 'Activate'} "${svc.title}"?`)) return;
     try {
-      const res  = await fetch(`${BASE_URL}/Backend/service/update_service.php`, {
+      const res  = await fetch(`${BASE_URL}/service/update_service.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: svc.id, is_active: svc.isActive ? 0 : 1 }),
@@ -282,7 +282,7 @@ export default function AdminServices() {
   const handleDelete = async (id, title) => {
     if (!window.confirm(`Delete "${title}"? This also deletes all its sub-items.`)) return;
     try {
-      const res  = await fetch(`${BASE_URL}/Backend/service/delete_service.php`, {
+      const res  = await fetch(`${BASE_URL}/service/delete_service.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),

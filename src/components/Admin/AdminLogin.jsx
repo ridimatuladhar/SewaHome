@@ -75,7 +75,7 @@ const AdminLogin = () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     try {
-      const res = await fetch("https://sewacareservices.com/Backend/admin/admin_login.php", {
+      const res = await fetch("https://api.sewacareservices.com/admin/admin_login.php", {
       //const res = await fetch("http://localhost/SewaHome/Backend/admin/admin_login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

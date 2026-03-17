@@ -60,7 +60,7 @@ const ContactForm = () => {
     setShowError(false);
 
     try {
-      const response = await fetch('https://sewacareservices.com/Backend/contact/save_contact.php', {
+      const response = await fetch('https://api.sewacareservices.com/contact/save_contact.php', {
       //const response = await fetch('http://localhost/SewaHome/Backend/contact/save_contact.php', {
         method: 'POST',
         headers: {

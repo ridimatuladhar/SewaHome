@@ -77,7 +77,7 @@ const AdminBlogs = () => {
   const fetchBlogs = async () => {
     try {
     //  const res = await fetch('http://localhost/SewaHome/Backend/Blog/get_blogs.php?admin=true');
-      const res = await fetch('https://sewacareservices.com/Backend/Blog/get_blogs.php?admin=true');
+      const res = await fetch('https://api.sewacareservices.com/Blog/get_blogs.php?admin=true');
       const data = await res.json();
       if (data.success) {
         setBlogs(data.blogs);
@@ -101,7 +101,7 @@ const AdminBlogs = () => {
 
     try {
      // const res = await fetch('http://localhost/SewaHome/Backend/Blog/delete_blog.php', {
-      const res = await fetch('https://sewacareservices.com/Backend/Blog/delete_blog.php', {
+      const res = await fetch('https://api.sewacareservices.com/Blog/delete_blog.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
@@ -123,7 +123,7 @@ const AdminBlogs = () => {
   const togglePublish = async (blog) => {
     try {
        //const res = await fetch('http://localhost/SewaHome/Backend/Blog/update_blog.php', {
-      const res = await fetch('https://sewacareservices.com/Backend/Blog/update_blog.php', {
+      const res = await fetch('https://api.sewacareservices.com/Blog/update_blog.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -148,7 +148,7 @@ const AdminBlogs = () => {
   const toggleFeatured = async (blog) => {
     try {
      // const res = await fetch('http://localhost/SewaHome/Backend/Blog/update_blog.php', {
-     const res = await fetch('https://sewacareservices.com/Backend/Blog/update_blog.php', {
+     const res = await fetch('https://api.sewacareservices.com/Blog/update_blog.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -247,7 +247,7 @@ const AdminBlogs = () => {
                   {blog.featured_image ? (
                     <img
                      // src={`http://localhost/SewaHome/Backend${blog.featured_image}`}
-                     src={`https://sewacareservices.com/Backend${blog.featured_image}`}
+                     src={`https://api.sewacareservices.com${blog.featured_image}`}
                       alt={blog.title}
                       className="w-full h-full object-cover"
                     />

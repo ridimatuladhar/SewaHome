@@ -7,8 +7,8 @@ import { additionalMenuItems } from "./navbar/ServiceData";
 import { useLocation, useNavigate } from "react-router-dom";
 import DesktopAdditionalMenu from "./navbar/DesktopAdditionalMenu";
 
-const BASE_URL = "https://sewacareservices.com";
-//const BASE_URL = "http://localhost/SewaHome";
+const BASE_URL = "https://api.sewacareservices.com";
+//const BASE_URL = "http://localhost/SewaHome/Backend";
 
 const menuRoutes = {
   "HOMECARE MASSACHUSETTS": "homecare-massachusetts",
@@ -34,7 +34,7 @@ const Navbar = () => {
   const [serviceMenuData, setServiceMenuData] = useState([]);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/Backend/service/services.php`)
+    fetch(`${BASE_URL}/service/services.php`)
       .then(res => res.text())
       .then(text => {
         try {

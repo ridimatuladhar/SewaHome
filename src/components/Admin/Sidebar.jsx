@@ -180,7 +180,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
   const handleLogout = async () => {
     try {
     //  const res = await fetch('http://localhost/SewaHome/Backend/admin/admin_logout.php', {
-     const res = await fetch('https://sewacareservices.com/Backend/admin/admin_logout.php', {
+     const res = await fetch('https://api.sewacareservices.com/admin/admin_logout.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
