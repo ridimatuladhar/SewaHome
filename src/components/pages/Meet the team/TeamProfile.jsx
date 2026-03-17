@@ -104,13 +104,12 @@ const TeamProfile = () => {
     }
   };
 
-  const getImageUrl = (imagePath) => {
+const getImageUrl = (imagePath) => {
     if (!imagePath) return '/about/placeholder.png';
     if (imagePath.startsWith('http') || imagePath.startsWith('//')) return imagePath;
-    if (imagePath.startsWith('/uploads/')) return `${API_BASE}${imagePath}`;
-    if (imagePath.startsWith('/')) return imagePath;
+    if (imagePath.startsWith('/')) return `https://api.sewacareservices.com${imagePath}`;
     return `${API_BASE}/uploads/${imagePath}`;
-  };
+};
 
   if (loading) {
     return (
