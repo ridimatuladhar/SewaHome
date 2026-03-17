@@ -105,7 +105,7 @@ const TeamProfile = () => {
   };
 
 const getImageUrl = (imagePath) => {
-    if (!imagePath) return '/about/placeholder.png';
+    if (!imagePath) return null;
     if (imagePath.startsWith('http') || imagePath.startsWith('//')) return imagePath;
     if (imagePath.startsWith('/')) return `https://api.sewacareservices.com${imagePath}`;
     return `${API_BASE}/uploads/${imagePath}`;
