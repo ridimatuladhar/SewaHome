@@ -16,8 +16,8 @@ const NewsletterSection = () => {
     setError("");
 
     try {
-      const response = await fetch('https://api.sewacareservices.com/Newsletter/subscribe.php', {
-      //const response = await fetch('http://localhost/SewaHome/Backend/Newsletter/subscribe.php', {
+      const response = await fetch('https://api.sewacareservices.com/newsletter/subscribe.php', {
+      //const response = await fetch('http://localhost/SewaHome/Backend/newsletter/subscribe.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
