@@ -21,8 +21,8 @@ const Blogs = () => {
     try {
       setLoading(true);
       // Backend expects 'admin' parameter - false to show only published blogs
-    const response = await fetch('https://api.sewacareservices.com/Blog/get_blogs.php?admin=false');
-    //  const response = await fetch('http://localhost/SewaHome/Backend/Blog/get_blogs.php?admin=false');
+    const response = await fetch('https://api.sewacareservices.com/blog/get_blogs.php?admin=false');
+    //  const response = await fetch('http://localhost/SewaHome/Backend/blog/get_blogs.php?admin=false');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

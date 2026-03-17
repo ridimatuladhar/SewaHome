@@ -76,8 +76,8 @@ const AdminBlogs = () => {
 
   const fetchBlogs = async () => {
     try {
-    //  const res = await fetch('http://localhost/SewaHome/Backend/Blog/get_blogs.php?admin=true');
-      const res = await fetch('https://api.sewacareservices.com/Blog/get_blogs.php?admin=true');
+    //  const res = await fetch('http://localhost/SewaHome/Backend/blog/get_blogs.php?admin=true');
+      const res = await fetch('https://api.sewacareservices.com/blog/get_blogs.php?admin=true');
       const data = await res.json();
       if (data.success) {
         setBlogs(data.blogs);
@@ -100,8 +100,8 @@ const AdminBlogs = () => {
     if (!window.confirm('Are you sure you want to delete this blog?')) return;
 
     try {
-     // const res = await fetch('http://localhost/SewaHome/Backend/Blog/delete_blog.php', {
-      const res = await fetch('https://api.sewacareservices.com/Blog/delete_blog.php', {
+     // const res = await fetch('http://localhost/SewaHome/Backend/blog/delete_blog.php', {
+      const res = await fetch('https://api.sewacareservices.com/blog/delete_blog.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
@@ -122,8 +122,8 @@ const AdminBlogs = () => {
 
   const togglePublish = async (blog) => {
     try {
-       //const res = await fetch('http://localhost/SewaHome/Backend/Blog/update_blog.php', {
-      const res = await fetch('https://api.sewacareservices.com/Blog/update_blog.php', {
+       //const res = await fetch('http://localhost/SewaHome/Backend/blog/update_blog.php', {
+      const res = await fetch('https://api.sewacareservices.com/blog/update_blog.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -147,8 +147,8 @@ const AdminBlogs = () => {
 
   const toggleFeatured = async (blog) => {
     try {
-     // const res = await fetch('http://localhost/SewaHome/Backend/Blog/update_blog.php', {
-     const res = await fetch('https://api.sewacareservices.com/Blog/update_blog.php', {
+     // const res = await fetch('http://localhost/SewaHome/Backend/blog/update_blog.php', {
+     const res = await fetch('https://api.sewacareservices.com/blog/update_blog.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

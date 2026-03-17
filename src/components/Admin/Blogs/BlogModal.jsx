@@ -212,8 +212,8 @@ const BlogModal = ({ blog, onClose, onSave }) => {
   const fetchCategories = async (isMounted = true) => {
     setCategoriesLoading(true);
     try {
-     const res = await fetch('https://api.sewacareservices.com/Blog/get_categories.php');
-      //const res = await fetch('http://localhost/SewaHome/Backend/Blog/get_categories.php');
+     const res = await fetch('https://api.sewacareservices.com/blog/get_categories.php');
+      //const res = await fetch('http://localhost/SewaHome/Backend/blog/get_categories.php');
       const data = await res.json();
       if (data.success && isMounted) {
         setCategories(data.categories);
@@ -309,10 +309,10 @@ const BlogModal = ({ blog, onClose, onSave }) => {
       // If featuredImage is null and no existingImage, no image will be set
 
       const url = blog 
-        ? 'https://api.sewacareservices.com/Blog/update_blog.php'
-        : 'https://api.sewacareservices.com/Blog/create_blog.php';
-        // ? 'http://localhost/SewaHome/Backend/Blog/update_blog.php'
-        // : 'http://localhost/SewaHome/Backend/Blog/create_blog.php';
+        ? 'https://api.sewacareservices.com/blog/update_blog.php'
+        : 'https://api.sewacareservices.com/blog/create_blog.php';
+        // ? 'http://localhost/SewaHome/Backend/blog/update_blog.php'
+        // : 'http://localhost/SewaHome/Backend/blog/create_blog.php';
 
       if (blog) {
         submitData.id = blog.id;
