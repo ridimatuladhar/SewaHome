@@ -16,8 +16,8 @@ const ApplicationsAdmin = () => {
   const [sortDirection, setSortDirection] = useState('desc');
   const [positions, setPositions] = useState([]);
 
-  const API_BASE = 'https://api.sewacareservices.com/career';
-  //const API_BASE = 'http://localhost/SewaHome/Backend/career';
+  const API_BASE = 'https://api.sewacareservices.com';
+  //const API_BASE = 'http://localhost/SewaHome/Backend';
 
   // Status options
   const statusOptions = [
@@ -34,7 +34,7 @@ const ApplicationsAdmin = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`${API_BASE}/get_applications.php`);
+      const response = await fetch(`${API_BASE}/career/get_applications.php`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -59,7 +59,7 @@ const ApplicationsAdmin = () => {
   // Fetch positions for filter
   const fetchPositions = async () => {
     try {
-      const response = await fetch(`${API_BASE}/get_positions.php?admin=true`);
+      const response = await fetch(`${API_BASE}/career/get_positions.php?admin=true`);
       const data = await response.json();
       
       if (data.success) {
@@ -123,7 +123,7 @@ const ApplicationsAdmin = () => {
   // Handle status update
   const handleStatusUpdate = async (applicationId, newStatus) => {
     try {
-      const response = await fetch(`${API_BASE}/update_application_status.php`, {
+      const response = await fetch(`${API_BASE}/career/update_application_status.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

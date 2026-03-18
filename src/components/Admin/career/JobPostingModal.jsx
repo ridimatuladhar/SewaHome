@@ -14,8 +14,8 @@ const JobPostingModal = ({ show, onClose, position, onSuccess, onError }) => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  const API_BASE = 'https://api.sewacareservices.com/career';
-  //const API_BASE = 'http://localhost/SewaHome/Backend/career';
+  const API_BASE = 'https://api.sewacareservices.com';
+  //const API_BASE = 'http://localhost/SewaHome/Backend';
 
   // Job type options
   const jobTypes = [
@@ -133,8 +133,8 @@ const JobPostingModal = ({ show, onClose, position, onSuccess, onError }) => {
       }
 
       const url = position 
-        ? `${API_BASE}/update_position.php`
-        : `${API_BASE}/add_position.php`;
+        ? `${API_BASE}/career/update_position.php`
+        : `${API_BASE}/career/add_position.php`;
 
       const response = await fetch(url, {
         method: 'POST',

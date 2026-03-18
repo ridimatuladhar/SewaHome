@@ -25,8 +25,8 @@ const Opportunities = () => {
     resume: null,
   });
 
-  const API_BASE = 'https://api.sewacareservices.com/career';
- // const API_BASE = 'http://localhost/SewaHome/Backend/career';
+  const API_BASE = 'https://api.sewacareservices.com';
+ // const API_BASE = 'http://localhost/SewaHome/Backend';
 
   // Fetch job openings from backend
   const fetchJobOpenings = async () => {
@@ -34,7 +34,7 @@ const Opportunities = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${API_BASE}/get_positions.php`);
+      const response = await fetch(`${API_BASE}/career/get_positions.php`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -172,7 +172,7 @@ const Opportunities = () => {
       submitData.append('resume', formData.resume);
 
       // Send to backend
-      const response = await fetch(`${API_BASE}/submit_application.php`, {
+      const response = await fetch(`${API_BASE}/career/submit_application.php`, {
         method: 'POST',
         body: submitData
       });

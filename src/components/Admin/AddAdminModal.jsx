@@ -29,13 +29,12 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
     }
     
     try {
-      await onAddAdmin(formData);
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-        role: 'admin'
-      });
+      await onAddAdmin({
+    full_name: formData.name,  
+    email: formData.email,
+    password: formData.password,
+    role: formData.role
+});
       onClose();
     } catch (error) {
       console.error('Error adding admin:', error);

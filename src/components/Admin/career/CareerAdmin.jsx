@@ -10,8 +10,8 @@ const CareerAdmin = () => {
   const [editingPosition, setEditingPosition] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const API_BASE = 'https://api.sewacareservices.com/career';
-  //const API_BASE = 'http://localhost/SewaHome/Backend/career';
+  const API_BASE = 'https://api.sewacareservices.com';
+  //const API_BASE = 'http://localhost/SewaHome/Backend';
 
   // Fetch positions
   const fetchPositions = async () => {
@@ -19,7 +19,7 @@ const CareerAdmin = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`${API_BASE}/get_positions.php?admin=true`);
+      const response = await fetch(`${API_BASE}/career/get_positions.php?admin=true`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -63,7 +63,7 @@ const CareerAdmin = () => {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/delete_position.php`, {
+      const response = await fetch(`${API_BASE}/career/delete_position.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const CareerAdmin = () => {
   // Handle toggle active status
   const handleToggleActive = async (positionId, currentStatus) => {
     try {
-      const response = await fetch(`${API_BASE}/update_position.php`, {
+      const response = await fetch(`${API_BASE}/career/update_position.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
