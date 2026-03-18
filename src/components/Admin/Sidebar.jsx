@@ -23,7 +23,8 @@ import {
   Users2Icon,
   HandshakeIcon,
   ScrollIcon,
-  Briefcase
+  Briefcase,
+  LocateIcon
 } from 'lucide-react';
 
 const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
@@ -124,6 +125,12 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
     {
       title: "User Queries",
       items: [
+        { 
+          id: 'location', 
+          label: 'Locations', 
+          icon: LocateIcon,
+          type: 'simple'
+        },
         { 
           id: 'newsletter', 
           label: 'Newsletter', 

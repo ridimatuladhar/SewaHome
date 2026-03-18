@@ -16,6 +16,7 @@ import ChangePassword from './Settings/ChangePassword';
 import TeamAdmin from './Team-member/TeamAdmin';
 import CareerAdmin from './career/CareerAdmin';
 import ApplicationsAdmin from './career/ApplicationsAdmin';
+import LocationsAdmin from './LocationsAdmin';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -87,6 +88,8 @@ const AdminPanel = () => {
 
        case 'change-password':
        return <ChangePassword />
+       case 'location':
+       return <LocationsAdmin />
 
 
       default:

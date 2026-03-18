@@ -275,13 +275,95 @@ const getImageUrl = (imagePath) => {
         </motion.div>
       )}
 
+      {(() => {
+  const malaLama = teamMembers.find(m => m.member_id === 'mala-lama');
+  const others = teamMembers.filter(m => m.member_id !== 'mala-lama');
+
+  return (
+    <>
+      {/* Row 1: mala-lama solo, centered */}
+      {malaLama && (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex justify-center max-w-6xl mx-auto mb-24"
+        >
+          {[malaLama].map((member) => {
+            const index = teamMembers.indexOf(member);
+            return (
+              <motion.div
+                key={member.member_id || member.id}
+                variants={itemVariants}
+                whileHover="hover"
+                style={getCardStyle(index)}
+                onClick={() => handleCardClick(member.member_id)}
+                onMouseEnter={() => handleCardHover(index, true)}
+                onMouseLeave={() => handleCardHover(index, false)}
+                className="cursor-pointer"
+              >
+                <motion.div
+                  variants={cardHoverVariants}
+                  className="flex flex-col items-center text-center bg-[#EBEBEB] relative transition-transform duration-300 ease-in-out"
+                  style={{
+                    transform: hoveredCard === index ? 'scale(1.05)' : 'scale(1)',
+                    willChange: 'transform',
+                  }}
+                >
+                  <div className="relative sm:w-54 sm:h-63 bg-[url('/about/icon.png')] bg-contain bg-no-repeat bg-center rounded-md flex items-center justify-center">
+                    <div className="w-48 h-63 transform transition-transform duration-300 ease-in-out hover:scale-105">
+                      {!loadedImages.has(index) && (
+                        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
+                      )}
+                      <img
+                        src={getImageUrl(member.image)}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        onLoad={() => handleImageLoad(index)}
+                        style={{
+                          opacity: loadedImages.has(index) ? 1 : 0,
+                          transition: 'opacity 0.3s ease-in-out'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="absolute top-50 right-[1px] py-[2px] bg-[#EBEBEB] rounded-l-[22px] pl-4 pr-4">
+                    <h3 className="text-[10px] font-semibold text-[#1c3c6b] uppercase tracking-wide">
+                      {member.name}
+                    </h3>
+                    <p className="text-[8px] text-[#1990ff] font-medium uppercase">
+                      {member.role}
+                    </p>
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => handleTalkToMe(e, member)}
+                    className="absolute top-65 bg-[#EBEBEB] mt-1 px-16 py-1 border border-[#1990ff] text-[#1990ff] hover:rounded-tr-[10px] hover:rounded-bl-[10px] text-sm hover:bg-[#1990ff] hover:text-white transition-all duration-300"
+                    style={{ fontFamily: "Macha" }}
+                    aria-label={`Talk to ${member.name}${member.phone ? ` at ${member.phone}` : ''}`}
+                  >
+                    TALK TO ME
+                  </motion.button>
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      )}
+
+      {/* Row 2+: rest of the team in 4-column grid */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-20 gap-x-10 place-items-center max-w-6xl mx-auto relative"
       >
-        {teamMembers.map((member, index) => (
+        {others.map((member, index) => (
           <motion.div
             key={member.member_id || member.id}
             variants={itemVariants}
@@ -312,7 +394,6 @@ const getImageUrl = (imagePath) => {
                     loading="lazy"
                     decoding="async"
                     onLoad={() => handleImageLoad(index)}
-                    onError={(e) => { e.target.src = '/about/placeholder.png'; }}
                     style={{
                       opacity: loadedImages.has(index) ? 1 : 0,
                       transition: 'opacity 0.3s ease-in-out'
@@ -344,6 +425,9 @@ const getImageUrl = (imagePath) => {
           </motion.div>
         ))}
       </motion.div>
+    </>
+  );
+})()}
     </div>
   );
 };

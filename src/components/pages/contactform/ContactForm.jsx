@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { CheckCircle, AlertCircle, Loader, X, Mail, User, MessageSquare, Phone } from 'lucide-react';
+import AddressSection from "./AddressSection";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -442,6 +443,7 @@ const ContactForm = () => {
           </div>
         </div>
       </motion.div>
+      <AddressSection />
 
       <FooterButtons />
     </>

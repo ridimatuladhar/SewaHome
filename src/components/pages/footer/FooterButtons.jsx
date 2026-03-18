@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, ChevronDown } from 'lucide-react';
 import { serviceMenuData } from '../../layouts/navbar/ServiceData';
 
@@ -7,15 +7,15 @@ const toUrl = (title) =>
 
 const openGoogleMaps = (url) => window.open(url, '_blank');
 
-const californiaMapsUrl    = "https://www.google.com/maps/search/?api=1&query=San+Francisco,+California+94102,+United+States";
+const californiaMapsUrl = "https://www.google.com/maps/search/?api=1&query=San+Francisco,+California+94102,+United+States";
 const massachusettsMapsUrl = "https://www.google.com/maps/place/SEWA+HOME+CARE/@42.5583828,-71.4400269,16.25z/data=!4m14!1m7!3m6!1s0x39eb195084b2fb6f:0xe2a9f4c3eeee38b6!2sSmart+Home+Sewa!8m2!3d27.6960003!4d85.2929533!16s%2Fg%2F11kh4nk88j!3m5!1s0x89e3a3605d97ee37:0x16ce8ce578a8d33b!8m2!3d42.5571586!4d-71.436875!16s%2Fg%2F11fx8rpb86?entry=ttu";
 
 // ── Services accordion ────────────────────────────────────────────────────────
 const ServicesAccordion = () => {
-  const [openCat,  setOpenCat]  = useState(null);
+  const [openCat, setOpenCat] = useState(null);
   const [openItem, setOpenItem] = useState(null);
 
-  const toggleCat  = (t) => { setOpenCat(openCat === t ? null : t); setOpenItem(null); };
+  const toggleCat = (t) => { setOpenCat(openCat === t ? null : t); setOpenItem(null); };
   const toggleItem = (k) => setOpenItem(openItem === k ? null : k);
 
   return (
@@ -41,9 +41,9 @@ const ServicesAccordion = () => {
             {catOpen && (
               <div className="ml-2 border-l border-white/20 pl-3 space-y-0.5 mb-1">
                 {category.items.map((item) => {
-                  const itemKey  = `${category.title}::${item.title}`;
+                  const itemKey = `${category.title}::${item.title}`;
                   const itemOpen = openItem === itemKey;
-                  const hasSub   = item.subItems?.length > 0;
+                  const hasSub = item.subItems?.length > 0;
 
                   return (
                     <div key={item.title}>
@@ -99,6 +99,113 @@ const ServicesAccordion = () => {
   );
 };
 
+// ── Locations accordion ───────────────────────────────────────────────────────
+const LocationsAccordion = () => {
+  const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [openLocation, setOpenLocation] = useState(null); // open first by default after load
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const res = await fetch('https://api.sewacareservices.com/locations/get_locations.php');
+        //const res = await fetch('http://localhost/SewaHome/Backend/locations/get_locations.php');
+        const data = await res.json();
+        if (data.success && data.locations.length > 0) {
+          setLocations(data.locations);
+          setOpenLocation(data.locations[0].id); // open first location by default
+        }
+      } catch (err) {
+        console.error('Failed to fetch locations:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLocations();
+  }, []);
+
+  const toggle = (id) => setOpenLocation(openLocation === id ? null : id);
+
+  if (loading) return (
+    <div>
+      <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">Contacts</h3>
+      <p className="text-sm text-gray-400">Loading locations...</p>
+    </div>
+  );
+
+  return (
+    <div>
+      <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">Contacts</h3>
+      <div className="space-y-1">
+        {locations.map((loc) => {
+          const isOpen = openLocation === loc.id;
+          return (
+            <div key={loc.id} className="border-b border-white/20 last:border-0">
+
+              {/* Accordion header */}
+              <button
+                onClick={() => toggle(loc.id)}
+                className="w-full flex items-center justify-between py-2 text-md font-semibold text-white hover:text-blue-300 transition-colors duration-200"
+              >
+                <span>{loc.state_name}</span>
+                <ChevronDown
+                  size={14}
+                  className={`flex-shrink-0 ml-2 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              {/* Accordion body */}
+              {isOpen && (
+                <div className="pb-3 space-y-2 text-sm">
+
+                  {/* Address */}
+                  <div className="flex flex-col items-center md:items-start">
+                    <div className="flex items-center space-x-2 mb-1">
+                      <MapPin className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm">Location</span>
+                    </div>
+                    <button
+                      onClick={() => loc.maps_url && window.open(loc.maps_url, '_blank')}
+                      className="text-sm text-left text-gray-300 hover:text-blue-300 transition-colors duration-300"
+                    >
+                      <p>{loc.address_line1}</p>
+                      {loc.address_line2 && <p>{loc.address_line2}</p>}
+                      {loc.address_line3 && <p>{loc.address_line3}</p>}
+                    </button>
+                  </div>
+
+                  {/* Phone */}
+                  <div className="flex justify-center md:justify-start items-center space-x-2">
+                    <Phone className="w-4 h-4 flex-shrink-0" />
+                    <a
+                      href={`tel:${loc.phone}`}
+                      className="text-sm hover:text-blue-300 transition-colors duration-300"
+                    >
+                      {loc.phone}
+                    </a>
+                  </div>
+
+                  {/* Email */}
+                  <div className="flex justify-center md:justify-start items-center space-x-2">
+                    <Mail className="w-4 h-4 flex-shrink-0" />
+                    <a
+                      href={`mailto:${loc.email}`}
+                      className="text-sm hover:text-blue-300 transition-colors duration-300 break-all"
+                    >
+                      {loc.email}
+                    </a>
+                  </div>
+
+                </div>
+              )}
+
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 // ── Footer ────────────────────────────────────────────────────────────────────
 const FooterButtons = () => (
   <div className="bg-slate-700 text-white">
@@ -106,70 +213,22 @@ const FooterButtons = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
 
-        {/* ── Contact ── */}
-        <div className="space-y-6 md:space-y-8">
-          <div>
-            <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">California</h3>
-            <div className="space-y-2 md:space-y-3">
-              <div className="flex flex-col items-center md:items-start">
-                <div className="flex items-center space-x-2 mb-1 md:mb-2">
-                  <MapPin className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                  <span className="text-sm md:text-base">Location</span>
-                </div>
-                <button onClick={() => openGoogleMaps(californiaMapsUrl)} className="text-xs md:text-sm text-left hover:text-blue-300 transition-colors duration-300">
-                  <p>San Francisco, California 94102,</p>
-                  <p>United States</p>
-                </button>
-              </div>
-              <div className="flex justify-center md:justify-start items-center space-x-2">
-                <Phone className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                <a href="tel:9786777012" className="text-sm md:text-base hover:text-blue-300 transition-colors duration-300">(978) 677-7012</a>
-              </div>
-              <div className="flex justify-center md:justify-start items-center space-x-2">
-                <Mail className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                <a href="mailto:California@sewahomecare.com" className="text-xs md:text-sm hover:text-blue-300 transition-colors duration-300">California@sewahomecare.com</a>
-              </div>
-            </div>
-          </div>
+ 
 
-          <div>
-            <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">Massachusetts</h3>
-            <div className="space-y-2 md:space-y-3">
-              <div className="flex flex-col items-center md:items-start">
-                <div className="flex items-center space-x-2 mb-1 md:mb-2">
-                  <MapPin className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                  <span className="text-sm md:text-base">Location</span>
-                </div>
-                <button onClick={() => openGoogleMaps(massachusettsMapsUrl)} className="text-xs md:text-sm text-left hover:text-blue-300 transition-colors duration-300">
-                  <p>270 Littleton Rd, Ste 10,</p>
-                  <p>Westford, MA 01886,</p>
-                  <p>United States</p>
-                </button>
-              </div>
-              <div className="flex justify-center md:justify-start items-center space-x-2">
-                <Phone className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                <a href="tel:9786777012" className="text-sm md:text-base hover:text-blue-300 transition-colors duration-300">(978) 677-7012</a>
-              </div>
-              <div className="flex justify-center md:justify-start items-center space-x-2">
-                <Mail className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
-                <a href="mailto:headoffice@sewahomecare.com" className="text-xs md:text-sm hover:text-blue-300 transition-colors duration-300">headoffice@sewahomecare.com</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <LocationsAccordion />
 
         {/* ── Quick Links ── */}
         <div className="flex flex-col items-center md:items-start">
           <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">Quick Links</h3>
           <div className="space-y-2">
             {[
-              { label: "Home",                   href: "/home" },
-              { label: "About Us",               href: "/about" },
-              { label: "Join our Team",          href: "/join-our-team" },
-              { label: "Opportunities",          href: "/opportunities" },
+              { label: "Home", href: "/home" },
+              { label: "About Us", href: "/about" },
+              { label: "Join our Team", href: "/join-our-team" },
+              { label: "Opportunities", href: "/opportunities" },
               { label: "Homecare Massachusetts", href: "/homecare-massachusetts" },
-              { label: "Contact Us",             href: "/contact-us" },
-              { label: "Blogs",                  href: "/blogs" },
+              { label: "Contact Us", href: "/contact-us" },
+              { label: "Blogs", href: "/blogs" },
               { label: "Leave your testimonial", href: "/leave-review" },
             ].map(({ label, href }) => (
               <div key={href}>
@@ -191,11 +250,11 @@ const FooterButtons = () => (
             <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">Additionals</h3>
             <div className="space-y-2">
               {[
-                { label: "Book a Consultation",       href: "/consultation" },
+                { label: "Book a Consultation", href: "/consultation" },
                 { label: "Non-Discrimination Policy", href: "/non-discrimination-policy" },
-                { label: "Terms of Service",          href: "#" },
-                { label: "Privacy Policy",            href: "#" },
-                { label: "Terms and Conditions",      href: "#" },
+                { label: "Terms of Service", href: "#" },
+                { label: "Privacy Policy", href: "#" },
+                { label: "Terms and Conditions", href: "#" },
               ].map(({ label, href }) => (
                 <div key={label}>
                   <a href={href} className="hover:text-blue-300 transition-colors duration-300 text-sm md:text-base">{label}</a>
