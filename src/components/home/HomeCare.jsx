@@ -51,7 +51,7 @@ const HomeCare = () => {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             >
-              Why Choose Home Care?
+              Why Choose Sewa Home Care?
             </motion.h2>
 
             <motion.div

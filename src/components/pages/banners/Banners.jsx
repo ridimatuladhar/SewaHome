@@ -8,7 +8,7 @@ const airlines = [
   { name: "Care Academy", src: "partners/care_academy.png" },
   { name: "Care", src: "partners/care.png" },
   { name: "Fallon Health", src: "partners/fallon.png" },
-  { name: "GR8Nepal", src: "partners/GR8NEPAL-LOGO.png" },
+  { name: "GR8Nepal", src: "partners/Golden-gr8.png" },
   { name: "Habitat", src: "partners/habitat.png" },
   { name: "Home Care Alliance", src: "partners/home_care_alliance.png" },
   { name: "Middlesex West", src: "partners/middlesex_west.png" },
