@@ -4,7 +4,6 @@ import {
   Heart, Shield, Users, Activity, FileText, Home, Search, Car,
   Building, User, UserCheck, ArrowRightLeft, LifeBuoy,
   EyeOff, Loader2, ChevronDown, ChevronRight, FolderOpen,
-  // ── New icons ──
   Stethoscope, Brain, HandHeart, Pill, Ambulance, Baby,
   BedDouble, Clipboard, ClipboardList, Clock, Dumbbell,
   Ear, Eye as EyeIcon, FlaskConical, HandMetal, Headphones,
@@ -13,14 +12,14 @@ import {
   BadgeAlert, Bike, BookOpen, Briefcase, CookingPot,
   HeartPulse, HelpingHand, Landmark, Lightbulb, Map,
   MessageCircle, PersonStanding, Ribbon, ShieldPlus, Sparkles,
-  Star, Sun, Truck, Utensils, Wallet, 
+  Star, Sun, Truck, Utensils, Wallet,
 } from 'lucide-react';
 
 const BASE_URL = 'https://api.sewacareservices.com';
-// const BASE_URL = 'http://localhost/SewaHome';
+//const BASE_URL = 'http://localhost/SewaHome/Backend';
+
 
 const ICON_OPTIONS = [
-  // ── Original ──
   { name: 'Heart',            component: Heart },
   { name: 'Shield',           component: Shield },
   { name: 'Users',            component: Users },
@@ -34,7 +33,6 @@ const ICON_OPTIONS = [
   { name: 'UserCheck',        component: UserCheck },
   { name: 'ArrowRightLeft',   component: ArrowRightLeft },
   { name: 'LifeBuoy',         component: LifeBuoy },
-  // ── Medical & Clinical ──
   { name: 'Stethoscope',      component: Stethoscope },
   { name: 'HeartPulse',       component: HeartPulse },
   { name: 'Syringe',          component: Syringe },
@@ -48,7 +46,6 @@ const ICON_OPTIONS = [
   { name: 'BadgeAlert',       component: BadgeAlert },
   { name: 'Clipboard',        component: Clipboard },
   { name: 'ClipboardList',    component: ClipboardList },
-  // ── Care & Support ──
   { name: 'HandHeart',        component: HandHeart },
   { name: 'HelpingHand',      component: HelpingHand },
   { name: 'Brain',            component: Brain },
@@ -59,7 +56,6 @@ const ICON_OPTIONS = [
   { name: 'Eye',              component: EyeIcon },
   { name: 'Smile',            component: Smile },
   { name: 'Ribbon',           component: Ribbon },
-  // ── Lifestyle & Wellness ──
   { name: 'Apple',            component: Apple },
   { name: 'Leaf',             component: Leaf },
   { name: 'Sun',              component: Sun },
@@ -70,7 +66,6 @@ const ICON_OPTIONS = [
   { name: 'CookingPot',       component: CookingPot },
   { name: 'Sparkles',         component: Sparkles },
   { name: 'Star',             component: Star },
-  // ── Communication & Admin ──
   { name: 'Phone',            component: Phone },
   { name: 'MessageCircle',    component: MessageCircle },
   { name: 'Headphones',       component: Headphones },
@@ -103,33 +98,31 @@ const EMPTY_FORM = {
   is_active:            1,
 };
 
-const getIcon = (name) => (ICON_OPTIONS.find(o => o.name === name)?.component) ?? Heart;
-const toSlug  = (t) => t.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-').substring(0,50);
-const imgUrl  = (p) => !p ? '' : p.startsWith('http') ? p : `${BASE_URL}${p}`;
-
-// Icon groups for organised display in the picker
 const ICON_GROUPS = [
-  {
-    label: 'Original',
-    names: ['Heart','Shield','Users','Activity','FileText','Home','Search','Car','Building','User','UserCheck','ArrowRightLeft','LifeBuoy'],
-  },
-  {
-    label: 'Medical & Clinical',
-    names: ['Stethoscope','HeartPulse','Syringe','Pill','Thermometer','Microscope','FlaskConical','Ambulance','Hospital','ShieldPlus','BadgeAlert','Clipboard','ClipboardList'],
-  },
-  {
-    label: 'Care & Support',
-    names: ['HandHeart','HelpingHand','Brain','Accessibility','PersonStanding','Baby','Ear','Eye','Smile','Ribbon'],
-  },
-  {
-    label: 'Lifestyle & Wellness',
-    names: ['Apple','Leaf','Sun','Moon','Dumbbell','Bike','Utensils','CookingPot','Sparkles','Star'],
-  },
-  {
-    label: 'Communication & Admin',
-    names: ['Phone','MessageCircle','Headphones','BookOpen','Briefcase','Lightbulb','Landmark','Wallet','Map','Truck','Clock','RefreshCw','BedDouble','HandMetal'],
-  },
+  { label: 'Original',              names: ['Heart','Shield','Users','Activity','FileText','Home','Search','Car','Building','User','UserCheck','ArrowRightLeft','LifeBuoy'] },
+  { label: 'Medical & Clinical',    names: ['Stethoscope','HeartPulse','Syringe','Pill','Thermometer','Microscope','FlaskConical','Ambulance','Hospital','ShieldPlus','BadgeAlert','Clipboard','ClipboardList'] },
+  { label: 'Care & Support',        names: ['HandHeart','HelpingHand','Brain','Accessibility','PersonStanding','Baby','Ear','Eye','Smile','Ribbon'] },
+  { label: 'Lifestyle & Wellness',  names: ['Apple','Leaf','Sun','Moon','Dumbbell','Bike','Utensils','CookingPot','Sparkles','Star'] },
+  { label: 'Communication & Admin', names: ['Phone','MessageCircle','Headphones','BookOpen','Briefcase','Lightbulb','Landmark','Wallet','Map','Truck','Clock','RefreshCw','BedDouble','HandMetal'] },
 ];
+
+const getIcon  = (name) => (ICON_OPTIONS.find(o => o.name === name)?.component) ?? Heart;
+const toSlug   = (t)    => t.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-').substring(0,50);
+const imgUrl   = (p)    => !p ? '' : p.startsWith('http') ? p : `${BASE_URL}${p}`;
+
+// ─── Flatten the entire hierarchy into a list of { id, title, categoryId, depth }
+// so the "Parent Service" dropdown can show services at any depth.
+const flattenServices = (items, depth = 0, catId = null) => {
+  const result = [];
+  for (const svc of items) {
+    const cid = svc.categoryId ?? catId;
+    result.push({ id: svc.id, title: svc.title, categoryId: cid, depth });
+    if (svc.subItems?.length) {
+      result.push(...flattenServices(svc.subItems, depth + 1, cid));
+    }
+  }
+  return result;
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 export default function AdminServices() {
@@ -164,7 +157,8 @@ export default function AdminServices() {
     }
   };
 
-  const topLevelServices = hierarchy.flatMap(cat => cat.items ?? []);
+  // All services flattened (for parent dropdown) — excludes the item being edited
+  const allServicesFlat = flattenServices(hierarchy.flatMap(c => c.items ?? []));
 
   const setField = (name, value) => setFormData(p => ({ ...p, [name]: value }));
 
@@ -174,20 +168,21 @@ export default function AdminServices() {
       ...p,
       [name]: value,
       ...(name === 'title' && !editMode && { service_id: toSlug(value) }),
+      // Auto-fill category when a parent is chosen
       ...(name === 'parent_service_id' && value && {
-        category_id: topLevelServices.find(s => String(s.id) === String(value))?.categoryId ?? p.category_id,
+        category_id: allServicesFlat.find(s => String(s.id) === String(value))?.categoryId ?? p.category_id,
       }),
     }));
   };
 
-  const handleArrayChange   = (i, v, f)  => setFormData(p => ({ ...p, [f]: p[f].map((x, j) => j === i ? v : x) }));
-  const handleProcessChange = (i, k, v)  => setFormData(p => ({ ...p, process: p.process.map((x, j) => j === i ? { ...x, [k]: v } : x) }));
-  const addArrayItem        = (f)         => setFormData(p => ({ ...p, [f]: [...p[f], f === 'process' ? { step: '', description: '' } : ''] }));
-  const removeArrayItem     = (i, f)      => { if (formData[f].length > 1) setFormData(p => ({ ...p, [f]: p[f].filter((_, j) => j !== i) })); };
+  const handleArrayChange   = (i, v, f) => setFormData(p => ({ ...p, [f]: p[f].map((x, j) => j === i ? v : x) }));
+  const handleProcessChange = (i, k, v) => setFormData(p => ({ ...p, process: p.process.map((x, j) => j === i ? { ...x, [k]: v } : x) }));
+  const addArrayItem        = (f)        => setFormData(p => ({ ...p, [f]: [...p[f], f === 'process' ? { step: '', description: '' } : ''] }));
+  const removeArrayItem     = (i, f)     => { if (formData[f].length > 1) setFormData(p => ({ ...p, [f]: p[f].filter((_, j) => j !== i) })); };
 
   const openAdd = (prefillCategoryId = '', prefillParentId = '') => {
     setEditMode(false);
-    setFormData({ ...EMPTY_FORM, category_id: prefillCategoryId, parent_service_id: prefillParentId, display_order: topLevelServices.length + 1 });
+    setFormData({ ...EMPTY_FORM, category_id: prefillCategoryId, parent_service_id: prefillParentId, display_order: allServicesFlat.length + 1 });
     setShowModal(true);
   };
 
@@ -196,7 +191,7 @@ export default function AdminServices() {
     setFormData({
       id:                   svc.id,
       category_id:          svc.categoryId        ?? '',
-      parent_service_id:    svc.parentServiceId   ?? '',
+      parent_service_id:    svc.parentServiceId   ?? '',   // ← preserves level-3 parent
       service_id:           svc.serviceId,
       title:                svc.title,
       icon_name:            svc.icon,
@@ -296,21 +291,29 @@ export default function AdminServices() {
   const toggleCat  = (id) => setExpandedCats(p  => ({ ...p, [id]: !p[id] }));
   const toggleItem = (id) => setExpandedItems(p => ({ ...p, [id]: !p[id] }));
 
-  const ServiceRow = ({ svc, indent = false, catId }) => {
+  // ── ServiceRow renders any depth via recursion ───────────────────────────
+  const ServiceRow = ({ svc, depth = 0, catId }) => {
     const Icon    = getIcon(svc.icon);
     const hasSubs = svc.subItems?.length > 0;
     const open    = expandedItems[svc.id];
 
+    // Visual indent: each level adds left padding + a coloured left border
+    const indentColors = ['border-blue-100', 'border-purple-100', 'border-orange-100'];
+    const indentStyle  = depth > 0
+      ? `pl-${4 + depth * 6} border-l-2 ml-${depth * 6} ${indentColors[(depth - 1) % indentColors.length]}`
+      : '';
+
     return (
       <>
-        <div className={`flex items-center justify-between py-3 px-4 hover:bg-gray-50 transition-colors ${indent ? 'pl-10 border-l-2 border-blue-100 ml-6' : ''}`}>
+        <div className={`flex items-center justify-between py-3 px-4 hover:bg-gray-50 transition-colors ${indentStyle}`}>
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            {hasSubs && (
+            {hasSubs ? (
               <button onClick={() => toggleItem(svc.id)} className="text-gray-400 hover:text-gray-600 flex-shrink-0">
                 {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
               </button>
+            ) : (
+              <span className="w-[14px] flex-shrink-0" />
             )}
-            {!hasSubs && <span className="w-[14px] flex-shrink-0" />}
 
             <div className="p-1.5 rounded-md bg-blue-50 flex-shrink-0">
               <Icon size={16} className="text-[#376082]" />
@@ -333,25 +336,41 @@ export default function AdminServices() {
           </div>
 
           <div className="flex gap-1 flex-shrink-0 ml-2">
-            {!indent && (
-              <button onClick={() => openAdd(String(catId), String(svc.id))} title="Add sub-item" className="p-1.5 text-green-600 hover:bg-green-50 rounded-md transition-colors">
-                <Plus size={15} />
-              </button>
-            )}
-            <button onClick={() => toggleActive(svc)} title={svc.isActive ? 'Deactivate' : 'Activate'} className={`p-1.5 rounded-md transition-colors ${svc.isActive ? 'text-green-600 hover:bg-green-50' : 'text-gray-400 hover:bg-gray-100'}`}>
+            {/* "Add child" button: always show so any level can have children */}
+            <button
+              onClick={() => openAdd(String(catId), String(svc.id))}
+              title="Add sub-item"
+              className="p-1.5 text-green-600 hover:bg-green-50 rounded-md transition-colors"
+            >
+              <Plus size={15} />
+            </button>
+            <button
+              onClick={() => toggleActive(svc)}
+              title={svc.isActive ? 'Deactivate' : 'Activate'}
+              className={`p-1.5 rounded-md transition-colors ${svc.isActive ? 'text-green-600 hover:bg-green-50' : 'text-gray-400 hover:bg-gray-100'}`}
+            >
               {svc.isActive ? <Eye size={15} /> : <EyeOff size={15} />}
             </button>
-            <button onClick={() => openEdit({ ...svc, categoryId: catId })} title="Edit" className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
+            <button
+              onClick={() => openEdit({ ...svc, categoryId: catId })}
+              title="Edit"
+              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+            >
               <Edit size={15} />
             </button>
-            <button onClick={() => handleDelete(svc.id, svc.title)} title="Delete" className="p-1.5 text-red-500 hover:bg-red-50 rounded-md transition-colors">
+            <button
+              onClick={() => handleDelete(svc.id, svc.title)}
+              title="Delete"
+              className="p-1.5 text-red-500 hover:bg-red-50 rounded-md transition-colors"
+            >
               <Trash2 size={15} />
             </button>
           </div>
         </div>
 
+        {/* Recursively render children at depth + 1 */}
         {hasSubs && open && svc.subItems.map(sub => (
-          <ServiceRow key={sub.id} svc={sub} indent catId={catId} />
+          <ServiceRow key={sub.id} svc={sub} depth={depth + 1} catId={catId} />
         ))}
       </>
     );
@@ -383,13 +402,19 @@ export default function AdminServices() {
         <div className="space-y-4">
           {hierarchy.map(cat => (
             <div key={cat.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-              <div className="flex items-center justify-between px-4 py-3 bg-[#376082] cursor-pointer select-none" onClick={() => toggleCat(cat.id)}>
+              <div
+                className="flex items-center justify-between px-4 py-3 bg-[#376082] cursor-pointer select-none"
+                onClick={() => toggleCat(cat.id)}
+              >
                 <div className="flex items-center gap-2">
                   <ChevronDown size={16} className={`text-white/80 transition-transform duration-200 ${expandedCats[cat.id] ? '' : '-rotate-90'}`} />
                   <span className="text-sm font-medium tracking-widest uppercase text-white">{cat.title}</span>
                   <span className="text-xs text-white/60 ml-1">{cat.items?.length ?? 0} items</span>
                 </div>
-                <button onClick={(e) => { e.stopPropagation(); openAdd(String(cat.id)); }} className="flex items-center gap-1 text-xs text-white/80 hover:text-white bg-white/10 hover:bg-white/20 px-2 py-1 rounded transition-colors">
+                <button
+                  onClick={(e) => { e.stopPropagation(); openAdd(String(cat.id)); }}
+                  className="flex items-center gap-1 text-xs text-white/80 hover:text-white bg-white/10 hover:bg-white/20 px-2 py-1 rounded transition-colors"
+                >
                   <Plus size={13} /> Add to this category
                 </button>
               </div>
@@ -397,7 +422,7 @@ export default function AdminServices() {
               {expandedCats[cat.id] && (
                 <div className="divide-y divide-gray-100">
                   {cat.items?.length > 0 ? (
-                    cat.items.map(svc => <ServiceRow key={svc.id} svc={svc} catId={cat.id} />)
+                    cat.items.map(svc => <ServiceRow key={svc.id} svc={svc} depth={0} catId={cat.id} />)
                   ) : (
                     <p className="text-sm text-gray-400 px-4 py-4 text-center">No services in this category yet.</p>
                   )}
@@ -432,13 +457,29 @@ export default function AdminServices() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1.5">Parent Service <span className="text-gray-400 font-normal">(leave blank for top-level)</span></label>
-                  <select name="parent_service_id" value={formData.parent_service_id} onChange={handleInputChange} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#376082]">
+                  <label className="block text-sm font-medium mb-1.5">
+                    Parent Service <span className="text-gray-400 font-normal">(leave blank for top-level)</span>
+                  </label>
+                  {/*
+                    FIX: Use allServicesFlat instead of topLevelServices only.
+                    This means any service (at any depth) can be a parent,
+                    enabling true 3-level (and beyond) nesting.
+                  */}
+                  <select
+                    name="parent_service_id"
+                    value={formData.parent_service_id}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#376082]"
+                  >
                     <option value="">— Top-level item —</option>
-                    {topLevelServices
+                    {allServicesFlat
                       .filter(s => !editMode || s.id !== formData.id)
                       .filter(s => !formData.category_id || String(s.categoryId) === String(formData.category_id))
-                      .map(s => <option key={s.id} value={s.id}>{s.title}</option>)
+                      .map(s => (
+                        <option key={s.id} value={s.id}>
+                          {'  '.repeat(s.depth)}{s.depth > 0 ? '↳ ' : ''}{s.title}
+                        </option>
+                      ))
                     }
                   </select>
                 </div>
@@ -457,7 +498,7 @@ export default function AdminServices() {
                 </div>
               </div>
 
-              {/* ── Icon picker — grouped ── */}
+              {/* Icon picker */}
               <div>
                 <label className="block text-sm font-medium mb-2">Icon <span className="text-red-500">*</span></label>
                 <div className="space-y-3 border border-gray-200 rounded-lg p-3 max-h-64 overflow-y-auto">
@@ -488,7 +529,6 @@ export default function AdminServices() {
                     </div>
                   ))}
                 </div>
-                {/* Selected icon preview */}
                 <div className="mt-2 flex items-center gap-2 text-sm text-gray-600">
                   <span>Selected:</span>
                   <div className="flex items-center gap-1.5 bg-blue-50 border border-[#376082] rounded-lg px-2.5 py-1 text-[#376082]">
