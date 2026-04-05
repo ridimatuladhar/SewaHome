@@ -279,20 +279,26 @@ const FooterButtons = () => (
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="mt-8 pt-8 border-t border-white/20">
-        <div className="flex flex-col items-center">
-          <p className="text-xs md:text-sm mb-2">Copyright © SEWA Home Care - All Rights Reserved.</p>
-          <p className="text-xs md:text-sm mb-2">Developed by</p>
-          <div className="w-10 h-10 md:w-12 md:h-12">
-            <img
-              src="/main-logo/footer_logo.webp"
-              alt="SEWA Home Care Logo"
-              className="w-full h-full object-contain"
-              onError={(e) => { e.target.style.display = 'none'; }}
-            />
-          </div>
-        </div>
+ <div className="mt-8 pt-8 border-t border-white/20">
+  <div className="flex flex-col items-center">
+    <p className="text-xs md:text-sm mb-2">Copyright © SEWA Home Care - All Rights Reserved.</p>
+    <p className="text-xs md:text-sm mb-2">Developed by</p>
+    <a 
+      href="https://gr8.com.np/"  // Replace with your target URL
+      target="_blank"             // Opens in new tab (optional)
+      rel="noopener noreferrer"   // Security measure for target="_blank"
+    >
+      <div className="w-10 h-10 md:w-12 md:h-12">
+        <img
+          src="/partners/Golden-gr8.png"
+          alt="SEWA Home Care Logo"
+          className="w-full h-full object-contain cursor-pointer hover:opacity-80 transition-opacity"
+          onError={(e) => { e.target.style.display = 'none'; }}
+        />
       </div>
+    </a>
+  </div>
+</div>
 
     </div>
   </div>
