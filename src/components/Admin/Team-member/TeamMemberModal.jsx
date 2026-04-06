@@ -55,7 +55,8 @@ const TeamMemberModal = ({ show, onClose, member, onSuccess, onError }) => {
           credentials: formatArrayField(member.credentials)
         });
         if (member.image) {
-         const imageUrl = member.image.startsWith('http')
+         // Current code - line ~55
+const imageUrl = member.image.startsWith('http')
     ? member.image
     : `https://api.sewacareservices.com/${member.image}`;
             //: `http://localhost/SewaHome/Backend/team${member.image}`;
