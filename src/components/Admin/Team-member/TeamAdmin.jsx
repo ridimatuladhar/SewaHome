@@ -161,7 +161,7 @@ const TeamAdmin = () => {
                 <img
                   src={member.image?.startsWith('http') 
     ? member.image 
-    : `https://api.sewacareservices.com${member.image}`}
+    : `https://api.sewacareservices.com/${member.image}`}
                  //  src={`http://localhost/SewaHome/Backend/team/${member.image}`}
                   alt={member.name}
                   className="w-full h-full object-cover"
