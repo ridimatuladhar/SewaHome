@@ -21,7 +21,6 @@ const TeamAdmin = () => {
   const fetchTeamMembers = async () => {
     try {
       const response = await fetch('https://api.sewacareservices.com/team/get_team_members.php');
-      // const response = await fetch('http://localhost/SewaHome/Backend/team/get_team_members.php');
       const data = await response.json();
 
       if (data.success) {
@@ -76,7 +75,7 @@ const TeamAdmin = () => {
   const handleFormSuccess = (message) => {
     showNotification(message, 'success');
     closeModal();
-    fetchTeamMembers();
+    setTimeout(() => fetchTeamMembers(), 300); // ✅ wait for modal to close cleanly
   };
 
   const handleFormError = (message) => {
@@ -87,7 +86,6 @@ const TeamAdmin = () => {
     if (window.confirm(`Are you sure you want to delete "${memberName}"?`)) {
       try {
         const response = await fetch(`https://api.sewacareservices.com/team/delete_team_member.php`, {
-          // const response = await fetch(`http://localhost/SewaHome/Backend/team/delete_team_member.php`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ member_id: memberId })
@@ -159,12 +157,12 @@ const TeamAdmin = () => {
               {/* Image */}
               <div className="relative h-48 bg-gray-100">
                 <img
-                  src={member.image?.startsWith('http') 
-    ? member.image 
-    : `https://api.sewacareservices.com/${member.image}`}
-                 //  src={`http://localhost/SewaHome/Backend/team/${member.image}`}
+                  src={member.image?.startsWith('http')
+                    ? member.image
+                    : `https://api.sewacareservices.com/${member.image}`}
                   alt={member.name}
                   className="w-full h-full object-cover"
+                  onError={(e) => { e.target.src = '/about/placeholder.png'; }}
                 />
                 <div className="absolute top-2 right-2 flex space-x-1">
                   <button
@@ -187,7 +185,6 @@ const TeamAdmin = () => {
                 <h3 className="font-semibold text-gray-900 text-lg">{member.name}</h3>
                 <p className="text-blue-600 text-sm font-medium mb-1">{member.role}</p>
 
-                {/* Phone */}
                 {member.phone && (
                   <p className="text-gray-500 text-sm flex items-center gap-1 mb-2">
                     <Phone size={13} />
@@ -201,7 +198,6 @@ const TeamAdmin = () => {
                   </p>
                 )}
 
-                {/* Credentials */}
                 {member.credentials && member.credentials.length > 0 && member.credentials[0] !== '' && (
                   <div>
                     <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Credentials</p>
