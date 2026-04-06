@@ -109,7 +109,7 @@ const BlogDetail = () => {
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
-    return `https://api.sewacareservices.com${imagePath}`;
+    return `https://api.sewacareservices.com/${imagePath}`;
    //return `http://localhost/SewaHome/Backend${imagePath}`;
   };
 
