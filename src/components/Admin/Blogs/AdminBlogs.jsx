@@ -247,7 +247,7 @@ const AdminBlogs = () => {
                   {blog.featured_image ? (
                     <img
                      // src={`http://localhost/SewaHome/Backend${blog.featured_image}`}
-                     src={`https://api.sewacareservices.com${blog.featured_image}`}
+                     src={`https://api.sewacareservices.com/${blog.featured_image}`}
                       alt={blog.title}
                       className="w-full h-full object-cover"
                     />
