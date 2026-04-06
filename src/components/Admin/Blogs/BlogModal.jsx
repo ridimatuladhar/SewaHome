@@ -194,7 +194,7 @@ const BlogModal = ({ blog, onClose, onSave }) => {
           tags: blog.tags || []
         });
         if (blog.featured_image) {
-         const imagePath = `https://api.sewacareservices.com${blog.featured_image}`;
+         const imagePath = `https://api.sewacareservices.com/${blog.featured_image}`;
          // const imagePath = `http://localhost/SewaHome/Backend${blog.featured_image}`;
           setImagePreview(imagePath);
           setExistingImage(blog.featured_image);
