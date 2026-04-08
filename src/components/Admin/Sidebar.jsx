@@ -27,19 +27,106 @@ import {
   LocateIcon
 } from 'lucide-react';
 
+
+const NavItem = ({ item, level = 0, activeTab, setActiveTab, setSidebarOpen, openDropdowns, toggleDropdown, expandedItems, toggleExpand }) => {
+  const isDropdown = item.type === 'dropdown';
+  const isExpandable = item.type === 'expandable';
+  const isOpen = openDropdowns[item.id] || expandedItems[item.id];
+  const hasSubItems = item.subItems && item.subItems.length > 0;
+  const isActive = activeTab === item.id;
+
+  return (
+    <div className="mb-1">
+      <button
+        onClick={() => {
+          if (isDropdown) {
+            toggleDropdown(item.id);
+          } else if (isExpandable) {
+            toggleExpand(item.id);
+          } else {
+            setActiveTab(item.id);
+            if (window.innerWidth < 768) setSidebarOpen(false);
+          }
+        }}
+        className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 group ${
+          isActive
+            ? 'bg-[#4A7FA6] text-white shadow-md' 
+            : 'text-gray-200 hover:bg-[#456E8C] hover:text-white'
+        } ${level > 0 ? 'pl-8' : ''}`}
+      >
+        <div className="flex items-center space-x-3 min-w-0">
+          <div className={`p-1 rounded-lg ${
+            isActive 
+              ? 'bg-white/20' 
+              : 'bg-transparent group-hover:bg-white/10'
+          }`}>
+            <item.icon size={18} className="flex-shrink-0" />
+          </div>
+          <span className="font-medium text-sm text-left truncate">{item.label}</span>
+        </div>
+        
+        {(isDropdown || isExpandable) && hasSubItems && (
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex-shrink-0 ml-2"
+          >
+            <ChevronDown size={16} />
+          </motion.div>
+        )}
+      </button>
+
+      {/* Sub Items */}
+      {(isDropdown || isExpandable) && hasSubItems && (
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-1 ml-2 space-y-1 border-l-2 border-[#456E8C] pl-3 py-1">
+                {item.subItems.map((subItem) => {
+                  const isSubItemActive = activeTab === subItem.id;
+                  return (
+                    <button
+                      key={subItem.id}
+                      onClick={() => {
+                        setActiveTab(subItem.id);
+                        if (window.innerWidth < 768) setSidebarOpen(false);
+                      }}
+                      className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${
+                        isSubItemActive
+                          ? 'bg-[#4A7FA6] text-white shadow-sm'
+                          : 'text-gray-300 hover:bg-[#456E8C] hover:text-white'
+                      }`}
+                    >
+                      <subItem.icon size={16} className="flex-shrink-0" />
+                      <span className="truncate">{subItem.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+    </div>
+  );
+};
+
 const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
   const [openDropdowns, setOpenDropdowns] = useState({});
   const [expandedItems, setExpandedItems] = useState({});
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  // Get admin data from localStorage
   const adminData = JSON.parse(localStorage.getItem('adminData') || '{}');
   const { full_name = 'Admin User', email = 'admin@carevista.com', role = 'admin' } = adminData;
 
-  // Check if user is super admin
   const isSuperAdmin = role === 'super admin';
 
-  // Get first letter of name in capital
   const getInitial = () => {
     if (full_name && full_name.trim() !== '') {
       return full_name.charAt(0).toUpperCase();
@@ -61,7 +148,6 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
     }));
   };
 
-  // Organized navigation items with categories
   const navigationSections = [
     {
       title: "Main content",
@@ -72,7 +158,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
           icon: LayoutDashboard,
           type: 'simple'
         },
-       { 
+        { 
           id: 'home', 
           label: 'Home', 
           icon: HomeIcon,
@@ -143,7 +229,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
           icon: MessageSquare,
           type: 'simple'
         },
-         { 
+        { 
           id: 'contact', 
           label: 'Contacts', 
           icon: Contact,
@@ -155,22 +241,17 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
           icon: MessageCircleWarningIcon,
           type: 'simple'
         },
-        
       ]
     }
   ];
 
-  // Define settings sub items based on role
   const getSettingsSubItems = () => {
     const baseSubItems = [
       { id: 'change-password', label: 'Change password', icon: Shield }
     ];
-    
-    // Only add "All admins" if user is super admin
     if (isSuperAdmin) {
       baseSubItems.unshift({ id: 'all-admins', label: 'All admins', icon: Shield });
     }
-    
     return baseSubItems;
   };
 
@@ -184,17 +265,25 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
     },
   ];
 
+  // Shared props passed down to every NavItem
+  const navItemProps = {
+    activeTab,
+    setActiveTab,
+    setSidebarOpen,
+    openDropdowns,
+    toggleDropdown,
+    expandedItems,
+    toggleExpand,
+  };
+
   const handleLogout = async () => {
     try {
-    //  const res = await fetch('http://localhost/SewaHome/Backend/admin/admin_logout.php', {
-     const res = await fetch('https://api.sewacareservices.com/admin/admin_logout.php', {
+      const res = await fetch('https://api.sewacareservices.com/admin/admin_logout.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
       const data = await res.json();
 
@@ -212,104 +301,6 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
     } finally {
       setShowLogoutConfirm(false);
     }
-  };
-
-  const confirmLogout = () => {
-    setShowLogoutConfirm(true);
-  };
-
-  const cancelLogout = () => {
-    setShowLogoutConfirm(false);
-  };
-
-  const NavItem = ({ item, level = 0 }) => {
-    const isDropdown = item.type === 'dropdown';
-    const isExpandable = item.type === 'expandable';
-    const isSimple = item.type === 'simple';
-    const isOpen = openDropdowns[item.id] || expandedItems[item.id];
-    const hasSubItems = item.subItems && item.subItems.length > 0;
-    const isActive = activeTab === item.id;
-
-    return (
-      <div className="mb-1">
-        <button
-          onClick={() => {
-            if (isDropdown || isExpandable) {
-              if (hasSubItems) {
-                isDropdown ? toggleDropdown(item.id) : toggleExpand(item.id);
-              }
-            } else {
-              setActiveTab(item.id);
-              window.innerWidth < 768 && setSidebarOpen(false);
-            }
-          }}
-          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 group ${
-            isActive
-              ? 'bg-[#4A7FA6] text-white shadow-md' 
-              : 'text-gray-200 hover:bg-[#456E8C] hover:text-white'
-          } ${level > 0 ? 'pl-8' : ''}`}
-        >
-          <div className="flex items-center space-x-3 min-w-0">
-            <div className={`p-1 rounded-lg ${
-              isActive 
-                ? 'bg-white/20' 
-                : 'bg-transparent group-hover:bg-white/10'
-            }`}>
-              <item.icon size={18} className="flex-shrink-0" />
-            </div>
-            <span className="font-medium text-sm text-left truncate">{item.label}</span>
-          </div>
-          
-          {(isDropdown || isExpandable) && hasSubItems && (
-            <motion.div
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex-shrink-0 ml-2"
-            >
-              <ChevronDown size={16} />
-            </motion.div>
-          )}
-        </button>
-
-        {/* Sub Items */}
-        {(isDropdown || isExpandable) && hasSubItems && (
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="mt-1 ml-2 space-y-1 border-l-2 border-[#456E8C] pl-3 py-1">
-                  {item.subItems.map((subItem) => {
-                    const isSubItemActive = activeTab === subItem.id;
-                    return (
-                      <button
-                        key={subItem.id}
-                        onClick={() => {
-                          setActiveTab(subItem.id);
-                          window.innerWidth < 768 && setSidebarOpen(false);
-                        }}
-                        className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${
-                          isSubItemActive
-                            ? 'bg-[#4A7FA6] text-white shadow-sm'
-                            : 'text-gray-300 hover:bg-[#456E8C] hover:text-white'
-                        }`}
-                      >
-                        <subItem.icon size={16} className="flex-shrink-0" />
-                        <span className="truncate">{subItem.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
-      </div>
-    );
   };
 
   return (
@@ -354,31 +345,26 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
         <nav className="flex-1 overflow-y-auto py-4">
           {navigationSections.map((section, index) => (
             <div key={section.title} className={index > 0 ? 'mt-6' : ''}>
-              {/* Section Title */}
               <div className="px-4 mb-2">
                 <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                   {section.title}
                 </h3>
               </div>
-              
-              {/* Section Items */}
               <div className="px-2 space-y-1">
                 {section.items.map((item) => (
-                  <NavItem key={item.id} item={item} />
+                  <NavItem key={item.id} item={item} {...navItemProps} />
                 ))}
               </div>
             </div>
           ))}
 
-          {/* Divider */}
           <div className="px-4 my-6">
             <div className="border-t border-[#456E8C]"></div>
           </div>
 
-          {/* Secondary Navigation */}
           <div className="px-2 space-y-1">
             {secondaryNavItems.map((item) => (
-              <NavItem key={item.id} item={item} />
+              <NavItem key={item.id} item={item} {...navItemProps} />
             ))}
           </div>
         </nav>
@@ -397,7 +383,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
               </p>
             </div>
             <button 
-              onClick={confirmLogout} 
+              onClick={() => setShowLogoutConfirm(true)} 
               className="p-2 hover:bg-[#456E8C] rounded-lg transition-colors flex-shrink-0 group"
               title="Logout"
             >
@@ -407,7 +393,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
         </div>
       </motion.div>
 
-      {/* Overlay for mobile sidebar */}
+      {/* Mobile overlay */}
       <AnimatePresence>
         {sidebarOpen && (
           <motion.div
@@ -447,7 +433,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
                 </p>
                 <div className="flex space-x-3">
                   <button
-                    onClick={cancelLogout}
+                    onClick={() => setShowLogoutConfirm(false)}
                     className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
                   >
                     Cancel
