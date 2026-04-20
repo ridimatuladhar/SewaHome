@@ -51,12 +51,12 @@ const TrustMetrics = () => {
       label: "Years of Trust"
     },
     {
-      value: "4500",
+      value: "450",
       suffix: "+",
       label: "Families Supported"
     },
     {
-      value: "3000",
+      value: "1000",
       suffix: "+",
       label: "Certified Caregivers"
     },
