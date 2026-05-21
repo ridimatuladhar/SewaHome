@@ -6,6 +6,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { CheckCircle, AlertCircle, Loader, X, Mail, User, MessageSquare, Phone } from 'lucide-react';
 import AddressSection from "./AddressSection";
+import SocialIcons from "../../layouts/navbar/SocialIcons";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +63,6 @@ const ContactForm = () => {
 
     try {
       const response = await fetch('https://api.sewacareservices.com/contact/save_contact.php', {
-      //const response = await fetch('http://localhost/SewaHome/Backend/contact/save_contact.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -262,7 +262,7 @@ const ContactForm = () => {
         )}
       </AnimatePresence>
 
-      {/* Contact Section */}
+      {/* Contact Section - Updated Layout */}
       <motion.div
         className="py-16 bg-gradient-to-b from-blue-50 to-white"
         initial={{ opacity: 0 }}
@@ -271,18 +271,19 @@ const ContactForm = () => {
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
-            {/* Left Side - Image & Info */}
+            
+            {/* Left Side - Image & Social Icons Below */}
             <motion.div
-              className="space-y-8"
+              className="space-y-8 pl-12 pr-12"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
             >
+              {/* Image */}
               <motion.div
                 className="relative group"
                 variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="absolute -inset-4 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-all duration-500"></div>
@@ -292,10 +293,25 @@ const ContactForm = () => {
                   className="relative rounded-2xl w-full max-w-lg mx-auto shadow-2xl transform hover:scale-105 transition-all duration-500 cursor-pointer"
                 />
               </motion.div>
+              <div className="p-8 bg-white rounded-2xl shadow-lg">
+              <h3 className="text-3xl font-bold text-[#376082] mb-3" style={{ fontFamily: 'Outfit' }}>
+                  Follow us on Social Media
+                </h3>
 
+              {/* Social Icons - Below the image */}
+              <motion.div 
+                className="flex pt-4"
+                variants={itemVariants}
+              >
+                
+                <div className="">
+                  <SocialIcons />
+                </div>
+              </motion.div>
+              </div>
             </motion.div>
 
-            {/* Right Side - Form */}
+            {/* Right Side - Form Only */}
             <motion.div
               className="bg-white rounded-3xl shadow-2xl p-8 border border-blue-100"
               initial={{ opacity: 0, x: 50 }}
@@ -443,8 +459,8 @@ const ContactForm = () => {
           </div>
         </div>
       </motion.div>
+      
       <AddressSection />
-
       <FooterButtons />
     </>
   );

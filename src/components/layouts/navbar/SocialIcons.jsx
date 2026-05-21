@@ -13,8 +13,8 @@ const SocialIcons = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
+          width="32"
+          height="32"
           viewBox="0 0 24 24"
         >
           <path
@@ -34,8 +34,8 @@ const SocialIcons = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
+          width="32"
+          height="32"
           viewBox="0 0 24 24"
         >
           <path
@@ -61,8 +61,8 @@ const SocialIcons = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="28"
+          height="28"
           viewBox="0 0 16 16"
           className="mt-0.5" // Slight adjustment for better visual alignment
         >
@@ -83,8 +83,8 @@ const SocialIcons = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
+          width="32"
+          height="32"
           viewBox="0 0 24 24"
         >
           <g fill="none" fillRule="evenodd">
