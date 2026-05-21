@@ -15,6 +15,7 @@ import CareComparisonTable from "./CareComparisonTable";
 import InstagramCarousel from "./InstagramCarousel";
 import Testimonials from "../pages/testimonials/Testimonials";
 import ScrollToTopArrow from "./ScrollToTopArrow";
+import CTASection from "../pages/about/CTASection";
 
 export default function Homepage() {
   const [typedText, setTypedText] = useState("");
@@ -142,6 +143,7 @@ export default function Homepage() {
       
       {/* <MainJoinsection />
       <Banners /> */}
+      <CTASection />
          <ScrollToTopArrow />
 
       <FooterButtons />

@@ -21,10 +21,10 @@ const DesktopAdditionalMenu = ({
       onMouseLeave={handleMenuLeave}
     >
       <button
-        className="flex items-center gap-1 text-[13px] font-light tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap"
+        className="flex items-center gap-1 text-[13px] font-extrabold  tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap"
         style={{
           fontFamily: "century, 'Century Gothic', sans-serif",
-          color: isActive ? BRAND : '#374151',
+          color: isActive ? BRAND : '#376082',
         }}
       >
         {title}

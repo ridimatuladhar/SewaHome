@@ -1,3 +1,4 @@
+// DesktopMenuItem.jsx
 import React from 'react';
 import { ServicesDropdownContent } from './DropdownContents';
 import { ChevronDown } from 'lucide-react';
@@ -29,10 +30,10 @@ const DesktopMenuItem = ({
       onMouseLeave={handleMenuLeave}
     >
       <div
-        className="flex items-center gap-1 text-[13px] font-light tracking-wide px-3 py-2 rounded cursor-pointer whitespace-nowrap transition-colors duration-200 select-none"
+        className="flex items-center gap-1 text-sm font-extrabold tracking-wide px-3 py-2 rounded cursor-pointer whitespace-nowrap transition-colors duration-200 select-none uppercase"
         style={{
           fontFamily: "century, 'Century Gothic', sans-serif",
-          color: isActive ? BRAND : '#374151',
+          color: isActive ? BRAND : '#376082',
         }}
       >
         {title}
@@ -47,7 +48,7 @@ const DesktopMenuItem = ({
       {/* Active underline indicator */}
       {isActive && (
         <div
-          className="absolute bottom-0 left-3 right-3 h-0.25 rounded-full"
+          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full"
           style={{ backgroundColor: BRAND }}
         />
       )}

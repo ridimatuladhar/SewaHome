@@ -1,3 +1,4 @@
+// Navbar.jsx
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import SocialIcons from "./navbar/SocialIcons";
@@ -6,9 +7,10 @@ import MobileMenu from "./navbar/MobileMenu";
 import { additionalMenuItems } from "./navbar/ServiceData"; 
 import { useLocation, useNavigate } from "react-router-dom";
 import DesktopAdditionalMenu from "./navbar/DesktopAdditionalMenu";
+import NavbarCTAs from "./navbar/NavbarCTAs";
 
-const BASE_URL = "https://api.sewacareservices.com";
 //const BASE_URL = "http://localhost/SewaHome/Backend";
+const BASE_URL = "https://api.sewacareservices.com";
 
 const menuRoutes = {
   "HOMECARE MASSACHUSETTS": "homecare-massachusetts",
@@ -24,13 +26,11 @@ const menuRoutes = {
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeMenu,       setActiveMenu]       = useState(null);
-  const [openSubmenu,      setOpenSubmenu]       = useState(null);
-  const [isVisible,        setIsVisible]         = useState(true);
-  const [lastScrollY,      setLastScrollY]       = useState(0);
-  const [scrolled,         setScrolled]          = useState(false);
-
-  // ── Service data from backend ─────────────────────────────────────────────
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const [serviceMenuData, setServiceMenuData] = useState([]);
 
   useEffect(() => {
@@ -47,13 +47,11 @@ const Navbar = () => {
       .catch(err => console.error("[Navbar] fetch error:", err));
   }, []);
 
-  // ── Split service data to mirror desktop sections ─────────────────────────
-  // API returns category objects: { id, title, slug, items: [...] }
-  // Filter by title exactly as before — works with both static and API data
+  // Filter services - using shorter labels for display
   const homeCareServices = serviceMenuData.filter(item =>
     ["HOME CARE SERVICES", "TRANSITION & PLACEMENT", "SUPPORT SERVICES"].includes(item.title)
   );
-  const professionalCareManagement = serviceMenuData.filter(item =>
+  const professionalCare = serviceMenuData.filter(item =>
     item.title === "PROFESSIONAL CARE MANAGEMENT"
   );
   const clinicalNursingServices = serviceMenuData.filter(item =>
@@ -63,10 +61,9 @@ const Navbar = () => {
     item.title === "DEMENTIA CARE SPECIALISTS"
   );
 
-  const navigate  = useNavigate();
-  const location  = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // ── Scroll behaviour ──────────────────────────────────────────────────────
   useEffect(() => {
     const controlNavbar = () => {
       setScrolled(window.scrollY > 10);
@@ -84,40 +81,34 @@ const Navbar = () => {
 
   const handleMenuEnter = (title) => setActiveMenu(title);
   const handleMenuLeave = () => setActiveMenu(null);
-  const toggleSubmenu   = (title) => setOpenSubmenu(openSubmenu === title ? null : title);
+  const toggleSubmenu = (title) => setOpenSubmenu(openSubmenu === title ? null : title);
 
-  // ── Navigation helpers ────────────────────────────────────────────────────
   const navigateToAbout = () => {
     navigate("/about");
     setIsMobileMenuOpen(false);
     setActiveMenu(null);
   };
+
   const navigateToContact = () => {
     navigate("/contact-us");
     setIsMobileMenuOpen(false);
     setActiveMenu(null);
   };
+
   const navigateToLeaveReview = () => {
     navigate("/leave-review");
     setIsMobileMenuOpen(false);
     setActiveMenu(null);
   };
 
-  // ── Service click — uses serviceId slug from API, falls back to title-slug ──
-  // serviceItem is now an object { title, serviceId, subItems, ... } from the API
-  // OR a plain string (legacy / sub-item string) — handle both safely
   const handleServiceClick = (serviceItem, e) => {
     e.preventDefault();
-
     let slug;
     if (typeof serviceItem === 'object' && serviceItem !== null) {
-      // API object — use the stored serviceId slug directly
       slug = serviceItem.serviceId;
     } else {
-      // Fallback: plain string (shouldn't happen with API data, but keeps old behaviour)
       slug = String(serviceItem).toLowerCase().replace(/\s+/g, '-');
     }
-
     if (slug) {
       window.location.href = `/services/${slug}`;
     }
@@ -125,10 +116,8 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // ── Additional MENU item click ────────────────────────────────────────────
   const handleMenuClick = (menuName, e) => {
     e.preventDefault();
-
     if (menuName === "GOOGLE BUSINESS REVIEWS") {
       window.open('https://search.google.com/local/reviews?placeid=ChIJN-6XXWCj44kRO9OoeOWMzhY', '_blank');
       setActiveMenu(null);
@@ -145,7 +134,6 @@ const Navbar = () => {
       navigateToLeaveReview();
       return;
     }
-
     const routeId = menuRoutes[menuName];
     if (routeId) {
       window.location.href = `/${routeId}`;
@@ -165,7 +153,7 @@ const Navbar = () => {
         isVisible ? 'translate-y-0' : '-translate-y-full'
       } ${scrolled ? 'shadow-md' : 'shadow-sm'}`}
     >
-      {/* ── Desktop bar ── */}
+      {/* Desktop Navigation */}
       <div
         className="hidden lg:flex items-end justify-between w-full px-4 xl:px-10"
         style={{ height: '80px' }}
@@ -178,20 +166,22 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Nav links */}
+        {/* Navigation Links - Center */}
         <nav className="flex items-center gap-0.5 flex-1 justify-center min-w-0">
+          {/* ABOUT US - On the left side */}
           <button
             onClick={navigateToAbout}
-            className="text-[13px] font-light tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap flex-shrink-0"
-            style={{ fontFamily: "century, 'Century Gothic', sans-serif", color: '#374151' }}
+            className="text-[13px] font-semibold tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap flex-shrink-0"
+            style={{ fontFamily: "century, 'Century Gothic', sans-serif", color: '#376082' }}
             onMouseEnter={e => e.currentTarget.style.color = '#376082'}
-            onMouseLeave={e => e.currentTarget.style.color = '#374151'}
+            onMouseLeave={e => e.currentTarget.style.color = '#376082'}
           >
             ABOUT US
           </button>
 
           <Divider />
 
+          {/* OUR SERVICES */}
           <DesktopMenuItem
             title="OUR SERVICES"
             items={homeCareServices}
@@ -201,17 +191,23 @@ const Navbar = () => {
             handleMenuEnter={handleMenuEnter}
             handleMenuLeave={handleMenuLeave}
           />
+          
           <Divider />
+
+          {/* PROFESSIONAL CARE */}
           <DesktopMenuItem
             title="PROFESSIONAL CARE"
-            items={professionalCareManagement}
+            items={professionalCare}
             dropdownType="services"
             onItemClick={handleServiceClick}
             activeMenu={activeMenu}
             handleMenuEnter={handleMenuEnter}
             handleMenuLeave={handleMenuLeave}
           />
+          
           <Divider />
+
+          {/* CLINICAL NURSING */}
           <DesktopMenuItem
             title="CLINICAL NURSING"
             items={clinicalNursingServices}
@@ -221,7 +217,10 @@ const Navbar = () => {
             handleMenuEnter={handleMenuEnter}
             handleMenuLeave={handleMenuLeave}
           />
+          
           <Divider />
+
+          {/* DEMENTIA CARE */}
           <DesktopMenuItem
             title="DEMENTIA CARE"
             items={dementiaCareSpecialists}
@@ -233,10 +232,13 @@ const Navbar = () => {
           />
         </nav>
 
-        {/* Right utilities */}
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <SocialIcons />
+        {/* Right utilities - Phone Number and MENU */}
+        <div className="flex items-center gap-3 flex-shrink-0 mb-2">
+          <NavbarCTAs />
+          
           <div className="h-5 w-px bg-gray-200" />
+          
+          {/* MENU */}
           <DesktopAdditionalMenu
             title="MENU"
             items={additionalMenuItems}
@@ -248,20 +250,24 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ── Mobile bar ── */}
+      {/* Mobile Bar */}
       <div className="lg:hidden flex items-center justify-between px-4 h-16">
         <a href="/home" onClick={handleLogoClick}>
           <img src="/main-logo/logo.webp" alt="Logo" className="h-10 w-auto object-contain" />
         </a>
-        <button
-          className="p-2 rounded-md focus:outline-none focus:ring-2 transition-colors"
-          style={{ color: '#376082' }}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-expanded={isMobileMenuOpen}
-          aria-label="Toggle navigation"
-        >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-3">
+          {/* Phone Number for Mobile */}
+          <NavbarCTAs />
+          <button
+            className="p-2 rounded-md focus:outline-none focus:ring-2 transition-colors"
+            style={{ color: '#376082' }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-expanded={isMobileMenuOpen}
+            aria-label="Toggle navigation"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

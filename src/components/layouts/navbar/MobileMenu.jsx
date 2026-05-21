@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from "lucide-react";
 import SocialIcons from './SocialIcons';
+import NavbarCTAs from './NavbarCTAs';
 
 const BRAND       = '#376082';
 const BRAND_LIGHT = '#eef3f7';
@@ -150,7 +151,8 @@ const MobileMenu = ({
       <div className="px-4 pt-2 pb-6">
         {/* Social icons row */}
         <div className="flex items-center justify-end space-x-4 py-3 border-b border-gray-200">
-          <SocialIcons />
+          {/* <SocialIcons /> */}
+            <NavbarCTAs />
         </div>
 
         <nav className="py-2">

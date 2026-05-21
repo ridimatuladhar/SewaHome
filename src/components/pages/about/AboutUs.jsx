@@ -6,6 +6,7 @@ import Navbar from "../../layouts/Navbar";
 import FooterButtons from "../footer/FooterButtons";
 import FAQ from './FAQ';
 import ScrollToTopArrow from '../../home/ScrollToTopArrow';
+import CTASection from './CTASection';
 
 // 🔑 Detect small screens for responsive animations
 const isMobile = window.innerWidth < 768;
@@ -141,7 +142,7 @@ const About = () => {
             <motion.div {...slideLeft} viewport={{ once: true }}>
               <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>Our Approach to Care</h2>
               <p className="text-gray-600 leading-relaxed mb-6 text-lg">
-                From the outset, Seva Home Care has understood that exceptional senior care starts with a profound appreciation of each individual's unique health, cultural, and emotional needs.
+                From the outset, Sewa Home Care has understood that exceptional senior care starts with a profound appreciation of each individual's unique health, cultural, and emotional needs.
               </p>
               <p className="text-gray-600 leading-relaxed text-lg">
                 We continuously enhance our offerings to support aging in place with dignity whether through memory support services, comprehensive care, or engagement-based wellness programs that promote physical, emotional, and mental well-being.
@@ -178,7 +179,7 @@ const About = () => {
             <motion.div {...slideLeft} viewport={{ once: true }}>
               <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>Our Caregivers</h2>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
-                As an employer, Seva Home Care recognizes the vital link between caregiver satisfaction and client outcomes. We take pride in hiring dedicated professionals and providing competitive benefits and training programs.
+                As an employer, Sewa Home Care recognizes the vital link between caregiver satisfaction and client outcomes. We take pride in hiring dedicated professionals and providing competitive benefits and training programs.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed">
                 Our team members are not just caregivers; they are trusted companions and advocates who make a meaningful difference in the lives of those we serve.
@@ -240,35 +241,7 @@ const About = () => {
       <FAQ />
 
       {/* Call to Action */}
-      <motion.section className="py-6 text-white">
-        <div className="container bg-[#5D8FB1] mx-auto p-12 text-center rounded-lg">
-          <motion.h2 
-            className="md:text-3xl text-2xl font-light mb-8"
-            style={{ fontFamily: "Macha" }}
-            initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: isMobile ? 0.4 : 0.6 }}
-          >
-            Learn more about creating a custom care plan for your loved one.
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: isMobile ? 0.4 : 0.6, delay: 0.2 }}
-          >
-            <a
-            href='/consultation'
-              className="inline-block bg-white text-[#5D8FB1] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
-              style={{ fontFamily: "Macha" }}
-            >
-              Book a Consultation
-            </a>
-          </motion.div>
-        </div>
-      </motion.section>
-
+     <CTASection />
       <FooterButtons />
          <ScrollToTopArrow />
     </>
