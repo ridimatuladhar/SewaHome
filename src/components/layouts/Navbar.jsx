@@ -233,9 +233,10 @@ const Navbar = () => {
         </nav>
 
         {/* Right utilities - Phone Number and MENU */}
-        <div className="flex items-center gap-3 flex-shrink-0 mb-2">
+        <div className="flex items-center gap-3 flex-shrink-0 ">
+          <div className="mb-2">
           <NavbarCTAs />
-          
+          </div>
           <div className="h-5 w-px bg-gray-200" />
           
           {/* MENU */}

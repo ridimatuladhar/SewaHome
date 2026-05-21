@@ -99,7 +99,7 @@ export const MenuDropdownContent = ({ items, onItemClick }) => {
               key={index}
               href="#"
               onClick={(e) => onItemClick && onItemClick(label, e)}
-              className="flex items-center justify-center text-center px-3 py-2.5 text-xs font-semibold tracking-wide rounded border border-transparent hover:bg-[#eef3f7] hover:text-[#376082] text-gray-600 transition-all duration-150 cursor-pointer"
+              className="flex items-center justify-center text-center px-3 py-2.5 text-xs font-semibold tracking-wide rounded border-transparent hover:bg-[#eef3f7] hover:text-[#376082] text-gray-600 transition-all duration-150 cursor-pointer"
             >
               {label}
             </a>

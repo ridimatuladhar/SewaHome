@@ -43,7 +43,7 @@ const DesktopAdditionalMenu = ({
       <div
         className="fixed w-screen bg-white shadow-xl z-[100] transition-all duration-200 ease-out"
         style={{
-          top: '80px',
+          top: '70px',
           left: '50%',
           transform: isActive
             ? 'translateX(-50%) translateY(0)'
