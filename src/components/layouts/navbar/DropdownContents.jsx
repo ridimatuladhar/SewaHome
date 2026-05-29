@@ -36,17 +36,16 @@ export const ServicesDropdownContent = ({ items, onServiceClick }) => {
                     onMouseLeave={() => setActiveItem(null)}
                   >
                     <a
-                      href="#"
-                      onClick={(e) => {
-                        if (!hasSubs) {
-                          // Leaf item — pass the whole object so Navbar can use serviceId
-                          onServiceClick(serviceItem, e);
-                        } else {
-                          e.preventDefault();
-                        }
-                      }}
-                      className="flex items-center justify-between gap-2 px-3 py-2 text-sm text-gray-600 rounded hover:bg-[#eef3f7] transition-colors group"
-                    >
+                     href={`/services/${serviceItem.serviceId}`}  // ← real href
+  onClick={(e) => {
+    if (!hasSubs) {
+      onServiceClick(serviceItem, e);
+    } else {
+      e.preventDefault();  // has subs, just show flyout
+    }
+  }}
+  className="flex items-center justify-between gap-2 px-3 py-2 ..."
+>
                       <span className="group-hover:text-[#376082] transition-colors">
                         {serviceItem.title}
                       </span>
@@ -64,10 +63,10 @@ export const ServicesDropdownContent = ({ items, onServiceClick }) => {
                         {activeSubs.map((sub) => (
                           <a
                             key={sub.serviceId ?? sub.id}
-                            href="#"
-                            onClick={(e) => onServiceClick(sub, e)}
-                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-[#376082] hover:bg-[#eef3f7] transition-colors"
-                          >
+  href={`/services/${sub.serviceId}`}  // ← real href
+  onClick={(e) => onServiceClick(sub, e)}
+  className="flex items-center gap-2 px-4 py-2 ..."
+>
                             <span
                               className="w-1 h-1 rounded-full flex-shrink-0"
                               style={{ backgroundColor: BRAND }}
@@ -103,11 +102,15 @@ export const MenuDropdownContent = ({ items, onItemClick }) => {
             <div className="flex flex-col gap-0.5">
               {group.items.map((item) => {
                 const label = typeof item === 'string' ? item : item.label;
-                const ext   = typeof item === 'string' ? false : item.external;
+  const href  = typeof item === 'string' ? '#' : (item.href ?? '#');
+  const ext   = typeof item === 'string' ? false : item.external;
+
                 return (
                   <a
                     key={label}
-                    href="#"
+                    href={href}                                        
+      target={ext ? "_blank" : undefined}
+      rel={ext ? "noopener noreferrer" : undefined}
                     onClick={(e) => onItemClick && onItemClick(label, e)}
                     className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 rounded hover:bg-[#eef3f7] hover:text-[#376082] transition-colors group"
                   >

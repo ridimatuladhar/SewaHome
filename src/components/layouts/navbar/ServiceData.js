@@ -80,27 +80,29 @@ export const serviceMenuData = [
 
 export const additionalMenuItems = [
   {
-    heading: 'Resources',
+    heading: "Company",
     items: [
-      { label: 'HOMECARE MASSACHUSETTS' },
-      { label: 'NON-DISCRIMINATION POLICY' },
-      { label: 'BLOGS' },
-    ],
+      
+      
+      { label: "HOMECARE MASSACHUSETTS", href: "/homecare-massachusetts" },
+      { label: "NON-DISCRIMINATION POLICY", href: "/non-discrimination-policy" },
+      { label: "BLOGS", href: "/blogs" },
+    ]
   },
   {
-    heading: 'Careers',
+    heading: "Careers",
     items: [
-      { label: 'JOIN OUR TEAM' },
-      { label: 'OPPORTUNITIES' },
-      { label: 'CONTACT US' },
-    ],
+      { label: "JOIN OUR TEAM", href: "/join-our-team" },
+      { label: "OPPORTUNITIES", href: "/opportunities" },
+      { label: "CONTACT US", href: "/contact-us" },
+    ]
   },
   {
-    heading: 'Reviews',
+    heading: "Reviews",
     items: [
-      { label: 'LEAVE A REVIEW' },
-      { label: 'GOOGLE BUSINESS REVIEWS' },
-      { label: 'CARE.COM REVIEWS' },
-    ],
+      { label: "LEAVE A REVIEW", href: "/leave-review" },
+      { label: "GOOGLE BUSINESS REVIEWS", href: "https://search.google.com/local/reviews?placeid=ChIJN-6XXWCj44kRO9OoeOWMzhY", external: true },
+      { label: "CARE.COM REVIEWS", href: "https://www.care.com/b/l/sewa-home-care/westford-ma", external: true },
+    ]
   },
 ];
