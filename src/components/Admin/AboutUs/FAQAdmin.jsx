@@ -82,7 +82,7 @@ const FAQAdmin = () => {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/get_faqs_id.php/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/get_faqs_id.php?id=${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ const FAQAdmin = () => {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/get_faqs_id.php/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/get_faqs_id.php?id=${id}`, {
         method: 'DELETE',
       });
 
