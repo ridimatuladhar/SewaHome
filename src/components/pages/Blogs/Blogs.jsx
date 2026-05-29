@@ -133,8 +133,8 @@ const Blogs = () => {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-extrabold text-center mb-4 text-[#376082]"
-              style={{ fontFamily: "Chathura" }}
+              className="text-3xl md:text-4xl font-medium text-center mb-4 text-[#376082]"
+        
             >
               Blogs
             </motion.h1>

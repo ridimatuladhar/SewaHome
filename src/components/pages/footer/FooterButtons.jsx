@@ -1,35 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, ChevronDown } from 'lucide-react';
-import { serviceMenuData } from '../../layouts/navbar/ServiceData';
 
-const toUrl = (title) =>
-  `/services/${title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-')}`;
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const toUrl = (serviceId) => `/services/${serviceId}`;
 
-const openGoogleMaps = (url) => window.open(url, '_blank');
-
-const californiaMapsUrl = "https://www.google.com/maps/search/?api=1&query=San+Francisco,+California+94102,+United+States";
-const massachusettsMapsUrl = "https://www.google.com/maps/place/SEWA+HOME+CARE/@42.5583828,-71.4400269,16.25z/data=!4m14!1m7!3m6!1s0x39eb195084b2fb6f:0xe2a9f4c3eeee38b6!2sSmart+Home+Sewa!8m2!3d27.6960003!4d85.2929533!16s%2Fg%2F11kh4nk88j!3m5!1s0x89e3a3605d97ee37:0x16ce8ce578a8d33b!8m2!3d42.5571586!4d-71.436875!16s%2Fg%2F11fx8rpb86?entry=ttu";
-
-// ── Services accordion ────────────────────────────────────────────────────────
+// ── Services Accordion ────────────────────────────────────────────────────────
 const ServicesAccordion = () => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [openCat, setOpenCat] = useState(null);
   const [openItem, setOpenItem] = useState(null);
 
-  const toggleCat = (t) => { setOpenCat(openCat === t ? null : t); setOpenItem(null); };
-  const toggleItem = (k) => setOpenItem(openItem === k ? null : k);
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+       // const res = await fetch('http://localhost/SewaHome/Backend/service/get_services.php');
+        const res = await fetch('https://api.sewacareservices.com/service/get_services.php');
+        const data = await res.json();
+        if (data.success) setCategories(data.services);
+      } catch (err) {
+        console.error('Failed to fetch services:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  const toggleCat = (id) => {
+    setOpenCat(openCat === id ? null : id);
+    setOpenItem(null);
+  };
+  const toggleItem = (key) => setOpenItem(openItem === key ? null : key);
+
+  if (loading) return <p className="text-sm text-gray-400">Loading services...</p>;
 
   return (
     <div className="space-y-1 max-h-80 overflow-y-auto pr-1 w-full">
-      {serviceMenuData.map((category) => {
-        const catOpen = openCat === category.title;
+      {categories.map((category) => {
+        const catOpen = openCat === category.id;
 
         return (
-          <div key={category.title}>
+          <div key={category.id}>
 
             {/* Category — always a toggle, never navigates */}
             <button
-              onClick={() => toggleCat(category.title)}
-              className="w-full flex items-center justify-between py-1.5 text-sm text-white hover:text-blue-300 transition-colors duration-200"
+              onClick={() => toggleCat(category.id)}
+              className="w-full flex items-center justify-between py-1.5 text-sm md:text-base text-white hover:text-blue-300 transition-colors duration-200"
             >
               <span className="text-left leading-snug">{category.title}</span>
               <ChevronDown
@@ -41,18 +58,18 @@ const ServicesAccordion = () => {
             {catOpen && (
               <div className="ml-2 border-l border-white/20 pl-3 space-y-0.5 mb-1">
                 {category.items.map((item) => {
-                  const itemKey = `${category.title}::${item.title}`;
+                  const itemKey = `${category.id}::${item.id}`;
                   const itemOpen = openItem === itemKey;
                   const hasSub = item.subItems?.length > 0;
 
                   return (
-                    <div key={item.title}>
+                    <div key={item.id}>
 
                       {hasSub ? (
-                        // Has sub-items → entire row is a toggle button, NO navigation
+                        // Has sub-items → toggle only, no navigation
                         <button
                           onClick={() => toggleItem(itemKey)}
-                          className="w-full flex items-center justify-between py-1 text-xs text-gray-300 hover:text-blue-300 transition-colors duration-200"
+                          className="w-full flex items-center partialcase justify-between py-1 text-xs text-gray-300 hover:text-blue-300 transition-colors duration-200"
                         >
                           <span className="text-left leading-snug">{item.title}</span>
                           <ChevronDown
@@ -63,7 +80,7 @@ const ServicesAccordion = () => {
                       ) : (
                         // No sub-items → navigates directly
                         <a
-                          href={toUrl(item.title)}
+                          href={toUrl(item.serviceId)}
                           className="block py-1 text-xs text-gray-300 hover:text-blue-300 transition-colors duration-200 leading-snug"
                         >
                           {item.title}
@@ -73,14 +90,14 @@ const ServicesAccordion = () => {
                       {/* Sub-items — these navigate */}
                       {hasSub && itemOpen && (
                         <div className="ml-3 border-l border-white/10 pl-2 space-y-0.5 mb-1">
-                          {item.subItems.map((sub, si) => (
+                          {item.subItems.map((sub) => (
                             <a
-                              key={si}
-                              href={toUrl(sub)}
+                              key={sub.id}
+                              href={toUrl(sub.serviceId)}
                               className="flex items-center gap-1.5 py-0.5 text-xs text-gray-400 hover:text-blue-300 transition-colors duration-200 leading-snug"
                             >
                               <span className="w-1 h-1 rounded-full bg-white/30 flex-shrink-0" />
-                              {sub}
+                              {sub.title}
                             </a>
                           ))}
                         </div>
@@ -99,21 +116,20 @@ const ServicesAccordion = () => {
   );
 };
 
-// ── Locations accordion ───────────────────────────────────────────────────────
+// ── Locations Accordion ───────────────────────────────────────────────────────
 const LocationsAccordion = () => {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [openLocation, setOpenLocation] = useState(null); // open first by default after load
+  const [openLocation, setOpenLocation] = useState(null);
 
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         const res = await fetch('https://api.sewacareservices.com/locations/get_locations.php');
-        //const res = await fetch('http://localhost/SewaHome/Backend/locations/get_locations.php');
         const data = await res.json();
         if (data.success && data.locations.length > 0) {
           setLocations(data.locations);
-          setOpenLocation(data.locations[0].id); // open first location by default
+          setOpenLocation(data.locations[0].id);
         }
       } catch (err) {
         console.error('Failed to fetch locations:', err);
@@ -206,14 +222,13 @@ const LocationsAccordion = () => {
     </div>
   );
 };
+
 // ── Footer ────────────────────────────────────────────────────────────────────
 const FooterButtons = () => (
   <div className="bg-slate-700 text-white">
     <div className="max-w-6xl mx-auto px-4 py-8">
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center md:text-left">
-
- 
 
         <LocationsAccordion />
 
@@ -224,12 +239,12 @@ const FooterButtons = () => (
             {[
               { label: "Home", href: "/home" },
               { label: "About Us", href: "/about" },
-              { label: "Join our Team", href: "/join-our-team" },
+              { label: "Join Our Team", href: "/join-our-team" },
               { label: "Opportunities", href: "/opportunities" },
-              { label: "Homecare Massachusetts", href: "/homecare-massachusetts" },
+              { label: "Home care Massachusetts", href: "/homecare-massachusetts" },
               { label: "Contact Us", href: "/contact-us" },
               { label: "Blogs", href: "/blogs" },
-              { label: "Leave your testimonial", href: "/leave-review" },
+              { label: "Leave Your Testimonial", href: "/leave-review" },
             ].map(({ label, href }) => (
               <div key={href}>
                 <a href={href} className="hover:text-blue-300 transition-colors duration-300 text-sm md:text-base">{label}</a>
@@ -238,7 +253,7 @@ const FooterButtons = () => (
           </div>
         </div>
 
-        {/* ── Services ── */}
+        {/* ── Services (fetched from backend) ── */}
         <div className="flex flex-col items-center md:items-start w-full">
           <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 underline decoration-2">Services</h3>
           <ServicesAccordion />
@@ -264,7 +279,7 @@ const FooterButtons = () => (
           </div>
 
           <div className="text-center md:text-left">
-            <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 underline decoration-2">Trust & Action</h3>
+            <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 underline decoration-2">Trust and Action</h3>
             <div className="bg-white/10 p-3 md:p-4 rounded-lg">
               <p className="text-xs md:text-sm font-medium">Fully Insured and Bonded</p>
               <div className="flex flex-wrap justify-center md:justify-start gap-1 md:gap-2 mt-2">
@@ -279,26 +294,26 @@ const FooterButtons = () => (
       </div>
 
       {/* ── Bottom bar ── */}
- <div className="mt-8 pt-8 border-t border-white/20">
-  <div className="flex flex-col items-center">
-    <p className="text-xs md:text-sm mb-2">Copyright © SEWA Home Care - All Rights Reserved.</p>
-    <p className="text-xs md:text-sm mb-2">Developed by</p>
-    <a 
-      href="https://gr8.com.np/"  // Replace with your target URL
-      target="_blank"             // Opens in new tab (optional)
-      rel="noopener noreferrer"   // Security measure for target="_blank"
-    >
-      <div className="w-10 h-10 md:w-12 md:h-12">
-        <img
-          src="/partners/Golden-gr8.png"
-          alt="SEWA Home Care Logo"
-          className="w-full h-full object-contain cursor-pointer hover:opacity-80 transition-opacity"
-          onError={(e) => { e.target.style.display = 'none'; }}
-        />
+      <div className="mt-8 pt-8 border-t border-white/20">
+        <div className="flex flex-col items-center">
+          <p className="text-xs md:text-sm mb-2">Copyright © Sewa Home Care - All Rights Reserved.</p>
+          <p className="text-xs md:text-sm mb-2">Developed by</p>
+          <a
+            href="https://gr8.com.np/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="w-10 h-10 md:w-12 md:h-12">
+              <img
+                src="/partners/Golden-gr8.png"
+                alt="Sewa Home Care Logo"
+                className="w-full h-full object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+          </a>
+        </div>
       </div>
-    </a>
-  </div>
-</div>
 
     </div>
   </div>

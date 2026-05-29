@@ -153,8 +153,7 @@ const ServiceDetail = () => {
                 </motion.div>
 
                 <motion.h1
-                  className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6"
-                  style={{ fontFamily: "Chathura" }}
+                  className="text-3xl md:text-4xl font-medium mb-4 md:mb-6"
                   variants={itemVariants}
                 >
                   {service.title}
@@ -237,7 +236,7 @@ const ServiceDetail = () => {
               >
                 {activeTab === 'overview' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <h2 className="text-3xl md:text-6xl font-extrabold text-[#376082] mb-4 md:mb-6" style={{ fontFamily: "Chathura" }}>
+                    <h2 className="text-3xl md:text-4xl font-medium text-[#376082] mb-4 md:mb-6" >
                       Service Overview
                     </h2>
                     <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6 md:mb-8">
@@ -248,7 +247,7 @@ const ServiceDetail = () => {
 
                 {activeTab === 'features' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="bg-white p-4 md:p-8 rounded-2xl shadow-xl border border-gray-100">
-                    <h3 className="text-3xl md:text-6xl font-extrabold text-[#376082] mb-4 md:mb-6" style={{ fontFamily: "Chathura" }}>
+                    <h3 className="text-3xl md:text-4xl font-medium text-[#376082] mb-4 md:mb-6" >
                       Key Features
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2">
@@ -271,7 +270,7 @@ const ServiceDetail = () => {
 
                 {activeTab === 'benefits' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <h3 className="text-3xl md:text-6xl font-extrabold text-[#376082] mb-4 md:mb-6" style={{ fontFamily: "Chathura" }}>
+                    <h3 className="text-3xl md:text-4xl font-medium text-[#376082] mb-4 md:mb-6" >
                       Why Choose Our Service?
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -355,8 +354,8 @@ const ServiceDetail = () => {
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.h2
-                className="text-3xl md:text-6xl font-bold text-[#376082] text-center mb-8 md:mb-16"
-                style={{ fontFamily: "Chathura" }}
+                className="text-3xl md:text-4xl font-medium text-[#376082] text-center mb-8 md:mb-16"
+               
                 initial={{ y: 30, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8 }}

@@ -87,33 +87,33 @@ const CareerAdmin = () => {
   };
 
   // Handle toggle active status
-  const handleToggleActive = async (positionId, currentStatus) => {
+const handleToggleActive = async (positionId, currentStatus) => {
     try {
-      const response = await fetch(`${API_BASE}/career/update_position.php`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          id: positionId,
-          is_active: !currentStatus
-        })
-      });
+        const newStatus = currentStatus == 1 ? 0 : 1; // ✅ fixes "0" string being truthy
 
-      const data = await response.json();
+        const response = await fetch(`${API_BASE}/career/update_position.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: positionId,
+                is_active: newStatus  // ✅ sends 0 or 1, not true/false
+            })
+        });
 
-      if (data.success) {
-        setSuccessMessage(`Position ${!currentStatus ? 'activated' : 'deactivated'} successfully`);
-        fetchPositions();
-        setTimeout(() => setSuccessMessage(''), 3000);
-      } else {
-        throw new Error(data.message || 'Failed to update position');
-      }
+        const data = await response.json();
+
+        if (data.success) {
+            setSuccessMessage(`Position ${newStatus === 1 ? 'activated' : 'deactivated'} successfully`); // ✅ consistent with newStatus
+            fetchPositions();
+            setTimeout(() => setSuccessMessage(''), 3000);
+        } else {
+            throw new Error(data.message || 'Failed to update position');
+        }
     } catch (err) {
-      console.error('Error updating position:', err);
-      setError(err.message);
+        console.error('Error updating position:', err);
+        setError(err.message);
     }
-  };
+};
 
   // Handle modal success
   const handleModalSuccess = (message) => {

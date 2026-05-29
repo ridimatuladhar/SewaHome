@@ -144,7 +144,7 @@ const ApplicationDetailsModal = ({ show, onClose, application, onStatusUpdate, o
                     </div>
                   </div>
                   <button
-                    onClick={() => onDownloadResume(application.resume_path)}
+                    onClick={() => onDownloadResume(application)}
                     className="bg-[#376082] hover:bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
                     
                   >
@@ -208,7 +208,7 @@ const ApplicationDetailsModal = ({ show, onClose, application, onStatusUpdate, o
                   </button>
                   
                   <button
-                    onClick={() => onDownloadResume(application.resume_path)}
+                    onClick={() => onDownloadResume(application)}
                     className="w-full bg-[#376082] hover:bg-blue-800 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
                    
                   >

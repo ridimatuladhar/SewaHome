@@ -22,43 +22,43 @@ const WhyJoinUs = () => {
     {
       icon: <ShieldCheck className="w-15 h-15  mr-2" />,
       id: 1,
-      title: "Life, Accidental & Long-Term Disability Insurance",
+      title: "Life, Accidental, and Long-Term Disability Insurance",
       style: "rotate-[-12deg]",
       content:
-        "Protect your future with life and disability insurance coverage.",
+        "Protect your future with comprehensive life and disability coverage.",
     },
     {
       icon: <HeartPulse className="w-15 h-15  mr-2" />,
       id: 2,
       title: "Health Insurance",
       style: "rotate-[-12deg]",
-      content: "Comprehensive coverage for your well-being.",
+      content: "Comprehensive health coverage for your well-being.",
     },
     {
       id: 3,
-      title: "Caregiver-Founded & Operated",
+      title: "Caregiver-Founded and Operated",
       content:
-        "Founded and run by caregivers who understand your challenges firsthand.",
+        "Founded and led by caregivers who understand your challenges firsthand.",
       style: "rotate-[5deg]",
       icon: <Users className="w-15 h-15 mr-2" />,
     },
     {
       id: 4,
       title: "Industry-Leading Wages",
-      content: "Earn industry-leading wages for your caregiving services.",
+      content: "Earn competitive, industry-leading wages for your caregiving services.",
       icon: <DollarSign className="w-15 h-15 mr-2" />,
     },
     {
       id: 5,
       title: "401(k) Retirement Plan",
-      content: "Option to enroll and save for your future.",
+      content: "Enroll in a retirement plan and save for your future.",
       style: "rotate-[-12deg]",
       icon: <PiggyBank className="w-15 h-15 mr-2" />,
     },
     {
       id: 6,
       title: "Employee Recognition",
-      content: "Be recognized and rewarded for your dedication and hard work.",
+      content: "Be recognized and rewarded for your dedication and hard work",
       icon: <Star className="w-15 h-15 mr-2" />,
     },
     {
@@ -70,15 +70,15 @@ const WhyJoinUs = () => {
     },
     {
       id: 8,
-      title: "MA Repay Program",
+      title: "Massachusetts Student Loan Repayment Program (MA Repay)",
       content:
-        "Employees eligible for $3,000-$30,000 in student loan repayment assistance.",
+        "Eligible employees may receive $3,000-$30,000 in student loan repayment assistance.",
       style: "rotate-[-5deg]",
       icon: <GraduationCap className="w-15 h-15 mr-2" />,
     },
     {
       id: 9,
-      title: "Certified Training & Education",
+      title: "Certified Training and Education",
       content:
         "Access Care Academy courses to meet state requirements and advance your career.",
       icon: <BookOpenCheck className="w-15 h-15 mr-2" />,
@@ -119,7 +119,7 @@ const WhyJoinUs = () => {
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row bg-white lg:h-[34rem]">
           {/* Left Section - Title */}
           <div className="flex-1 flex items-center justify-center p-6 md:p-8 lg:p-12 text-center">
-            <h1 className="text-5xl  md:text-8xl font-extrabold text-[#376082]"  style={{fontFamily: "Chathura"}}>
+            <h1 className="text-3xl md:text-4xl font-medium text-[#376082]">
               Why Join Us?
             </h1>
           </div>

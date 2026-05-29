@@ -79,13 +79,28 @@ export const serviceMenuData = [
 ];
 
 export const additionalMenuItems = [
-  "HOMECARE MASSACHUSETTS",
-  "NON-DISCRIMINATION POLICY",
-  "BLOGS",
-  "CONTACT US",
-  "JOIN OUR TEAM",
-  "OPPORTUNITIES",
-  "LEAVE A REVIEW",
-  "GOOGLE BUSINESS REVIEWS", 
-  "CARE.COM REVIEWS"
+  {
+    heading: 'Resources',
+    items: [
+      { label: 'HOMECARE MASSACHUSETTS' },
+      { label: 'NON-DISCRIMINATION POLICY' },
+      { label: 'BLOGS' },
+    ],
+  },
+  {
+    heading: 'Careers',
+    items: [
+      { label: 'JOIN OUR TEAM' },
+      { label: 'OPPORTUNITIES' },
+      { label: 'CONTACT US' },
+    ],
+  },
+  {
+    heading: 'Reviews',
+    items: [
+      { label: 'LEAVE A REVIEW' },
+      { label: 'GOOGLE BUSINESS REVIEWS' },
+      { label: 'CARE.COM REVIEWS' },
+    ],
+  },
 ];

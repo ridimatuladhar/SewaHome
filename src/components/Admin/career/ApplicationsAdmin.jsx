@@ -33,15 +33,15 @@ const ApplicationsAdmin = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const response = await fetch(`${API_BASE}/career/get_applications.php`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         setApplications(data.applications || []);
         setFilteredApplications(data.applications || []);
@@ -61,7 +61,7 @@ const ApplicationsAdmin = () => {
     try {
       const response = await fetch(`${API_BASE}/career/get_positions.php?admin=true`);
       const data = await response.json();
-      
+
       if (data.success) {
         setPositions(data.positions || []);
       }
@@ -92,7 +92,7 @@ const ApplicationsAdmin = () => {
     // Apply search filter
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(app => 
+      filtered = filtered.filter(app =>
         app.first_name.toLowerCase().includes(term) ||
         app.last_name.toLowerCase().includes(term) ||
         app.email.toLowerCase().includes(term) ||
@@ -128,7 +128,7 @@ const ApplicationsAdmin = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           id: applicationId,
           status: newStatus
         })
@@ -168,11 +168,14 @@ const ApplicationsAdmin = () => {
     return applications.filter(app => app.status === status).length;
   };
 
-  // Download resume
-  const handleDownloadResume = (resumePath) => {
-    const fullPath = `${API_BASE}${resumePath}`;
-    window.open(fullPath, '_blank');
-  };
+const handleDownloadResume = (application) => {
+    if (!application.resume_path) return;
+    const params = new URLSearchParams(application.resume_path.split('?')[1]);
+    const fileName = params.get('file');
+    if (!fileName) return;
+    window.open(`${API_BASE}/serve_resume.php?file=${encodeURIComponent(fileName)}`, '_blank');
+};
+
 
   if (loading) {
     return (
@@ -192,7 +195,7 @@ const ApplicationsAdmin = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-           
+
             <div className="text-sm text-gray-500" >
               Total: {applications.length} applications
             </div>
@@ -239,7 +242,7 @@ const ApplicationsAdmin = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search by name, email, or position..."
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#376082] focus:border-[#376082] transition-colors"
-                
+
                 />
               </div>
             </div>
@@ -253,7 +256,7 @@ const ApplicationsAdmin = () => {
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#376082] focus:border-[#376082] transition-colors"
-                
+
               >
                 {statusOptions.map(option => (
                   <option key={option.value} value={option.value}>
@@ -272,7 +275,7 @@ const ApplicationsAdmin = () => {
                 value={positionFilter}
                 onChange={(e) => setPositionFilter(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#376082] focus:border-[#376082] transition-colors"
-             
+
               >
                 <option value="all">All Positions</option>
                 {positions.map(position => (
@@ -292,7 +295,7 @@ const ApplicationsAdmin = () => {
               Applications ({filteredApplications.length})
             </h2>
           </div>
-          
+
           {filteredApplications.length === 0 ? (
             <div className="p-12 text-center">
               <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -305,10 +308,10 @@ const ApplicationsAdmin = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th 
+                    <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('first_name')}
-                      
+
                     >
                       <div className="flex items-center space-x-1">
                         <span>Applicant</span>
@@ -317,10 +320,10 @@ const ApplicationsAdmin = () => {
                         )}
                       </div>
                     </th>
-                    <th 
+                    <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('position')}
-                      
+
                     >
                       <div className="flex items-center space-x-1">
                         <span>Position</span>
@@ -332,10 +335,10 @@ const ApplicationsAdmin = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >
                       Contact
                     </th>
-                    <th 
+                    <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('experience')}
-                      
+
                     >
                       <div className="flex items-center space-x-1">
                         <span>Experience</span>
@@ -344,10 +347,10 @@ const ApplicationsAdmin = () => {
                         )}
                       </div>
                     </th>
-                    <th 
+                    <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('created_at')}
-                     
+
                     >
                       <div className="flex items-center space-x-1">
                         <span>Applied</span>
@@ -408,10 +411,9 @@ const ApplicationsAdmin = () => {
                         <select
                           value={application.status}
                           onChange={(e) => handleStatusUpdate(application.id, e.target.value)}
-                          className={`text-xs font-medium px-3 py-1 rounded-full border-0 focus:ring-2 focus:ring-[#376082] transition-colors ${
-                            statusOptions.find(s => s.value === application.status)?.color || 'bg-gray-100 text-gray-800'
-                          }`}
-                          
+                          className={`text-xs font-medium px-3 py-1 rounded-full border-0 focus:ring-2 focus:ring-[#376082] transition-colors ${statusOptions.find(s => s.value === application.status)?.color || 'bg-gray-100 text-gray-800'
+                            }`}
+
                         >
                           {statusOptions.slice(1).map(option => (
                             <option key={option.value} value={option.value}>
@@ -429,13 +431,19 @@ const ApplicationsAdmin = () => {
                           >
                             <Eye size={16} />
                           </button>
-                          <button
-                            onClick={() => handleDownloadResume(application.resume_path)}
-                            className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
-                            title="Download resume"
-                          >
-                            <Download size={16} />
-                          </button>
+{application.resume_path ? (
+    <button
+        onClick={() => handleDownloadResume(application)}
+        className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+        title="Download resume"
+    >
+        <Download size={16} />
+    </button>
+) : (
+    <span className="p-2 text-gray-300 cursor-not-allowed" title="No resume uploaded">
+        <Download size={16} />
+    </span>
+)}
                         </div>
                       </td>
                     </tr>

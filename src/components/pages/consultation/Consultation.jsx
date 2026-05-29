@@ -238,8 +238,8 @@ const Consultation = () => {
           >
             <motion.h2
               variants={fadeIn}
-              className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-6"
-              style={{ fontFamily: "Chathura" }}
+              className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-6"
+              
             >
               Why Schedule a Consultation?
             </motion.h2>
@@ -295,8 +295,8 @@ const Consultation = () => {
             >
               <motion.h2
                 variants={fadeIn}
-                className="text-3xl md:text-6xl font-bold text-[#376082] mb-4"
-                style={{ fontFamily: "Chathura" }}
+                className="text-3xl md:text-4xl font-medium text-[#376082] mb-4"
+              
               >
                 Schedule Your Free Consultation
               </motion.h2>

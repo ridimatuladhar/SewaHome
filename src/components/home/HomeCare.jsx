@@ -39,9 +39,6 @@ const Modal = ({ onClose }) => {
 
             {/* Elite Leadership */}
             <div>
-              <p className="text-xs font-semibold text-[#376082] uppercase tracking-widest mb-4 opacity-60">
-                Elite Leadership
-              </p>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   {
@@ -58,8 +55,8 @@ const Modal = ({ onClose }) => {
                     className="bg-[#F0F4F8] rounded-xl p-5 border-l-4 border-[#376082]"
                     style={{ borderRadius: '0 12px 12px 0' }}
                   >
-                    <h5 className="text-base font-semibold text-[#376082] mb-2">{item.title}</h5>
-                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                    <h5 className="text-base font-semibold text-lg text-xl text-[#376082] mb-2">{item.title}</h5>
+                    <p className="text-sm md:text-md text-gray-600 leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -90,8 +87,8 @@ const Modal = ({ onClose }) => {
                   <div key={i} className="flex gap-4 items-start bg-[#F0F4F8] rounded-xl p-4">
                     <div className="mt-1.5 w-2 h-2 rounded-full bg-[#376082] flex-shrink-0" />
                     <div>
-                      <h6 className="text-sm font-semibold text-[#376082] mb-1">{item.title}</h6>
-                      <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                      <h6 className="text-md md:text-lg font-semibold text-[#376082] mb-1">{item.title}</h6>
+                      <p className="text-sm md:text-md text-gray-600 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -103,7 +100,7 @@ const Modal = ({ onClose }) => {
             {/* Lifestyle & Advocacy */}
             <div>
               <p className="text-xs font-semibold text-[#376082] uppercase tracking-widest mb-4 opacity-60">
-                Lifestyle &amp; Advocacy
+                Lifestyle and Advocacy
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
@@ -112,7 +109,7 @@ const Modal = ({ onClose }) => {
                     desc: 'We believe that high-end care should be seamless and discreet. Our team is trained to integrate into high-functioning, private households with the utmost professionalism, ensuring that the familiar warmth and aesthetic of your home remain undisturbed.'
                   },
                   {
-                    title: 'Concierge Advocacy & Strategy',
+                    title: 'Concierge Advocacy and Strategy',
                     desc: 'Navigating the complexities of modern medicine requires a sophisticated advocate. We act as your private consultants, designing a bespoke roadmap for your care that evolves with your needs.'
                   }
                 ].map((item, i) => (
@@ -133,12 +130,10 @@ const Modal = ({ onClose }) => {
             {/* Closing Statement */}
             <div className="text-center pb-2">
               <p className="text-base md:text-lg font-medium text-[#376082] mb-2">
-                Intelligence Backed by Knowledge. Experience Refined by Decades.
+               Intelligence Backed by Knowledge. Experience Refined by Decades.
               </p>
               <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                At Sewa Home Care, we don't just provide assistance; we provide a superior, tech-forward,
-                and clinician-led experience. We ensure you stay where life feels most meaningful —
-                safely, gracefully, with the highest standards of modern clinical care.
+                At Sewa Home Care, we don't just provide assistance; we provide a superior, tech-forward, and clinician-led experience. We ensure you stay where life feels most meaningful safely, gracefully, with the highest standards of modern clinical care.
               </p>
             </div>
           </div>
@@ -166,7 +161,7 @@ const HomeCare = () => {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <motion.h1
-              className="text-3xl md:text-5xl font-medium text-[#376082] mb-4 md:mb-6"
+              className="text-3xl md:text-4xl font-medium text-[#376082] mb-4 md:mb-6"
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
@@ -179,8 +174,7 @@ const HomeCare = () => {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
             >
-              Sewa Home care helps seniors and individuals with challenges maintain their independence,
-              safety, and quality of life in the place they love most.
+              Sewa Home Care helps seniors and individuals with challenges maintain independence, safety, and quality of life in the place they love most their home.
             </motion.p>
           </motion.div>
 
@@ -195,8 +189,7 @@ const HomeCare = () => {
               transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
             >
               <motion.h2
-                className="text-4xl md:text-7xl font-extrabold text-[#376082] mb-4 md:mb-6"
-                style={{ fontFamily: 'Chathura' }}
+                className="text-3xl md:text-4xl font-medium text-[#376082] mb-4 md:mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
@@ -209,13 +202,11 @@ const HomeCare = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                 transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' }}
               >
-                <h3 className="text-xl md:text-2xl font-semibold text-[#376082] mb-3">
-                  The Global Standard in Intelligent, Clinical, and Bespoke Private Care
+                <h3 className="text-lg md:text-xl font-semibold text-[#376082] mb-3">
+                  The Global Standard in Intelligent, Clinical, and Bespoke Private Care 
                 </h3>
                 <p className="text-md md:text-lg leading-relaxed text-gray-700">
-                  Choosing Sewa Home Care is a commitment to excellence without compromise.
-                  We provide a boutique lifestyle solution where sophisticated clinical oversight
-                  meets the world's most advanced care technologies.
+                  Choosing Sewa Home Care is a commitment to excellence without compromise. We provide a boutique lifestyle solution where sophisticated clinical oversight meets the world's most advanced care technologies.
                 </p>
               </motion.div>
 
@@ -228,15 +219,10 @@ const HomeCare = () => {
               >
                 <div className="bg-white/50 rounded-xl p-4 md:p-6">
                   <p className="text-md md:text-lg leading-relaxed text-gray-700">
-                    <span className="font-semibold text-[#376082]">
-                      Founded and led by Mala Lama, BSN, RN, CMC, CDP, MSIT.
-                    </span>{' '}
-                    A Registered Nurse and Medical IT expert with a Master of Science in Information Technology
-                    and a degree in Hospital Management.
+                    <span className="font-semibold text-[#376082]">Founded and led by Mala Lama, BSN, RN, CMC, CDP, MSIT</span>—a Registered Nurse and Medical IT expert with a Master of Science in Information Technology and a degree in Hospital Management.
                   </p>
                   <p className="text-md md:text-lg leading-relaxed text-gray-700 mt-3">
-                    Our core is powered by intelligence and steered by a veteran leadership team that
-                    represents the pinnacle of the healthcare industry.
+                   Our core is powered by intelligence and steered by a veteran leadership team that represents the pinnacle of the healthcare industry.
                   </p>
 
                   {/* Read More Button */}

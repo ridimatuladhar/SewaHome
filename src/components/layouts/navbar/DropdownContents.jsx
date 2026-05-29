@@ -91,20 +91,37 @@ export const ServicesDropdownContent = ({ items, onServiceClick }) => {
 export const MenuDropdownContent = ({ items, onItemClick }) => {
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-6">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-        {items.map((item, index) => {
-          const label = typeof item === 'string' ? item : item.name;
-          return (
-            <a
-              key={index}
-              href="#"
-              onClick={(e) => onItemClick && onItemClick(label, e)}
-              className="flex items-center justify-center text-center px-3 py-2.5 text-xs font-semibold tracking-wide rounded border-transparent hover:bg-[#eef3f7] hover:text-[#376082] text-gray-600 transition-all duration-150 cursor-pointer"
+      <div className="grid grid-cols-3 gap-8">
+        {items.map((group) => (
+          <div key={group.heading}>
+            <p
+              className="text-xs font-medium uppercase mb-3 pb-1 border-b"
+              style={{ color: '#376082', borderColor: '#d1dde8' }}
             >
-              {label}
-            </a>
-          );
-        })}
+              {group.heading}
+            </p>
+            <div className="flex flex-col gap-0.5">
+              {group.items.map((item) => {
+                const label = typeof item === 'string' ? item : item.label;
+                const ext   = typeof item === 'string' ? false : item.external;
+                return (
+                  <a
+                    key={label}
+                    href="#"
+                    onClick={(e) => onItemClick && onItemClick(label, e)}
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 rounded hover:bg-[#eef3f7] hover:text-[#376082] transition-colors group"
+                  >
+                    
+                    <span className="capitalize lowercase" style={{ textTransform: 'capitalize' }}>
+                      {label.charAt(0) + label.slice(1).toLowerCase()}
+                    </span>
+                 
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

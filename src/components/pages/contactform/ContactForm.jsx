@@ -146,8 +146,7 @@ const ContactForm = () => {
         <div className="absolute inset-0 bg-white/50"></div>
         <div className="relative container mx-auto px-4 text-center">
           <motion.h2
-            className="text-6xl md:text-7xl font-bold text-[#3A5674] mb-6"
-            style={{ fontFamily: 'Chathura' }}
+            className="text-3xl md:text-4xl font-medium text-[#3A5674] mb-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -160,7 +159,7 @@ const ContactForm = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            We would love to hear from you. Send us a message, and we will respond as soon as possible.
           </motion.p>
         </div>
       </motion.div>
@@ -178,7 +177,7 @@ const ContactForm = () => {
               <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-semibold">Message Sent Successfully!</p>
-                <p className="text-sm">Thank you for contacting us. We'll get back to you soon.</p>
+                <p className="text-sm">Thank you for contacting us. We will get back to you soon.</p>
               </div>
             </div>
           </motion.div>
@@ -227,7 +226,7 @@ const ContactForm = () => {
 
               <div className="mb-6">
                 <p className="text-gray-600 mb-4">
-                  Are you sure you want to send your message? We'll contact you at:
+                  Are you sure you want to send your message? We will contact you at:
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                   <p className="text-sm">
@@ -324,7 +323,7 @@ const ContactForm = () => {
                   Send us a Message
                 </h3>
                 <p className="text-gray-600">
-                  Fill out the form below and we'll get back to you shortly.
+                  Fill out the form below, and we will get back to you shortly.
                 </p>
               </div>
 
@@ -452,7 +451,7 @@ const ContactForm = () => {
                 </motion.button>
 
                 <p className="text-center text-sm text-gray-500">
-                  By submitting this form, you agree to our Privacy Policy and consent to be contacted by SEWA Home Care.
+                  By submitting this form, you agree to our Privacy Policy and consent to be contacted by Sewa Home Care.
                 </p>
               </motion.form>
             </motion.div>

@@ -52,8 +52,8 @@ const Banners = () => {
     <>
       <div className="bg-white py-12">
         <h2
-           className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-          style={{ fontFamily: "Chathura" }}
+           className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+         
         >
           Our Partners
         </h2>
@@ -110,59 +110,7 @@ const Banners = () => {
         </div>
       )}
 
-      {/* Recognition section */}
-      {/* <div className="container mx-auto space-y-4">
-        <p
-          className="text-6xl font-bold text-center mt-10 mb-6 text-[#1c3c6b]"
-          style={{ fontFamily: "chathura" }}
-        >
-          Recognition
-        </p> */}
-
-        {/* First row */}
-        {/* <div className="flex flex-col md:flex-row justify-center flex-wrap  md:space-x-30 border">
-          <div
-            className="flex-1 flex flex-col items-center md:items-end justify-end text-end p-4 font-bold text-[42px] md:text-[45px] lg:text-[60px]"
-            style={{ fontFamily: "chathura" }}
-          >
-            <p>Highly Recommended By</p>
-            <p className="mt-[-20px] md:pr-14 lg:pr-19">Locals on Alignable</p>
-          </div>
-          <div className="flex-1 flex items-center justify-center md:justify-start p-4">
-            <img
-              src="/partners/recognition/image4.png"
-              alt=""
-              className="w-full max-w-[300px] object-contain"
-            />
-          </div>
-        </div> */}
-
-        {/* Second row */}
-
-        {/* <div className="flex flex-col md:flex-row justify-center flex-wrap  ">
-          <div className="flex-1 flex items-center justify-center p-4 ">
-            <img
-              src="/partners/recognition/image4.png"
-              alt=""
-              className="w-full max-w-[300px] object-contain"
-            />
-          </div>
-          <div className="flex-1 flex items-center justify-center p-4 ">
-            <img
-              src="/partners/recognition/image2.png"
-              alt=""
-              className="w-full max-w-[300px] object-contain"
-            />
-          </div>
-          <div className="flex-1 flex items-center justify-center  p-4">
-            <img
-              src="/partners/recognition/image3.png"
-              alt=""
-              className="w-full max-w-[300px] object-contain"
-            />
-          </div>
-        </div>
-      </div> */}
+     
     </>
   );
 };

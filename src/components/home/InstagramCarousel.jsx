@@ -93,8 +93,8 @@ const InstagramAutoCarousel = () => {
       {/* Header Section */}
       <div className="text-center mb-12">
         <div className="flex items-center justify-center mb-4">
-          <h1  className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] "
-          style={{ fontFamily: "Chathura" }}>Instagram</h1>
+          <h1  className="text-3xl md:text-4xl font-medium text-center text-[#376082] "
+          >Instagram</h1>
         </div>
         <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed"  style={{ fontFamily: "Macha" }}>
           A window into our world of care. For real moments, client testimonials, and helpful 

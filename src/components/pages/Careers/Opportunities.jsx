@@ -209,8 +209,8 @@ const Opportunities = () => {
         <Navbar />
         <div className="bg-[#f8fafc] mt-16 py-16 px-6 text-center">
           <h1
-            className="text-5xl md:text-6xl font-extrabold text-[#376082] mb-4"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl font-medium text-[#376082] mb-4"
+       
           >
             Current Job Opportunities
           </h1>
@@ -233,8 +233,8 @@ const Opportunities = () => {
         <Navbar />
         <div className="bg-[#f8fafc] mt-16 py-16 px-6 text-center">
           <h1
-            className="text-5xl md:text-6xl font-extrabold text-[#376082] mb-4"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl font-medium text-[#376082] mb-4"
+    
           >
             Current Job Opportunities
           </h1>
@@ -265,8 +265,8 @@ const Opportunities = () => {
       {/* Header Section */}
       <div className="bg-[#f8fafc] mt-16 py-16 px-6 text-center">
         <h1
-          className="text-5xl md:text-6xl font-extrabold text-[#376082] mb-4"
-          style={{ fontFamily: "Chathura" }}
+          className="text-3xl md:text-4xl font-medium text-[#376082] mb-4"
+
         >
           Current Job Opportunities
         </h1>
@@ -621,7 +621,7 @@ const Opportunities = () => {
                     <div className="relative">
                       <PhoneInput
                         international
-                        defaultCountry="NP"
+                        defaultCountry="US"
                         value={formData.phone}
                         onChange={handlePhoneChange}
                         placeholder="Enter your phone number"

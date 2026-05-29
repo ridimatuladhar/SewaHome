@@ -16,7 +16,7 @@ const MeetTheTeam = () => {
   const navigate = useNavigate();
 
   const API_BASE = 'https://api.sewacareservices.com/team';
-  // const API_BASE = 'http://localhost/SewaHome/Backend/team';
+ //  const API_BASE = 'http://localhost/SewaHome/Backend/team';
 
   const fetchTeamMembers = useCallback(async () => {
     try {
@@ -181,8 +181,8 @@ const getImageUrl = (imagePath) => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-          style={{ fontFamily: "Chathura" }}
+          className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+
         >
           Meet The Team
         </motion.h1>
@@ -202,8 +202,8 @@ const getImageUrl = (imagePath) => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-          style={{ fontFamily: "Chathura" }}
+          className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+
         >
           Meet The Team
         </motion.h1>
@@ -228,8 +228,8 @@ const getImageUrl = (imagePath) => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-          style={{ fontFamily: "Chathura" }}
+          className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+         
         >
           Meet The Team
         </motion.h1>
@@ -258,8 +258,8 @@ const getImageUrl = (imagePath) => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-        style={{ fontFamily: "Chathura" }}
+        className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+    
       >
         Meet The Team
       </motion.h1>

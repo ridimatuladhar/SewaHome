@@ -48,18 +48,18 @@ const Navbar = () => {
   }, []);
 
   // Filter services - using shorter labels for display
-  const homeCareServices = serviceMenuData.filter(item =>
-    ["HOME CARE SERVICES", "TRANSITION & PLACEMENT", "SUPPORT SERVICES"].includes(item.title)
-  );
-  const professionalCare = serviceMenuData.filter(item =>
-    item.title === "PROFESSIONAL CARE MANAGEMENT"
-  );
-  const clinicalNursingServices = serviceMenuData.filter(item =>
-    item.title === "CLINICAL NURSING SERVICES"
-  );
-  const dementiaCareSpecialists = serviceMenuData.filter(item =>
-    item.title === "DEMENTIA CARE SPECIALISTS"
-  );
+const homeCareServices = serviceMenuData.filter(item =>
+  ["Home Care Services", "Transition and Placement", "Support Services"].includes(item.title)
+);
+const professionalCare = serviceMenuData.filter(item =>
+  item.title === "Professional Care Management"
+);
+const clinicalNursingServices = serviceMenuData.filter(item =>
+  item.title === "Clinical Nursing Services"
+);
+const dementiaCareSpecialists = serviceMenuData.filter(item =>
+  item.title === "Dementia Care Specialists"
+);
 
   const navigate = useNavigate();
   const location = useLocation();

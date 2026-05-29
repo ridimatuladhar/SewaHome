@@ -68,7 +68,7 @@ const Homecare_massachusetts = () => {
             variants={fadeIn}
             className="max-w-3xl mx-auto text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-[#376081] mb-4" style={{ fontFamily: 'Chathura' }}>
+            <h1 className="text-3xl md:text-4xl font-medium text-[#376081] mb-4" >
               HomeCare Services - Massachusetts
             </h1>
             <p className="text-lg md:text-xl text-gray-600" style={{ fontFamily: 'Macha' }}>
@@ -88,7 +88,7 @@ const Homecare_massachusetts = () => {
             variants={fadeIn}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-[#376081] mb-6" style={{ fontFamily: 'Chathura' }}>
+            <h2 className="text-3xl md:text-4xl font-medium text-[#376081] mb-6" >
               Comprehensive Home Care Resources
             </h2>
             <p className="text-lg text-gray-700 mb-8">
@@ -115,8 +115,7 @@ const Homecare_massachusetts = () => {
           >
             <motion.h2 
               variants={fadeIn}
-              className="text-4xl md:text-6xl font-bold text-[#376081] mb-2 text-center"
-              style={{ fontFamily: 'Chathura' }}
+              className="text-3xl md:text-4xl font-medium text-[#376081] mb-2 text-center"
             >
               State-Funded In-Home Care Programs
             </motion.h2>

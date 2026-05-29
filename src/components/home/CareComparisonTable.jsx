@@ -6,7 +6,7 @@ const CareComparisonTable = () => {
   
   const comparisonData = [
     {
-      feature: "Thoroughly Screened & Insured Caregivers",
+      feature: "Thoroughly Screened and Insured Caregivers",
       sewaHomeCare: true,
       basicAgency: false,
       privateCaregiver: false,
@@ -92,8 +92,8 @@ const CareComparisonTable = () => {
       {/* Header */}
       <div className="text-center mb-10 md:mb-12">
                <h1
-        className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-4"
-        style={{ fontFamily: "Chathura" }}
+        className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-4"
+        
       >
        Finding Peace of Mind: How Your Options Compare
       </h1>

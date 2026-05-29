@@ -79,8 +79,8 @@ const About = () => {
       >
         <div className="container mt-16 mx-auto px-6 text-center">
           <motion.h1 
-            className="text-5xl md:text-7xl font-extrabold mb-4"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl font-medium mb-4"
+           
             {...fadeInUp}
           >
             About Us
@@ -112,7 +112,7 @@ const About = () => {
             >
               <div className="flex items-center mb-6">
                 <Target className="w-8 h-8 text-[#376082] mr-4" />
-                <h2 className="text-4xl md:text-5xl text-[#376082] font-extrabold" style={{ fontFamily: "Chathura" }}>Our Mission</h2>
+                <h2 className="text-2xl md:text-3xl text-[#376082] font-medium">Our Mission</h2>
               </div>
               <p className="text-gray-600 leading-relaxed" style={{ fontFamily: "Macha" }}>
                 At Sewa Home Care, our mission is to be a trusted leader in home care services throughout Massachusetts and California providing compassionate, high-quality support that empowers seniors to live independently, safely, and with dignity in the comfort of their own homes.
@@ -125,7 +125,7 @@ const About = () => {
             >
               <div className="flex items-center mb-6">
                 <Eye className="w-8 h-8 text-[#376082] mr-4" />
-                <h2 className="text-4xl md:text-5xl text-[#376082] font-extrabold" style={{ fontFamily: "Chathura" }}>Our Vision</h2>
+                <h2 className="text-2xl md:text-3xl text-[#376082] font-medium">Our Vision</h2>
               </div>
               <p className="text-gray-600 leading-relaxed" style={{ fontFamily: "Macha" }}>
                 At Sewa Home Care, we believe aging is a time of strength and wisdom. With compassion and respect, we promote care that fosters independence, dignity, and wellness—helping seniors thrive with confidence and joy in the comfort of home.
@@ -140,7 +140,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <motion.div {...slideLeft} viewport={{ once: true }}>
-              <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>Our Approach to Care</h2>
+              <h2 className="text-3xl md:text-4xl text-[#376082] font-medium mb-6">Our Approach to Care</h2>
               <p className="text-gray-600 leading-relaxed mb-6 text-lg">
                 From the outset, Sewa Home Care has understood that exceptional senior care starts with a profound appreciation of each individual's unique health, cultural, and emotional needs.
               </p>
@@ -163,7 +163,7 @@ const About = () => {
               <img src="/carousel/carousel1.webp" alt="Memory care specialist with senior" className="rounded-xl shadow-2xl w-full" />
             </motion.div>
             <motion.div {...slideRight} viewport={{ once: true }} className="order-1 lg:order-2">
-              <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>Specialized Memory Care</h2>
+              <h2 className="text-3xl md:text-4xl text-[#376082] font-medium mb-6">Specialized Memory Care</h2>
               <p className="text-gray-600 leading-relaxed text-lg">
                 Our specialized approach to cognitive and memory care includes tailored activities designed to promote brain fitness, foster emotional connections, and establish daily structure helping individuals with mild cognitive impairment and early-stage dementia maintain their quality of life at home.
               </p>
@@ -177,7 +177,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <motion.div {...slideLeft} viewport={{ once: true }}>
-              <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>Our Caregivers</h2>
+              <h2 className="text-3xl md:text-4xl text-[#376082] font-medium mb-6" >Our Caregivers</h2>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
                 As an employer, Sewa Home Care recognizes the vital link between caregiver satisfaction and client outcomes. We take pride in hiring dedicated professionals and providing competitive benefits and training programs.
               </p>
@@ -196,8 +196,8 @@ const About = () => {
       <motion.section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <motion.h2 
-            className="text-5xl md:text-7xl text-[#376082] font-extrabold text-center mb-16"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl text-[#376082] font-medium text-center mb-16"
+          
             initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

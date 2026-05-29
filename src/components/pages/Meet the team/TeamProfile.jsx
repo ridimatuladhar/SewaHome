@@ -118,8 +118,8 @@ const getImageUrl = (imagePath) => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+          
           >
             Team Profile
           </motion.h1>
@@ -143,8 +143,8 @@ const getImageUrl = (imagePath) => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+    
           >
             Team Profile
           </motion.h1>
@@ -173,8 +173,8 @@ const getImageUrl = (imagePath) => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-            style={{ fontFamily: "Chathura" }}
+            className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+            
           >
             Team Profile
           </motion.h1>
@@ -209,8 +209,8 @@ const getImageUrl = (imagePath) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl md:text-7xl font-extrabold text-center text-[#376082] mb-16"
-          style={{ fontFamily: "Chathura" }}
+          className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-16"
+         
         >
           Team Profile
         </motion.h1>
@@ -329,7 +329,7 @@ const getImageUrl = (imagePath) => {
             <div className="space-y-6">
               {/* Bio Section */}
               <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-5xl font-extrabold text-[#1c3c6b] mb-4 border-b pb-2" style={{ fontFamily: "Chathura" }}>
+                <h3 className="text-2xl font-base text-[#1c3c6b] mb-4 border-b pb-2">
                   About Me
                 </h3>
                 <div className="prose prose-lg">
@@ -342,7 +342,7 @@ const getImageUrl = (imagePath) => {
               {/* Experience Section */}
               {member.experience && member.experience.length > 0 && (
                 <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-5xl font-extrabold text-[#1c3c6b] mb-4 border-b pb-2" style={{ fontFamily: "Chathura" }}>
+                  <h2 className="text-2xl font-base text-[#1c3c6b] mb-4 border-b pb-2">
                     Experience
                   </h2>
                   <div className="space-y-4">
@@ -370,7 +370,7 @@ const getImageUrl = (imagePath) => {
               {/* Credentials Section */}
               {member.credentials && member.credentials.length > 0 && (
                 <motion.div variants={itemVariants} className="bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-5xl font-extrabold text-[#1c3c6b] mb-4 border-b pb-2" style={{ fontFamily: "Chathura" }}>
+                  <h2 className="text-2xl font-base text-[#1c3c6b] mb-4 border-b pb-2" >
                     Credentials
                   </h2>
                   <ul className="space-y-2">

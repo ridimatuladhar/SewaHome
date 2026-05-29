@@ -14,7 +14,7 @@ const JobPostingModal = ({ show, onClose, position, onSuccess, onError }) => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  const API_BASE = 'https://api.sewacareservices.com';
+ const API_BASE = 'https://api.sewacareservices.com';
   //const API_BASE = 'http://localhost/SewaHome/Backend';
 
   // Job type options
@@ -57,7 +57,7 @@ const JobPostingModal = ({ show, onClose, position, onSuccess, onError }) => {
           benefits: position.benefits && position.benefits.length > 0 
             ? position.benefits 
             : [''],
-          is_active: position.is_active !== undefined ? position.is_active : true
+          is_active: position.is_active !== undefined ? position.is_active == 1 : true
         });
       } else {
         resetForm();
@@ -124,7 +124,7 @@ const JobPostingModal = ({ show, onClose, position, onSuccess, onError }) => {
         salary_range: formData.salary_range.trim(),
         requirements: requirementsData,
         benefits: benefitsData,
-        is_active: formData.is_active
+       is_active: formData.is_active ? 1 : 0
       };
 
       // Add ID for updates

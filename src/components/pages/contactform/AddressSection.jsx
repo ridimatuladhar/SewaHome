@@ -29,8 +29,8 @@ const AddressSection = () => {
   if (loading) return (
     <div className="max-w-6xl mx-auto px-4 py-12 text-[#3A5674]">
       <h2
-        className="text-7xl font-semibold text-center mb-10"
-        style={{ fontFamily: "Chathura" }}
+        className="text-3xl md:text-4xl font-medium text-center mb-10"
+  
       >
         Location
       </h2>
@@ -44,8 +44,7 @@ const AddressSection = () => {
   if (error) return (
     <div className="max-w-6xl mx-auto px-4 py-12 text-[#3A5674]">
       <h2
-        className="text-7xl font-semibold text-center mb-10"
-        style={{ fontFamily: "Chathura" }}
+        className="text-3xl md:text-4xl font-medium text-center mb-10"
       >
         Locations
       </h2>
@@ -56,8 +55,8 @@ const AddressSection = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12 text-[#3A5674]">
       <h2
-        className="text-7xl font-semibold text-center mb-10"
-        style={{ fontFamily: "Chathura" }}
+        className="text-3xl md:text-4xl font-medium text-center mb-10"
+
       >
         Locations
       </h2>

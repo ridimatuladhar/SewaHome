@@ -35,7 +35,7 @@ const FAQ = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
-              <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>
+              <h2 className="text-3xl md:text-4xl text-[#376082] font-medium mb-6" >
                 Frequently Asked Questions
               </h2>
               <div className="w-16 h-1 bg-[#376082] rounded mx-auto"></div>
@@ -64,7 +64,7 @@ const FAQ = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="text-left mb-12">
-            <h2 className="text-5xl md:text-7xl text-[#376082] font-extrabold mb-6" style={{ fontFamily: "Chathura" }}>
+            <h2 className="text-3xl md:text-4xl text-[#376082] font-medium mb-6" >
               Frequently Asked Questions
             </h2>
             <div className="w-16 h-1 bg-[#376082] rounded"></div>

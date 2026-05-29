@@ -255,12 +255,11 @@ const LeaveReview = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
             Share Your Experience
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We value your feedback and appreciate you taking the time to share your experience with SEWA Home Care.
-            Your review helps us improve our services and assist others in making informed decisions.
+           We value your feedback and appreciate you taking the time to share your experience with Sewa Home Care. Your review helps us enhance our services and supports others in making informed decisions about their care.
           </p>
         </motion.div>
 
@@ -274,8 +273,8 @@ const LeaveReview = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-[#376082] to-[#4a7ca5] p-8 text-white">
             <div className="text-center">
-              <h2 className="text-3xl font-bold mb-2">Write a Review</h2>
-              <p className="text-blue-100 text-lg">Tell us about your experience</p>
+              <h2 className="text-3xl font-medium mb-2">Write a Review</h2>
+              <p className="text-blue-100 text-lg">Tell us about your experience with Sewa Home Care.</p>
             </div>
           </div>
 
@@ -329,7 +328,7 @@ const LeaveReview = () => {
                   onChange={handleInputChange}
                   rows="4"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#376082] focus:border-transparent transition-all duration-200 resize-none text-black text-lg"
-                  placeholder="Share your detailed experience with our service. What did you like? How can we improve?"
+                  placeholder="Please share your detailed experience with our service. What did you appreciate? How can we improve?"
                   required
                   disabled={submitting}
                 />
@@ -416,10 +415,10 @@ const LeaveReview = () => {
                 <div>
                   <h4 className="font-semibold text-blue-800 mb-2">Important Information</h4>
                   <ul className="text-sm text-blue-700 space-y-1">
-                    <li>• All reviews are subject to approval before being published</li>
-                    <li>• We respect your privacy and will never share your email address</li>
-                    <li>• Reviews typically appear within 24-48 hours after approval</li>
-                    <li>• For any issues with your submission, please contact us directly</li>
+                    <li>• All reviews are subject to approval before publication.</li>
+                    <li>• We respect your privacy and will never share your email address.</li>
+                    <li>• Reviews typically appear within 24-48 hours after approval.</li>
+                    <li>• For any issues with your submission, please contact us directly.</li>
                   </ul>
                 </div>
               </div>

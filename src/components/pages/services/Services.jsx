@@ -124,23 +124,21 @@ export default function Services() {
       {/* Hero */}
       <div className="text-center mb-16">
         <h1
-          className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight"
-          style={{ fontFamily: "Chathura", color: BRAND }}
+          className="text-3xl md:text-4xl font-medium mb-6 leading-tight"
+          style={{  color: BRAND }}
         >
           Expertly Managed, Whole-Person Home Care
         </h1>
         <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-          Experience peace of mind with expertly managed home care. Our custom plans combine
-          clinical support, geriatric expertise, and smart technology to promote your loved
-          one's independence and well-being at home.
+          Experience peace of mind with expertly managed home care. Our custom plans combine clinical support, geriatric expertise, and smart technology to promote independence and well-being at home.
         </p>
       </div>
 
       {/* Grid */}
       <div className="max-w-6xl mx-auto">
         <h2
-          className="text-5xl md:text-6xl font-bold text-center mb-12"
-          style={{ fontFamily: "Chathura", color: BRAND }}
+          className="text-3xl md:text-4xl font-medium text-center mb-12"
+          style={{  color: BRAND }}
         >
           Explore Our Services
         </h2>

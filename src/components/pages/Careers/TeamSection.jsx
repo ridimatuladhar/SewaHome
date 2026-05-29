@@ -96,10 +96,10 @@ const TeamSection = () => {
         <motion.div
           className="w-full lg:w-3/5 p-8 sm:p-12 flex flex-col justify-center space-y-6 lg:space-y-8"
           variants={contentVariants}
-          style={{ fontFamily: "Chathura" }}
+       
         >
           <motion.h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#376082] leading-tight"
+            className="text-3xl md:text-4xl font-medium text-[#376082] leading-tight"
             variants={titleVariants}
           >
             Join Our Compassionate Home Care Team
@@ -111,9 +111,7 @@ const TeamSection = () => {
               style={{ fontFamily: "Macha" }}
               variants={paragraphVariants}
             >
-              Are you passionate about making a difference in people's lives? Do you
-              have a heart for caring for the elderly and disabled? If so, we invite
-              you to consider joining our team.
+              Are you passionate about making a difference in people's lives? Do you have a heart for caring for the elderly and disabled? If so, we invite you to join our team.
             </motion.p>
 
             <motion.p
@@ -121,8 +119,7 @@ const TeamSection = () => {
               style={{ fontFamily: "Macha" }}
               variants={paragraphVariants}
             >
-              We offer a supportive work environment, competitive pay, comprehensive training,
-              and the opportunity to make a meaningful impact in your community.
+              We offer a supportive work environment, competitive pay, comprehensive training, and the opportunity to make a meaningful impact in your community.
             </motion.p>
 
             <motion.p
@@ -130,9 +127,7 @@ const TeamSection = () => {
               style={{ fontFamily: "Macha" }}
               variants={paragraphVariants}
             >
-              We're looking for dedicated caregivers, nurses, and home health aides
-              who are committed to providing exceptional, compassionate care to those
-              who need it most.
+              We are seeking dedicated caregivers, nurses, and home health aides who are committed to providing exceptional, compassionate care to those who need it most.
             </motion.p>
           </div>
 

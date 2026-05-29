@@ -216,27 +216,42 @@ const MobileMenu = ({
                 openSubmenu === "MENU" ? "max-h-[600px]" : "max-h-0"
               }`}
             >
-              <div className="grid grid-cols-2 gap-1 pb-3">
-                {(additionalMenuItems || []).map((item, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    onClick={(e) => handleMenuClick(item, e)}
-                    className="flex items-center justify-center text-center px-3 py-2 text-xs font-semibold tracking-wide rounded border border-transparent transition-all"
-                    style={{ color: '#374151', borderColor: 'transparent' }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.color = BRAND;
-                      e.currentTarget.style.backgroundColor = BRAND_LIGHT;
-                      e.currentTarget.style.borderColor = BRAND;
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.color = '#374151';
-                      e.currentTarget.style.backgroundColor = '';
-                      e.currentTarget.style.borderColor = 'transparent';
-                    }}
-                  >
-                    {item}
-                  </a>
+              <div className="flex flex-col gap-4 pb-3">
+                {(additionalMenuItems || []).map((group, gIdx) => (
+                  <div key={group.heading || gIdx} className="px-2">
+                    <p 
+                      className="text-[10px] font-bold uppercase mb-2 pb-1 border-b border-gray-100" 
+                      style={{ color: BRAND }}
+                    >
+                      {group.heading}
+                    </p>
+                    <div className="grid grid-cols-2 gap-1">
+                      {(group.items || []).map((item, iIdx) => {
+                        const label = typeof item === 'string' ? item : item.label;
+                        return (
+                          <a
+                            key={label}
+                            href="#"
+                            onClick={(e) => handleMenuClick(label, e)}
+                            className="flex items-center justify-center text-center px-3 py-2 text-xs font-semibold tracking-wide rounded border border-transparent transition-all"
+                            style={{ color: '#374151', borderColor: 'transparent' }}
+                            onMouseEnter={e => {
+                              e.currentTarget.style.color = BRAND;
+                              e.currentTarget.style.backgroundColor = BRAND_LIGHT;
+                              e.currentTarget.style.borderColor = BRAND;
+                            }}
+                            onMouseLeave={e => {
+                              e.currentTarget.style.color = '#374151';
+                              e.currentTarget.style.backgroundColor = '';
+                              e.currentTarget.style.borderColor = 'transparent';
+                            }}
+                          >
+                            {label}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
