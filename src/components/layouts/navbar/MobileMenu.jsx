@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from "lucide-react";
-import SocialIcons from './SocialIcons';
 import NavbarCTAs from './NavbarCTAs';
 
 const BRAND       = '#376082';
@@ -21,8 +20,15 @@ const MobileMenu = ({
   const [openServiceCategory, setOpenServiceCategory] = useState(null);
   const [openServiceItem,     setOpenServiceItem]     = useState(null);
 
-  const toggleServiceCategory = (title) => {
-    setOpenServiceCategory(openServiceCategory === title ? null : title);
+  const toggleServiceCategory = (title, sectionTitle) => {
+    if (openServiceCategory === title) {
+      setOpenServiceCategory(null);
+    } else {
+      setOpenServiceCategory(title);
+      if (openSubmenu !== sectionTitle) {
+        toggleSubmenu(sectionTitle);
+      }
+    }
     setOpenServiceItem(null);
   };
 
@@ -30,13 +36,19 @@ const MobileMenu = ({
     setOpenServiceItem(openServiceItem === title ? null : title);
   };
 
-  // Mirror desktop nav exactly: 4 service sections
+  // ✅ Match title-case strings returned by the API
   const homeCareServices = services.filter(item =>
-    ["HOME CARE SERVICES", "TRANSITION & PLACEMENT", "SUPPORT SERVICES"].includes(item.title)
+    ["Home Care Services", "Transition and Placement", "Support Services"].includes(item.title)
   );
-  const professionalCare  = services.filter(item => item.title === "PROFESSIONAL CARE MANAGEMENT");
-  const clinicalNursing   = services.filter(item => item.title === "CLINICAL NURSING SERVICES");
-  const dementiaCare      = services.filter(item => item.title === "DEMENTIA CARE SPECIALISTS");
+  const professionalCare = services.filter(item =>
+    item.title === "Professional Care Management"
+  );
+  const clinicalNursing = services.filter(item =>
+    item.title === "Clinical Nursing Services"
+  );
+  const dementiaCare = services.filter(item =>
+    item.title === "Dementia Care Specialists"
+  );
 
   const serviceMenuItems = [
     { title: "OUR SERVICES",      data: homeCareServices },
@@ -45,18 +57,18 @@ const MobileMenu = ({
     { title: "DEMENTIA CARE",     data: dementiaCare },
   ];
 
-  const renderServiceSection = (sectionData) => (
+  const renderServiceSection = (sectionData, sectionTitle) => (
     <div className="pb-2">
       {sectionData.map((category) => (
         <div key={category.title} className="mb-1">
-          {/* Category header */}
           <button
-            className="w-full flex justify-between items-center px-4 py-2 text-xs font-light tracking-widest uppercase rounded transition-colors"
+            className="w-full flex justify-between items-center px-4 py-2 text-xs font-semibold tracking-widest uppercase rounded transition-colors"
             style={{
               color: BRAND,
+              fontFamily: "century, 'Century Gothic', sans-serif",
               backgroundColor: openServiceCategory === category.title ? BRAND_LIGHT : 'transparent',
             }}
-            onClick={() => toggleServiceCategory(category.title)}
+            onClick={() => toggleServiceCategory(category.title, sectionTitle)}
           >
             <span>{category.title}</span>
             {openServiceCategory === category.title
@@ -64,13 +76,11 @@ const MobileMenu = ({
               : <ChevronDown className="w-3 h-3" />}
           </button>
 
-          {/* Items under category */}
           {openServiceCategory === category.title && (
             <div className="ml-3 mt-1 border-l-2 pl-2" style={{ borderColor: '#d1dde8' }}>
               {(category.items ?? [])
                 .filter(serviceItem => serviceItem.isActive !== false)
                 .map((serviceItem) => {
-                  // subItems from API are objects: { id, serviceId, title, ... }
                   const activeSubs = (serviceItem.subItems ?? []).filter(s => s.isActive !== false);
                   const hasSubs    = activeSubs.length > 0;
 
@@ -78,10 +88,10 @@ const MobileMenu = ({
                     <div key={serviceItem.serviceId ?? serviceItem.title}>
                       {hasSubs ? (
                         <>
-                          {/* Item with sub-items — toggle only, never navigate */}
                           <button
-                            className="w-full flex justify-between items-center px-3 py-2 text-sm text-gray-700 rounded transition-colors"
+                            className="w-full flex justify-between items-center px-3 py-2 text-sm text-gray-600 rounded transition-colors"
                             style={{
+                              fontFamily: "century, 'Century Gothic', sans-serif",
                               backgroundColor: openServiceItem === serviceItem.title ? BRAND_LIGHT : 'transparent',
                             }}
                             onClick={() => toggleServiceItem(serviceItem.title)}
@@ -97,12 +107,10 @@ const MobileMenu = ({
                               {activeSubs.map((sub) => (
                                 <a
                                   key={sub.serviceId ?? sub.id}
-                                  href="#"
-                                  // Pass the whole sub object — Navbar uses sub.serviceId for the URL
+                                  href={sub.serviceId ? `/services/${sub.serviceId}` : '#'}
                                   onClick={(e) => handleServiceClick(sub, e)}
-                                  className="flex items-center gap-2 py-1.5 px-3 text-xs text-gray-500 rounded transition-colors"
-                                  onMouseEnter={e => e.currentTarget.style.color = BRAND}
-                                  onMouseLeave={e => e.currentTarget.style.color = ''}
+                                  className="flex items-center gap-2 py-1.5 px-3 text-xs text-gray-500 rounded transition-colors hover:text-[#376082] hover:bg-[#eef3f7]"
+                                  style={{ fontFamily: "century, 'Century Gothic', sans-serif" }}
                                 >
                                   <span
                                     className="w-1 h-1 rounded-full flex-shrink-0"
@@ -115,19 +123,11 @@ const MobileMenu = ({
                           )}
                         </>
                       ) : (
-                        // Leaf item — navigate on click, pass whole object
                         <a
-                          href="#"
+                          href={serviceItem.serviceId ? `/services/${serviceItem.serviceId}` : '#'}
                           onClick={(e) => handleServiceClick(serviceItem, e)}
-                          className="block py-2 px-3 text-sm text-gray-600 rounded transition-colors"
-                          onMouseEnter={e => {
-                            e.currentTarget.style.color = BRAND;
-                            e.currentTarget.style.backgroundColor = BRAND_LIGHT;
-                          }}
-                          onMouseLeave={e => {
-                            e.currentTarget.style.color = '';
-                            e.currentTarget.style.backgroundColor = '';
-                          }}
+                          className="block py-2 px-3 text-sm text-gray-600 rounded transition-colors hover:text-[#376082] hover:bg-[#eef3f7]"
+                          style={{ fontFamily: "century, 'Century Gothic', sans-serif" }}
                         >
                           {serviceItem.title}
                         </a>
@@ -149,19 +149,16 @@ const MobileMenu = ({
       }`}
     >
       <div className="px-4 pt-2 pb-6">
-        {/* Social icons row */}
         <div className="flex items-center justify-end space-x-4 py-3 border-b border-gray-200">
-          {/* <SocialIcons /> */}
-            <NavbarCTAs />
+          <NavbarCTAs />
         </div>
 
         <nav className="py-2">
-
           {/* ABOUT US */}
           <div className="mb-1 border-b border-gray-100">
             <button
               className="w-full flex items-center py-3 text-sm font-bold tracking-wide transition-colors"
-              style={{ color: BRAND }}
+              style={{ color: BRAND, fontFamily: "century, 'Century Gothic', sans-serif" }}
               onClick={navigateToAbout}
             >
               ABOUT US
@@ -173,7 +170,7 @@ const MobileMenu = ({
             <div key={section.title} className="mb-1 border-b border-gray-100">
               <button
                 className="w-full flex justify-between items-center py-3 text-sm font-bold tracking-wide transition-colors"
-                style={{ color: BRAND }}
+                style={{ color: BRAND, fontFamily: "century, 'Century Gothic', sans-serif" }}
                 onClick={() => {
                   toggleSubmenu(section.title);
                   if (openSubmenu === section.title) {
@@ -193,16 +190,16 @@ const MobileMenu = ({
                   openSubmenu === section.title ? "max-h-[2000px]" : "max-h-0"
                 }`}
               >
-                {renderServiceSection(section.data)}
+                {renderServiceSection(section.data, section.title)}
               </div>
             </div>
           ))}
 
-          {/* MENU (flat list) */}
+          {/* MENU (grouped) */}
           <div className="mb-1">
             <button
               className="w-full flex justify-between items-center py-3 text-sm font-bold tracking-wide transition-colors"
-              style={{ color: BRAND }}
+              style={{ color: BRAND, fontFamily: "century, 'Century Gothic', sans-serif" }}
               onClick={() => toggleSubmenu("MENU")}
             >
               <span>MENU</span>
@@ -219,34 +216,28 @@ const MobileMenu = ({
               <div className="flex flex-col gap-4 pb-3">
                 {(additionalMenuItems || []).map((group, gIdx) => (
                   <div key={group.heading || gIdx} className="px-2">
-                    <p 
-                      className="text-[10px] font-bold uppercase mb-2 pb-1 border-b border-gray-100" 
-                      style={{ color: BRAND }}
+                    <p
+                      className="text-[10px] font-bold uppercase mb-2 pb-1 border-b border-gray-100 tracking-widest"
+                      style={{ color: BRAND, fontFamily: "century, 'Century Gothic', sans-serif" }}
                     >
                       {group.heading}
                     </p>
-                    <div className="grid grid-cols-2 gap-1">
-                      {(group.items || []).map((item, iIdx) => {
+                    <div className="flex flex-col gap-0.5">
+                      {(group.items || []).map((item) => {
                         const label = typeof item === 'string' ? item : item.label;
+                        const href  = typeof item === 'string' ? '#' : (item.href ?? '#');
+                        const ext   = typeof item !== 'string' && item.external;
                         return (
                           <a
                             key={label}
-                            href="#"
+                            href={href}
+                            target={ext ? '_blank' : undefined}
+                            rel={ext ? 'noopener noreferrer' : undefined}
                             onClick={(e) => handleMenuClick(label, e)}
-                            className="flex items-center justify-center text-center px-3 py-2 text-xs font-semibold tracking-wide rounded border border-transparent transition-all"
-                            style={{ color: '#374151', borderColor: 'transparent' }}
-                            onMouseEnter={e => {
-                              e.currentTarget.style.color = BRAND;
-                              e.currentTarget.style.backgroundColor = BRAND_LIGHT;
-                              e.currentTarget.style.borderColor = BRAND;
-                            }}
-                            onMouseLeave={e => {
-                              e.currentTarget.style.color = '#374151';
-                              e.currentTarget.style.backgroundColor = '';
-                              e.currentTarget.style.borderColor = 'transparent';
-                            }}
+                            className="px-3 py-2 text-sm text-gray-600 rounded transition-colors hover:text-[#376082] hover:bg-[#eef3f7]"
+                            style={{ fontFamily: "century, 'Century Gothic', sans-serif" }}
                           >
-                            {label}
+                            {label.charAt(0) + label.slice(1).toLowerCase()}
                           </a>
                         );
                       })}
@@ -256,7 +247,6 @@ const MobileMenu = ({
               </div>
             </div>
           </div>
-
         </nav>
       </div>
     </div>

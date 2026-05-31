@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { MenuDropdownContent } from './DropdownContents';
 import { ChevronDown } from 'lucide-react';
 
@@ -10,21 +10,41 @@ const DesktopAdditionalMenu = ({
   activeMenu,
   handleMenuEnter,
   handleMenuLeave,
+  handleMenuToggle,
   onItemClick,
 }) => {
   const isActive = activeMenu === title;
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!isActive) return;
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        handleMenuLeave();
+      }
+    };
+    document.addEventListener('pointerdown', handler);
+    return () => document.removeEventListener('pointerdown', handler);
+  }, [isActive, handleMenuLeave]);
 
   return (
     <div
+      ref={ref}
       className="relative flex-shrink-0"
       onMouseEnter={() => handleMenuEnter(title)}
       onMouseLeave={handleMenuLeave}
     >
       <button
-        className="flex items-center gap-1 text-[13px] font-extrabold  tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap"
+        className="flex items-center gap-1 text-[13px] font-extrabold tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap"
         style={{
           fontFamily: "century, 'Century Gothic', sans-serif",
-          color: isActive ? BRAND : '#376082',
+          color: BRAND,
+        }}
+        onPointerUp={(e) => {
+          if (e.pointerType === 'touch') {
+            e.preventDefault();
+            handleMenuToggle(title);
+          }
         }}
       >
         {title}
@@ -37,13 +57,10 @@ const DesktopAdditionalMenu = ({
         />
       </button>
 
-      
-
-      {/* Full-width dropdown */}
       <div
         className="fixed w-screen bg-white shadow-xl z-[100] transition-all duration-200 ease-out"
         style={{
-          top: '70px',
+          top: '80px',
           left: '50%',
           transform: isActive
             ? 'translateX(-50%) translateY(0)'

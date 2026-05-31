@@ -81,6 +81,8 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
 
   const handleMenuEnter = (title) => setActiveMenu(title);
   const handleMenuLeave = () => setActiveMenu(null);
+  const handleMenuToggle = (title) =>
+  setActiveMenu(prev => (prev === title ? null : title));
   const toggleSubmenu = (title) => setOpenSubmenu(openSubmenu === title ? null : title);
 
   const navigateToAbout = () => {
@@ -183,6 +185,7 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
 
           {/* OUR SERVICES */}
           <DesktopMenuItem
+          handleMenuToggle={handleMenuToggle}
             title="OUR SERVICES"
             items={homeCareServices}
             dropdownType="services"
@@ -196,6 +199,7 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
 
           {/* PROFESSIONAL CARE */}
           <DesktopMenuItem
+          handleMenuToggle={handleMenuToggle}
             title="PROFESSIONAL CARE"
             items={professionalCare}
             dropdownType="services"
@@ -209,6 +213,7 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
 
           {/* CLINICAL NURSING */}
           <DesktopMenuItem
+          handleMenuToggle={handleMenuToggle}
             title="CLINICAL NURSING"
             items={clinicalNursingServices}
             dropdownType="services"
@@ -222,6 +227,7 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
 
           {/* DEMENTIA CARE */}
           <DesktopMenuItem
+          handleMenuToggle={handleMenuToggle}
             title="DEMENTIA CARE"
             items={dementiaCareSpecialists}
             dropdownType="services"
@@ -242,6 +248,7 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
           {/* MENU */}
           <DesktopAdditionalMenu
             title="MENU"
+            handleMenuToggle={handleMenuToggle}
             items={additionalMenuItems}
             activeMenu={activeMenu}
             onItemClick={handleMenuClick}
@@ -257,8 +264,7 @@ const dementiaCareSpecialists = serviceMenuData.filter(item =>
           <img src="/main-logo/logo.webp" alt="Logo" className="h-10 w-auto object-contain" />
         </a>
         <div className="flex items-center gap-3">
-          {/* Phone Number for Mobile */}
-          <NavbarCTAs />
+          
           <button
             className="p-2 rounded-md focus:outline-none focus:ring-2 transition-colors"
             style={{ color: '#376082' }}
