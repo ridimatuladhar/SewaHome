@@ -311,7 +311,7 @@ const ServiceDetail = () => {
                   <div>
                     <motion.div className="flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/70 transition-colors" whileHover={{ x: 5 }}>
                       <Phone size={18} className="text-[#376082] flex-shrink-0" />
-                      <span className="text-gray-700 font-medium text-sm md:text-base">(978) 677-7012</span>
+                      <span className="text-gray-700 font-medium text-sm md:text-base">(857) 290-4205</span>
                     </motion.div>
                     <motion.div className="flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/70 transition-colors" whileHover={{ x: 5 }}>
                       <Mail size={18} className="text-[#376082] flex-shrink-0" />
