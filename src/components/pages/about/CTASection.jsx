@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { Phone, Calendar, Clock } from 'lucide-react';
 
 const CTASection = ({ isMobile = false }) => {
-  const PHONE_NUMBER = "(978) 677-7012";
-  const PHONE_LINK = "tel:+19786777012";
+  const PHONE_NUMBER = "(857) 290-4205";
+  const PHONE_LINK = "tel:+18572904205";
 
   const handlePhoneCall = () => {
     window.location.href = PHONE_LINK;
