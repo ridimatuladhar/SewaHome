@@ -4,8 +4,8 @@ import { Phone, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const NavbarCTAs = () => {
-  const PHONE_NUMBER = "(978) 677-7012";
-  const PHONE_LINK = "tel:19786777012";
+  const PHONE_NUMBER = "(857) 290-4205";
+  const PHONE_LINK = "tel:18572904205";
 
   return (
     <div className="flex items-center gap-3">
