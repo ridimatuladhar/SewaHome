@@ -136,6 +136,8 @@ export default function AdminServices() {
   const [expandedCats,    setExpandedCats]    = useState({});
   const [expandedItems,   setExpandedItems]   = useState({});
   const [formData,        setFormData]        = useState(EMPTY_FORM);
+  const [uploadProgress, setUploadProgress] = useState(0);
+const [localPreview,   setLocalPreview]   = useState('');
 
   useEffect(() => { loadAll(); }, []);
 
@@ -207,28 +209,77 @@ export default function AdminServices() {
     setShowModal(true);
   };
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
-    if (file.size > 5 * 1024 * 1024)    { alert('Max image size is 5 MB'); return; }
-    try {
-      setUploadingImage(true);
-      const fd = new FormData();
-      fd.append('hero_image', file);
-      const res  = await fetch(`${BASE_URL}/service/upload_image.php`, { method: 'POST', body: fd });
-      const data = await res.json();
-      if (data.success) setField('hero_image', data.image_path);
-      else throw new Error(data.message);
-    } catch (err) {
-      alert('Upload failed: ' + err.message);
-      setField('hero_image', '');
-    } finally {
-      setUploadingImage(false);
-      e.target.value = '';
-    }
-  };
+  const compressImage = (file, maxWidth = 1600, quality = 0.8) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const scale = Math.min(1, maxWidth / img.width);
+      canvas.width  = img.width  * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
+        'image/jpeg',
+        quality
+      );
+    };
+    img.src = URL.createObjectURL(file);
+  });
+};
 
+  const handleFileUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
+  if (file.size > 5 * 1024 * 1024)    { alert('Max image size is 5 MB'); return; }
+
+  // Show an instant local preview before anything uploads
+  const previewUrl = URL.createObjectURL(file);
+  setLocalPreview(previewUrl);
+  setUploadProgress(0);
+  setUploadingImage(true);
+
+  try {
+    const uploadFile = await compressImage(file); // shrink before sending
+    const fd = new FormData();
+    fd.append('hero_image', uploadFile);
+
+    const data = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `${BASE_URL}/service/upload_image.php`);
+
+      xhr.upload.onprogress = (evt) => {
+        if (evt.lengthComputable) {
+          setUploadProgress(Math.round((evt.loaded / evt.total) * 100));
+        }
+      };
+
+      xhr.onload = () => {
+        try {
+          const json = JSON.parse(xhr.responseText);
+          if (xhr.status >= 200 && xhr.status < 300 && json.success) resolve(json);
+          else reject(new Error(json.message || `Upload failed (${xhr.status})`));
+        } catch {
+          reject(new Error(`Upload failed (${xhr.status})`));
+        }
+      };
+      xhr.onerror = () => reject(new Error('Network error during upload'));
+      xhr.send(fd);
+    });
+
+    setField('hero_image', data.image_path);
+  } catch (err) {
+    alert('Upload failed: ' + err.message);
+    setField('hero_image', '');
+    setLocalPreview('');
+  } finally {
+    setUploadingImage(false);
+    setUploadProgress(0);
+    e.target.value = '';
+  }
+};
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.category_id)       { alert('Please select a category'); return; }
@@ -538,20 +589,57 @@ export default function AdminServices() {
                 </div>
               </div>
 
-              {/* Hero image */}
-              <div>
-                <label className="block text-sm font-medium mb-1.5">Hero Image</label>
-                <div className="flex items-center gap-3">
-                  <input type="file" accept="image/*" onChange={handleFileUpload} disabled={uploadingImage} className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#376082] file:text-white hover:file:bg-[#2a4a66]" />
-                  {uploadingImage && <Loader2 size={18} className="animate-spin text-[#376082] flex-shrink-0" />}
-                </div>
-                {formData.hero_image && (
-                  <div className="mt-2 relative inline-block">
-                    <img src={imgUrl(formData.hero_image)} alt="Preview" className="max-h-28 rounded-lg border object-cover" onError={e => e.target.style.display='none'} />
-                    <button type="button" onClick={() => setField('hero_image', '')} className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"><X size={13} /></button>
-                  </div>
-                )}
-              </div>
+         {/* Hero image */}
+<div>
+  <label className="block text-sm font-medium mb-1.5">Hero Image</label>
+  <div className="flex items-center gap-3">
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleFileUpload}
+      disabled={uploadingImage}
+      className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#376082] file:text-white hover:file:bg-[#2a4a66] disabled:opacity-50"
+    />
+  </div>
+
+  {uploadingImage && (
+    <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
+      <Loader2 size={14} className="animate-spin text-[#376082]" />
+      <span>Uploading… {uploadProgress}%</span>
+      <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-[#376082] transition-all duration-150"
+          style={{ width: `${uploadProgress}%` }}
+        />
+      </div>
+    </div>
+  )}
+
+  {(formData.hero_image || localPreview) && (
+    <div className="mt-2 relative inline-block">
+      <img
+        src={uploadingImage ? localPreview : imgUrl(formData.hero_image)}
+        alt="Preview"
+        className={`max-h-28 rounded-lg border object-cover transition-opacity ${uploadingImage ? 'opacity-50' : 'opacity-100'}`}
+        onError={e => e.target.style.display = 'none'}
+      />
+      {uploadingImage && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Loader2 size={20} className="animate-spin text-[#376082]" />
+        </div>
+      )}
+      {!uploadingImage && formData.hero_image && (
+        <button
+          type="button"
+          onClick={() => setField('hero_image', '')}
+          className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+        >
+          <X size={13} />
+        </button>
+      )}
+    </div>
+  )}
+</div>
 
               {/* Hover info */}
               <div>
