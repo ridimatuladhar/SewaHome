@@ -413,7 +413,7 @@ const Consultation = () => {
                         <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
                         <PhoneInput
                           international
-                          defaultCountry="NP"
+                          defaultCountry="US"
                           value={formData.phone}
                           onChange={handlePhoneChange}
                           placeholder="Enter your phone number"
