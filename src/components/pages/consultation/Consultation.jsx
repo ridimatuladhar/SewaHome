@@ -65,7 +65,7 @@ const Consultation = () => {
     const fetchServices = async () => {
       try {
       const response = await fetch('https://api.sewacareservices.com/consultation/get_services_dropdown.php');
-        //const response = await fetch('http://localhost/SewaHome/Backend/consultation/get_services_dropdown.php');
+    //    const response = await fetch('http://localhost/SewaHome/Backend/consultation/get_services_dropdown.php');
 
         if (!response.ok) {
           throw new Error('Failed to fetch services');
@@ -151,7 +151,7 @@ const Consultation = () => {
     setShowConfirmation(false);
 
     try {
-      const response = await fetch('https://api.sewacareservices.com/consultation/submit_consult.php', {
+     const response = await fetch('https://api.sewacareservices.com/consultation/submit_consult.php', {
      // const response = await fetch('http://localhost/SewaHome/Backend/consultation/submit_consult.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -226,61 +226,10 @@ const Consultation = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
 
-      {/* Benefits Section */}
-      <section className="py-16 mt-16 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={staggerContainer}
-            className="max-w-6xl mx-auto"
-          >
-            <motion.h2
-              variants={fadeIn}
-              className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-6"
-              
-            >
-              Why Schedule a Consultation?
-            </motion.h2>
-            <motion.p
-              variants={fadeIn}
-              className="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto"
-            >
-              Our consultations are designed to understand your specific situation and provide tailored solutions.
-            </motion.p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {benefits.map((benefit, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeIn}
-                  whileHover={{
-                    y: -8,
-                    transition: { duration: 0.3 }
-                  }}
-                  className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all border border-blue-100 cursor-pointer group"
-                >
-                  <motion.div
-                    className="mb-4 flex justify-center"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {benefit.icon}
-                  </motion.div>
-                  <h3 className="text-xl font-semibold text-[#376082] mb-3 group-hover:text-[#2a4a6a] transition-colors">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">{benefit.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+     
 
       {/* Consultation Form Section */}
-      <section id="consultation-form" className="py-16 bg-gradient-to-b from-gray-50 to-blue-50">
+      <section id="consultation-form" className="py-16 mt-16  bg-gradient-to-b from-gray-50 to-blue-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -501,6 +450,59 @@ const Consultation = () => {
                 </form>
               )}
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+       {/* Benefits Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="max-w-6xl mx-auto"
+          >
+            <motion.h2
+              variants={fadeIn}
+              className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-6"
+              
+            >
+              Why Schedule a Consultation?
+            </motion.h2>
+            <motion.p
+              variants={fadeIn}
+              className="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+            >
+              Our consultations are designed to understand your specific situation and provide tailored solutions.
+            </motion.p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {benefits.map((benefit, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeIn}
+                  whileHover={{
+                    y: -8,
+                    transition: { duration: 0.3 }
+                  }}
+                  className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all border border-blue-100 cursor-pointer group"
+                >
+                  <motion.div
+                    className="mb-4 flex justify-center"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {benefit.icon}
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-[#376082] mb-3 group-hover:text-[#2a4a6a] transition-colors">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed">{benefit.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>

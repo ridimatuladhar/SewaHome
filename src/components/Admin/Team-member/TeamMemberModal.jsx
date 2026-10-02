@@ -13,6 +13,7 @@ const TeamMemberModal = ({ show, onClose, member, onSuccess, onError }) => {
   });
   const [imagePreview, setImagePreview] = useState('');
   const [imageBase64, setImageBase64] = useState('');
+  const [imageRemoved, setImageRemoved] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const formatArrayField = (field) => {
@@ -40,6 +41,7 @@ const TeamMemberModal = ({ show, onClose, member, onSuccess, onError }) => {
     });
     setImagePreview('');
     setImageBase64('');
+    setImageRemoved(false);
   };
 
   useEffect(() => {
@@ -65,6 +67,7 @@ const imageUrl = member.image.startsWith('http')
           setImagePreview('');
         }
         setImageBase64('');
+        setImageRemoved(false);
       } else {
         resetForm();
       }
@@ -113,6 +116,7 @@ const imageUrl = member.image.startsWith('http')
         const base64String = e.target.result;
         setImageBase64(base64String);
         setImagePreview(base64String);
+        setImageRemoved(false);
       };
       reader.readAsDataURL(file);
     }
@@ -121,6 +125,7 @@ const imageUrl = member.image.startsWith('http')
   const removeImage = () => {
     setImagePreview('');
     setImageBase64('');
+    setImageRemoved(true);
   };
 
   const handleSubmit = async () => {
@@ -162,7 +167,7 @@ const imageUrl = member.image.startsWith('http')
         bio: formData.bio.trim(),
         experience: experienceData,
         credentials: credentialsData,
-        image: imageBase64 || null
+        ...(imageBase64 ? { image: imageBase64 } : imageRemoved ? { image: null } : {})
       };
 
       if (member) {
@@ -181,17 +186,23 @@ const imageUrl = member.image.startsWith('http')
         body: JSON.stringify(dataToSend)
       });
 
-      const result = await response.json();
+      const responseText = await response.text();
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        throw new Error(`Server returned HTTP ${response.status}${responseText ? `: ${responseText.slice(0, 200)}` : ''}`);
+      }
 
       if (result.success) {
         onSuccess(member ? 'Team member updated successfully' : 'Team member added successfully');
         onClose();
       } else {
-        onError(result.message || 'Operation failed');
+        onError(result.message || `Operation failed (HTTP ${response.status})`);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      onError('Error submitting form. Please try again.');
+      onError(error.message || 'Error submitting form. Please try again.');
     } finally {
       setSubmitting(false);
     }

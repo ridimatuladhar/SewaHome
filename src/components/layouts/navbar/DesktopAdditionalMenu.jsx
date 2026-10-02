@@ -30,45 +30,43 @@ const DesktopAdditionalMenu = ({
   return (
     <div
       ref={ref}
-      className="relative flex-shrink-0"
+      className="group relative flex-shrink-0 h-full flex items-center"
       onMouseEnter={() => handleMenuEnter(title)}
       onMouseLeave={handleMenuLeave}
     >
       <button
+        type="button"
         className="flex items-center gap-1 text-[13px] font-extrabold tracking-wide px-3 py-2 rounded transition-colors duration-200 whitespace-nowrap"
         style={{
           fontFamily: "century, 'Century Gothic', sans-serif",
           color: BRAND,
         }}
-        onPointerUp={(e) => {
-          if (e.pointerType === 'touch') {
-            e.preventDefault();
-            handleMenuToggle(title);
-          }
+        onClick={(e) => {
+          e.preventDefault();
+          handleMenuToggle(title);
         }}
       >
         {title}
         <ChevronDown
-          className="w-3 h-3 transition-transform duration-200"
+          className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
           style={{
             color: isActive ? BRAND : '#9ca3af',
-            transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)',
+            transform: isActive ? 'rotate(180deg)' : undefined,
           }}
         />
       </button>
 
+      {/* Dropdown panel with seamless bridge */}
       <div
-        className="fixed w-screen bg-white shadow-xl z-[100] transition-all duration-200 ease-out"
+        className={`fixed left-0 right-0 w-full bg-white shadow-xl z-[100] transition-all duration-200 ease-out ${
+          isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-1.5 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto'
+        }`}
         style={{
           top: '80px',
-          left: '50%',
-          transform: isActive
-            ? 'translateX(-50%) translateY(0)'
-            : 'translateX(-50%) translateY(-6px)',
-          opacity: isActive ? 1 : 0,
-          pointerEvents: isActive ? 'auto' : 'none',
         }}
       >
+        {/* Invisible top bridge to prevent gap flicker */}
+        <div className="absolute -top-4 left-0 right-0 h-4 bg-transparent" />
         <MenuDropdownContent items={items} onItemClick={onItemClick} />
       </div>
     </div>
