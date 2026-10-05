@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';
-import Navbar from '../../layouts/Navbar';
-import FooterButtons from '../footer/FooterButtons';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import Navbar from "../../layouts/Navbar";
+import FooterButtons from "../footer/FooterButtons";
 import {
   ClipboardList,
   UserCheck,
@@ -19,30 +19,30 @@ import {
   CheckCircle,
   AlertCircle,
   Loader,
-  X
-} from 'lucide-react';
+  X,
+} from "lucide-react";
 
 const Consultation = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
   });
 
   const [services, setServices] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loadingServices, setLoadingServices] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   const staggerContainer = {
@@ -50,25 +50,25 @@ const Consultation = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const slideIn = {
     hidden: { x: -50, opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { duration: 0.6 } }
+    visible: { x: 0, opacity: 1, transition: { duration: 0.6 } },
   };
 
   // Fetch services for dropdown
   useEffect(() => {
     const fetchServices = async () => {
       try {
-      const response = await fetch('https://api.sewacareservices.com/consultation/get_services_dropdown.php');
-    //    const response = await fetch('http://localhost/SewaHome/Backend/consultation/get_services_dropdown.php');
+        const response = await fetch( "https://api.sewacareservices.com/consultation/get_services_dropdown.php");
+        //  const response = await fetch('http://localhost/SewaHome/Backend/consultation/get_services_dropdown.php');
 
         if (!response.ok) {
-          throw new Error('Failed to fetch services');
+          throw new Error("Failed to fetch services");
         }
 
         const data = await response.json();
@@ -76,11 +76,11 @@ const Consultation = () => {
         if (data.success) {
           setServices(data.services);
         } else {
-          setError('Failed to load services');
+          setError("Failed to load services");
         }
       } catch (err) {
-        console.error('Error fetching services:', err);
-        setError('Unable to load services. Please try again.');
+        console.error("Error fetching services:", err);
+        setError("Unable to load services. Please try again.");
       } finally {
         setLoadingServices(false);
       }
@@ -91,46 +91,46 @@ const Consultation = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const handlePhoneChange = (value) => {
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      phone: value || ''
+      phone: value || "",
     }));
     // Clear error when user starts typing
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const validateForm = () => {
     if (!formData.firstName.trim()) {
-      setError('First name is required');
+      setError("First name is required");
       return false;
     }
     if (!formData.lastName.trim()) {
-      setError('Last name is required');
+      setError("Last name is required");
       return false;
     }
     if (!formData.email.trim()) {
-      setError('Email is required');
+      setError("Email is required");
       return false;
     }
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       return false;
     }
     if (!formData.phone) {
-      setError('Phone number is required');
+      setError("Phone number is required");
       return false;
     }
     if (!formData.message.trim()) {
-      setError('Please tell us how we can help you');
+      setError("Please tell us how we can help you");
       return false;
     }
     return true;
@@ -147,19 +147,21 @@ const Consultation = () => {
 
   const confirmSubmission = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     setShowConfirmation(false);
 
     try {
-     const response = await fetch('https://api.sewacareservices.com/consultation/submit_consult.php', {
-     // const response = await fetch('http://localhost/SewaHome/Backend/consultation/submit_consult.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          phone: formData.phone // This will be in international format
-        })
-      });
+     const response = await fetch(
+       "https://api.sewacareservices.com/consultation/submit_consult.php",        {
+        //   const response = await fetch('http://localhost/SewaHome/Backend/consultation/submit_consult.php', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            phone: formData.phone, // This will be in international format
+          }),
+        },
+      );
 
       const data = await response.json();
 
@@ -167,19 +169,19 @@ const Consultation = () => {
         setSubmitted(true);
         // Reset form
         setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          service: '',
-          message: ''
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
         });
       } else {
-        setError(data.message || 'Failed to submit consultation request');
+        setError(data.message || "Failed to submit consultation request");
       }
     } catch (err) {
-      setError('Network error: Unable to submit request. Please try again.');
-      console.error('Submission error:', err);
+      setError("Network error: Unable to submit request. Please try again.");
+      console.error("Submission error:", err);
     } finally {
       setLoading(false);
     }
@@ -192,44 +194,49 @@ const Consultation = () => {
   const benefits = [
     {
       title: "Personalized Assessment",
-      description: "We evaluate individual needs to create a customized care plan.",
-      icon: <ClipboardList className="w-12 h-12 mx-auto text-[#376082]" />
+      description:
+        "We evaluate individual needs to create a customized care plan.",
+      icon: <ClipboardList className="w-12 h-12 mx-auto text-[#376082]" />,
     },
     {
       title: "Expert Guidance",
       description: "Get advice from experienced care professionals.",
-      icon: <UserCheck className="w-12 h-12 mx-auto text-[#376082]" />
+      icon: <UserCheck className="w-12 h-12 mx-auto text-[#376082]" />,
     },
     {
       title: "No Obligation",
-      description: "Our consultations are completely free with no commitment required.",
-      icon: <Target className="w-12 h-12 mx-auto text-[#376082]" />
+      description:
+        "Our consultations are completely free with no commitment required.",
+      icon: <Target className="w-12 h-12 mx-auto text-[#376082]" />,
     },
     {
       title: "Local Resources",
       description: "Learn about Massachusetts-specific programs and benefits.",
-      icon: <MapPin className="w-12 h-12 mx-auto text-[#376082]" />
+      icon: <MapPin className="w-12 h-12 mx-auto text-[#376082]" />,
     },
     {
       title: "Care Options",
-      description: "Understand all available services and what might work best.",
-      icon: <Heart className="w-12 h-12 mx-auto text-[#376082]" />
+      description:
+        "Understand all available services and what might work best.",
+      icon: <Heart className="w-12 h-12 mx-auto text-[#376082]" />,
     },
     {
       title: "Financial Guidance",
-      description: "Get information about payment options and insurance coverage.",
-      icon: <DollarSign className="w-12 h-12 mx-auto text-[#376082]" />
-    }
+      description:
+        "Get information about payment options and insurance coverage.",
+      icon: <DollarSign className="w-12 h-12 mx-auto text-[#376082]" />,
+    },
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
 
-     
-
       {/* Consultation Form Section */}
-      <section id="consultation-form" className="py-16 mt-16  bg-gradient-to-b from-gray-50 to-blue-50">
+      <section
+        id="consultation-form"
+        className="py-16 mt-16  bg-gradient-to-b from-gray-50 to-blue-50"
+      >
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -238,14 +245,10 @@ const Consultation = () => {
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
-            <motion.div
-              variants={slideIn}
-              className="text-center mb-12"
-            >
+            <motion.div variants={slideIn} className="text-center mb-12">
               <motion.h2
                 variants={fadeIn}
                 className="text-3xl md:text-4xl font-medium text-[#376082] mb-4"
-              
               >
                 Schedule Your Free Consultation
               </motion.h2>
@@ -268,9 +271,13 @@ const Consultation = () => {
                   className="text-center py-8"
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
+                  <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+                    Thank You!
+                  </h3>
                   <p className="text-gray-600 mb-4">
-                    We've received your information and will contact you soon to schedule your consultation.
+                    We've received your information and sent a confirmation to
+                    your email. We'll contact you soon to schedule your
+                    consultation.
                   </p>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -296,7 +303,10 @@ const Consultation = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="firstName" className="block text-gray-700 font-semibold mb-2">
+                      <label
+                        htmlFor="firstName"
+                        className="block text-gray-700 font-semibold mb-2"
+                      >
                         First Name *
                       </label>
                       <div className="relative">
@@ -315,7 +325,10 @@ const Consultation = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="lastName" className="block text-gray-700 font-semibold mb-2">
+                      <label
+                        htmlFor="lastName"
+                        className="block text-gray-700 font-semibold mb-2"
+                      >
                         Last Name *
                       </label>
                       <div className="relative">
@@ -336,7 +349,10 @@ const Consultation = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
+                      <label
+                        htmlFor="email"
+                        className="block text-gray-700 font-semibold mb-2"
+                      >
                         Email Address *
                       </label>
                       <div className="relative">
@@ -355,7 +371,10 @@ const Consultation = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">
+                      <label
+                        htmlFor="phone"
+                        className="block text-gray-700 font-semibold mb-2"
+                      >
                         Phone Number *
                       </label>
                       <div className="relative">
@@ -370,12 +389,14 @@ const Consultation = () => {
                           inputclassname="w-full px-4 py-3 bg-transparent border-none focus:outline-none focus:ring-0"
                         />
                       </div>
-
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="service" className="block text-gray-700 font-semibold mb-2">
+                    <label
+                      htmlFor="service"
+                      className="block text-gray-700 font-semibold mb-2"
+                    >
                       Service of Interest
                     </label>
                     <div className="relative">
@@ -383,7 +404,9 @@ const Consultation = () => {
                       {loadingServices ? (
                         <div className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50 flex items-center">
                           <Loader className="w-4 h-4 animate-spin mr-2" />
-                          <span className="text-gray-500">Loading services...</span>
+                          <span className="text-gray-500">
+                            Loading services...
+                          </span>
                         </div>
                       ) : (
                         <select
@@ -395,7 +418,9 @@ const Consultation = () => {
                         >
                           <option value="">Select a service (optional)</option>
                           {services.map((service, index) => (
-                            <option key={index} value={service.title}>{service.title}</option>
+                            <option key={index} value={service.title}>
+                              {service.title}
+                            </option>
                           ))}
                         </select>
                       )}
@@ -403,7 +428,10 @@ const Consultation = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-gray-700 font-semibold mb-2"
+                    >
                       How Can We Help? *
                     </label>
                     <div className="relative">
@@ -445,7 +473,8 @@ const Consultation = () => {
                   </motion.button>
 
                   <p className="text-center text-sm text-gray-500">
-                    By submitting this form, you agree to our Privacy Policy and consent to be contacted by SEWA Home Care.
+                    By submitting this form, you agree to our Privacy Policy and
+                    consent to be contacted by SEWA Home Care.
                   </p>
                 </form>
               )}
@@ -454,7 +483,7 @@ const Consultation = () => {
         </div>
       </section>
 
-       {/* Benefits Section */}
+      {/* Benefits Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
@@ -467,7 +496,6 @@ const Consultation = () => {
             <motion.h2
               variants={fadeIn}
               className="text-3xl md:text-4xl font-medium text-center text-[#376082] mb-6"
-              
             >
               Why Schedule a Consultation?
             </motion.h2>
@@ -475,7 +503,8 @@ const Consultation = () => {
               variants={fadeIn}
               className="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto"
             >
-              Our consultations are designed to understand your specific situation and provide tailored solutions.
+              Our consultations are designed to understand your specific
+              situation and provide tailored solutions.
             </motion.p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -485,7 +514,7 @@ const Consultation = () => {
                   variants={fadeIn}
                   whileHover={{
                     y: -8,
-                    transition: { duration: 0.3 }
+                    transition: { duration: 0.3 },
                   }}
                   className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all border border-blue-100 cursor-pointer group"
                 >
@@ -499,7 +528,9 @@ const Consultation = () => {
                   <h3 className="text-xl font-semibold text-[#376082] mb-3 group-hover:text-[#2a4a6a] transition-colors">
                     {benefit.title}
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">{benefit.description}</p>
+                  <p className="text-gray-700 leading-relaxed">
+                    {benefit.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -562,7 +593,9 @@ const Consultation = () => {
             className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Confirm Submission</h3>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Confirm Submission
+              </h3>
               <button
                 onClick={cancelSubmission}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -573,11 +606,13 @@ const Consultation = () => {
 
             <div className="mb-6">
               <p className="text-gray-600 mb-4">
-                Are you sure you want to submit your consultation request? We'll contact you at:
+                Are you sure you want to submit your consultation request? We'll
+                contact you at:
               </p>
               <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                 <p className="text-sm">
-                  <strong>Name:</strong> {formData.firstName} {formData.lastName}
+                  <strong>Name:</strong> {formData.firstName}{" "}
+                  {formData.lastName}
                 </p>
                 <p className="text-sm">
                   <strong>Email:</strong> {formData.email}
