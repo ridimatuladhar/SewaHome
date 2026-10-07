@@ -313,10 +313,7 @@ const ServiceDetail = () => {
                       <Phone size={18} className="text-[#376082] flex-shrink-0" />
                       <span className="text-gray-700 font-medium text-sm md:text-base">(857) 290-4205</span>
                     </motion.div>
-                    <motion.div className="flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/70 transition-colors" whileHover={{ x: 5 }}>
-                      <Mail size={18} className="text-[#376082] flex-shrink-0" />
-                      <span className="text-gray-700 font-medium text-sm md:text-base">California@sewahomecare.com</span>
-                    </motion.div>
+                   
                     <motion.div className="flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/70 transition-colors" whileHover={{ x: 5 }}>
                       <Mail size={18} className="text-[#376082] flex-shrink-0" />
                       <span className="text-gray-700 font-medium text-sm md:text-base">headoffice@sewahomecare.com</span>
@@ -324,8 +321,8 @@ const ServiceDetail = () => {
                     <motion.div className="flex items-start gap-3 p-2 md:p-3 rounded-lg hover:bg-white/70 transition-colors" whileHover={{ x: 5 }}>
                       <MapPin size={18} className="text-[#376082] mt-0.5 flex-shrink-0" />
                       <div className="text-gray-700">
-                        <div className="font-medium text-sm md:text-base">California & Massachusetts</div>
-                        <div className="text-xs md:text-sm text-gray-500">Serving multiple locations</div>
+                        <div className="font-bold text-sm md:text-base">Massachusetts, New Hampshire & California</div>
+                        <div className="text-xs md:text-sm text-gray-500">Service locations</div>
                       </div>
                     </motion.div>
                   </div>
