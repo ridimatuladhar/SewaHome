@@ -115,7 +115,7 @@ const About = () => {
                 <h2 className="text-2xl md:text-3xl text-[#376082] font-medium">Our Mission</h2>
               </div>
               <p className="text-gray-600 leading-relaxed" style={{ fontFamily: "Macha" }}>
-                At Sewa Home Care, our mission is to be a trusted leader in home care services throughout Massachusetts and California providing compassionate, high-quality support that empowers seniors to live independently, safely, and with dignity in the comfort of their own homes.
+                At Sewa Home Care, our mission is to be a trusted leader in home care services throughout Massachusetts, New Hampshire and California providing compassionate, high-quality support that empowers seniors to live independently, safely, and with dignity in the comfort of their own homes.
               </p>
             </motion.div>
 
@@ -128,7 +128,7 @@ const About = () => {
                 <h2 className="text-2xl md:text-3xl text-[#376082] font-medium">Our Vision</h2>
               </div>
               <p className="text-gray-600 leading-relaxed" style={{ fontFamily: "Macha" }}>
-                At Sewa Home Care, we believe aging is a time of strength and wisdom. With compassion and respect, we promote care that fosters independence, dignity, and wellness—helping seniors thrive with confidence and joy in the comfort of home.
+                At Sewa Home Care, we believe aging is a time of strength and wisdom. With compassion and respect, we promote care that fosters independence, dignity, and wellness helping seniors thrive with confidence and joy in the comfort of home.
               </p>
             </motion.div>
           </div>

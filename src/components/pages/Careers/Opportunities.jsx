@@ -386,7 +386,7 @@ const Opportunities = () => {
       {/* Job Details Modal */}
       {showJobDetailsModal && selectedJob && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[70vh] overflow-y-auto">
             <div className="p-6">
               {/* Header */}
               <div className="flex justify-between items-start mb-6">
@@ -519,11 +519,7 @@ const Opportunities = () => {
                     Apply for This Position
                   </button>
 
-                  <div className="text-center">
-                    <p className="text-sm text-gray-500" style={{ fontFamily: "Macha" }}>
-                      Applications are reviewed within 48 hours
-                    </p>
-                  </div>
+                
                 </div>
               </div>
             </div>
